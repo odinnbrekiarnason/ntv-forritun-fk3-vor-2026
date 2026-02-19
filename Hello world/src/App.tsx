@@ -1,12 +1,9 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [myName, setName] = useState('UserName');
   const [email, setEmail] = useState('Email');
-  const [] = useState();
 
   return (
     <>
