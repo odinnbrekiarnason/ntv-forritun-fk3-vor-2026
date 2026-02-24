@@ -9,9 +9,20 @@ function App() {
     <>
       <h1>Hello World</h1>
       <div className="card">
-        <div> Name <input type='text' value={myName} onChange={(e) => setName(e.target.value)}></input></div>
-        <div> Email <input type='text' value={email} onChange={(e) => setEmail(e.target.value)}></input></div>
-        <div> <button onClick={() => alert(`${myName} and ${email} have been submitted` ) }>Submit</button></div>
+        <div> Name <input 
+          type='text' 
+          value={myName} 
+          onChange={(e) => setName(e.target.value)}></input>
+          </div>
+        <div> Email <input 
+          type='text' 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)}></input>
+          </div>
+        <div>
+          <button 
+        onClick={() => alert(`${myName} and ${email} have been submitted`)}> Submit </button>
+        </div>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
