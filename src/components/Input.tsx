@@ -1,7 +1,7 @@
 import { Input as ShadInput } from "@/components/ui/input"
 
 
-export const Input = () => <div className="bg-blue-700"><ShadInput /></div>
+export const Input = ShadInput
 
 type Props = {
     value: string;
