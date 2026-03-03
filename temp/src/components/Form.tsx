@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Field, FieldGroup, FieldLabel } from "./ui/field";
-import { Card, CardHeader, CardTitle } from "./ui/card";
-import { Input } from "./Input";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
-import { Button } from "./Button";
+import { Field, FieldGroup, FieldLabel } from "./ui/field.tsx";
+import { Card, CardHeader, CardTitle } from "./ui/card.tsx";
+import { Input } from "./Input.tsx";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select.tsx";
+import { Button } from "./Button.tsx";
 
 
 export function Form() {
