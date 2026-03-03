@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Field, FieldGroup, FieldLabel } from "./ui/field.tsx";
 import { Card, CardHeader, CardTitle } from "./ui/card.tsx";
 import { Input } from "./Input.tsx";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select.tsx";
 import { Button } from "./Button.tsx";
 
+// useEffect = () => { do this if callback updates },[callback] .. conditional [] er callbackið if updated do content
 
 export function Form() {
   const [name, setName] = useState('Name')
   const [email, setEmail] = useState('Email')
   const [selectedFruit, setSelectedFruit] = useState('')
+  const fruitRef = useRef('')
 
   return (
       <Card>
