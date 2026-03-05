@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Input } from "./Input";
 import { Card, CardHeader, CardTitle } from "./ui/card";
 import {
@@ -19,45 +19,47 @@ import { Button } from "./Button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 
-type Foo = {
-    bar: {
-        name: string
-    }
-}
-
-type DataType = {
+type FormValuesType = {
     firstName: string
     lastName: string
     email: string
     mobileNumber: string
+    selectedFruit: string
+    radioButton: string | null
 }
-export function Form({ bar }: Foo) {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [mobileNumber, setMobileNumber] = useState("");
-    const [selectedFruit, setSelectedFruit] = useState("");
-    const [radioButton, setRadioButton] = useState<string | null>(null);
-    const firstNameRef = useRef('')
 
-
-    const dataRef = useRef<DataType>({
-        email: '',
+export function Form() {
+    const dataRef = useRef<FormValuesType>({
         firstName: '',
         lastName: '',
-        mobileNumber: ''
+        email: '',
+        mobileNumber: '',
+        selectedFruit: '',
+        radioButton: null,
     })
+
+    const onInputChange = useCallback((key: keyof FormValuesType, value: string) => {
+        dataRef.current[key] = value
+    }, [])
+
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+
+    const headerValue = useMemo(() => `${firstName} ${lastName}`, [firstName, lastName])
 
 
     const onSubmit = () => {
         const { firstName } = dataRef.current
         window.alert(`Hello ${firstName}`)
     }
-    console.log('render')
 
     return (
         <div>
-            <p>FirstNameValue: </p>
+            <p>{headerValue} </p>
+            <Input
+                onChange={(e) => {
+                }}
+            />
             <Card className="w-3/4 max-w-7xl bg-blue-950">
                 <CardHeader>
                     <div className="flex items-center gap-2">
@@ -82,7 +84,7 @@ export function Form({ bar }: Foo) {
                                     autoComplete="off"
                                     placeholder="Gunnsteinn"
                                     onChange={(e) => {
-                                        firstNameRef.current = e.target.value;
+                                        onInputChange('firstName', e.target.value)
                                     }}
                                 />
                             </Field>
@@ -93,11 +95,7 @@ export function Form({ bar }: Foo) {
                                     autoComplete="off"
                                     placeholder="Skulason"
                                     onChange={(e) => {
-                                        dataRef.current = ({
-                                            ...dataRef.current,
-                                            lastName: e.target.value
-
-                                        });
+                                        onInputChange('lastName', e.target.value)
                                     }}
                                 />
                             </Field>
@@ -109,7 +107,7 @@ export function Form({ bar }: Foo) {
                                     type="email"
                                     placeholder="asdf@ntv.is"
                                     onChange={(e) => {
-                                        setEmail(e.target.value);
+                                        onInputChange('email', e.target.value)
                                     }}
                                 />
                             </Field>
@@ -121,7 +119,7 @@ export function Form({ bar }: Foo) {
                                     type="number"
                                     placeholder="Mobile number"
                                     onChange={(e) => {
-                                        setMobileNumber(e.target.value);
+                                        onInputChange('mobileNumber', e.target.value)
                                     }}
                                 />
                             </Field>
@@ -129,7 +127,7 @@ export function Form({ bar }: Foo) {
                         <FieldGroup>
                             <Select
                                 onValueChange={(e) => {
-                                    setSelectedFruit(e);
+                                    onInputChange('mobileNumber', e)
                                 }}
                             >
                                 <SelectTrigger className="w-full bg-white" >
@@ -149,11 +147,9 @@ export function Form({ bar }: Foo) {
                         </FieldGroup>
                         <FieldGroup>
                             <RadioGroup defaultValue="comfortable" className="w-fit flex" onValueChange={(e) => {
-                                setRadioButton(e)
+                                onInputChange('mobileNumber', e)
                             }}>
-                                <RadioGroupItem className="bg-white" value="yes" id="yes" onChange={(e) => {
-                                    console.log(e)
-                                }} />
+                                <RadioGroupItem className="bg-white" value="yes" id="yes" />
                                 <Label className="text-white" htmlFor="yes">Yes</Label>
                                 <RadioGroupItem className="bg-white" value="no" id="no" />
                                 <Label className="text-white" htmlFor="no">No</Label>
@@ -172,4 +168,49 @@ export function Form({ bar }: Foo) {
                 </form>
             </Card>
         </div>);
+}
+
+export const calculatePasswordStrength = (password: string) => {
+    // This console log is crucial! Have them watch their console.
+    // If they don't useMemo, this will fire on every single keystroke in the form.
+    console.log("Calculating password strength... (Heavy operation running!)");
+
+    if (!password) return 0;
+
+    // --- THE ARTIFICIAL LAG ---
+    // This simulates a computationally expensive task. 
+    // You may need to adjust the loop size depending on the speed of their machines, 
+    // but 20 million iterations usually causes a noticeable stutter in the UI.
+    let delay = 0;
+    for (let i = 0; i < 20000000; i++) {
+        // Intentionally set a value without using it to create artificial lag
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        delay += i;
+    }
+
+    // --- THE ACTUAL LOGIC ---
+    let score = 0;
+
+    if (password.length >= 8) score += 1; // Minimum length
+    if (password.length >= 12) score += 1; // Good length
+    if (/[A-Z]/.test(password)) score += 1; // Has uppercase
+    if (/[0-9]/.test(password)) score += 1; // Has number
+    if (/[^A-Za-z0-9]/.test(password)) score += 1; // Has special character
+
+    console.log('Password checked!')
+
+    // Returns a score from 0 to 5
+    return score;
+};
+
+export function useLocalStorage(key, initialValue) {
+    const [storedValue, setStoredValue] = useState();
+
+    const setValue = (value: string) => {
+        console.log('old value was', storedValue)
+        console.log('new value is', value)
+        setStoredValue(value);
+    };
+
+    return [storedValue, setValue];
 }

@@ -9,7 +9,7 @@ function App() {
       <ShopCard />
       <ShopCard />
       <div>
-        <Form bar={{ name: 'gunnsteinn' }} />
+        <Form />
       </div>
     </div>
   );
