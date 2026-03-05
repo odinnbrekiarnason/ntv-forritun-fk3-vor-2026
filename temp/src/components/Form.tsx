@@ -5,13 +5,36 @@ import { Input } from "./Input.tsx";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select.tsx";
 import { Button } from "./Button.tsx";
 
-// useEffect = () => { do this if callback updates },[callback] .. conditional [] er callbackið if updated do content
+// useEffect = () => { content },[callback] .. conditional [] er callbackið, if updated do content
 
 export function Form() {
-  const [name, setName] = useState('Name')
-  const [email, setEmail] = useState('Email')
-  const [selectedFruit, setSelectedFruit] = useState('')
-  const fruitRef = useRef('')
+  
+  type FormValuesType = {
+    firstName: string,
+    lastName: string,
+    email: string,
+    mobileNumber: string,
+    selectedFruit: string,
+    radioButton: string | null,
+  }
+  
+  const dataRef = useRef<FormValuesType> ({
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobileNumber: '',
+    selectedFruit: '',
+    radioButton: '',
+  });
+
+  const onInputChange = (key: keyof FormValuesType, value: string) => {
+    dataRef.current[key] = value
+  } 
+
+  const onSubmit = () => {
+    
+  }
+ 
 
   return (
       <Card>
@@ -29,12 +52,12 @@ export function Form() {
                 <Input 
                 id='name' 
                 autoComplete="off" 
-                placeholder="Evil Rabbit" 
+                placeholder="Input name here" 
                 onChange={(e) => setName(e.target.value)}/>
               </Field>
             </FieldGroup>
             <FieldGroup>
-              <Select onValueChange={(e) => {setSelectedFruit(e)}}>
+              <Select onValueChange={(e) => {fruitRef.current = e} }>
                 <SelectTrigger className="w-full max-w-48">
                   <SelectValue placeholder='Select a fruit' />
                 </SelectTrigger>
