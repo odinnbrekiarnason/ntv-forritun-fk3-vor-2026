@@ -1,14 +1,22 @@
+import { useState } from "react";
 import "./App.css";
 import { Form } from "./components/Form";
-import { ShopCard } from "./components/ShopCard";
+// import { ShopCard } from "./components/ShopCard";
+
 
 function App() {
+  const [state, setState] = useState(true)
   return (
-    <>
-      <ShopCard />
-      <ShopCard />
-      <Form />
-    </>
+    <div className="w-full justify-center">
+      <button onClick={() => {
+        setState(s => !s)
+      }}>Click</button>
+      {/* <ShopCard />
+      <ShopCard /> */}
+      {state &&
+        <Form />
+      }
+    </div>
   );
 }
 
