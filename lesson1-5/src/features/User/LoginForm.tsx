@@ -14,14 +14,14 @@ import { Label } from "@/shared/ui/label"
 export function Form() {
   // TODO: Remove ref data set, and only use state to keep track of realtime local data (written in input)
   // NOTE: You might want to detach the email from the data set (since it's used to index the localstorage)
-  const dataRef = useRef<FormValuesType>({
+  /* const dataRef = useRef<FormValuesType>({
     firstName: '',
     lastName: '',
     email: '',
     mobileNumber: '',
     selectedFruit: '',
     radioButton: null,
-  })
+  }) */
 
   const [values, setValues] = useState<FormValuesType>({
     firstName: '',
