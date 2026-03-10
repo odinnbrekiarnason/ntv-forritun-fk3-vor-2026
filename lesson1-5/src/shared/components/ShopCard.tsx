@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Input } from "./Input";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "./Button";
+import { Input } from "../ui/input";
 
 
 export function ShopCard() {
@@ -14,10 +14,6 @@ export function ShopCard() {
         <Card>
             <CardHeader>
                 <CardTitle>Shopping card</CardTitle>
-                <CardDescription>No dart here</CardDescription>
-                <CardAction>
-                    <Button onClick={onClick} value="foo" />
-                </CardAction>
             </CardHeader>
             <CardContent>
                 <Input value={myName} onChange={(e) => setMyName(e.target.value)} />
@@ -30,6 +26,7 @@ export function ShopCard() {
             </CardContent>
             <CardFooter>
                 <p>Card Footer</p>
+                <Button onClick={onClick} value={'submit'} />
             </CardFooter>
 
         </Card>

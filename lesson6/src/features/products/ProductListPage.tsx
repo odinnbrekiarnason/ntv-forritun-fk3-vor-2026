@@ -1,6 +1,6 @@
-import { useProducts } from "@/hooks/useProducts.js";
-import { useCart } from "@/hooks/useCart.js";
-import { ProductCard } from "@/components/ProductCard.js";
+import { useProducts } from "@/features/products/useProducts.js";
+import { useCart } from "@/features/cart/useCart.js";
+import { ProductCard } from "./ProductCard";
 
 export function ProductListPage() {
   const { products, loading } = useProducts();

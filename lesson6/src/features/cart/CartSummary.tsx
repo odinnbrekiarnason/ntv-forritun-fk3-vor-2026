@@ -1,6 +1,6 @@
 import type { CartItem } from "@/types/cart.js";
-import { formatPrice } from "@/utils/formatPrice.js";
-import { Button } from "./Button.js";
+import { formatPrice } from "@/shared/utils/formatPrice.js";
+import { Button } from "../../shared/components/Button.js";
 
 type CartSummaryProps = {
   items: CartItem[];

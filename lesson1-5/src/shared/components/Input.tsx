@@ -1,4 +1,4 @@
-import { Input as ShadInput } from "@/components/ui/input"
+import { Input as ShadInput } from "../ui/input";
 
 
 export const Input = ShadInput
