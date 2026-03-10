@@ -33,7 +33,7 @@ export function Form() {
   })
 
   const onInputChange = useCallback((key: keyof FormValuesType, value: string) => {
-    values[key] = value
+    setValues(prev => ({...prev, [key]: value}))
   }, [])
 
 
@@ -101,6 +101,7 @@ export function Form() {
                   id="firstName"
                   autoComplete="off"
                   placeholder="Gunnsteinn"
+                  value={values.firstName}
                   // TODO: Set values to all input fields in the form
                   onChange={(e) => {
                     onInputChange('firstName', e.target.value)
@@ -113,6 +114,7 @@ export function Form() {
                   id="lastName"
                   autoComplete="off"
                   placeholder="Skulason"
+                  value={values.lastName}
                   onChange={(e) => {
                     onInputChange('lastName', e.target.value)
                   }}
@@ -125,6 +127,7 @@ export function Form() {
                   autoComplete="off"
                   type="email"
                   placeholder="asdf@ntv.is"
+                  value={values.email}
                   onChange={(e) => {
                     onInputChange('email', e.target.value)
                   }}
@@ -137,6 +140,7 @@ export function Form() {
                   autoComplete="off"
                   type="number"
                   placeholder="Mobile number"
+                  value={values.mobileNumber}
                   onChange={(e) => {
                     onInputChange('mobileNumber', e.target.value)
                   }}
@@ -145,8 +149,9 @@ export function Form() {
             </FieldGroup>
             <FieldGroup>
               <Select
+                value={values.selectedFruit}
                 onValueChange={(e) => {
-                  onInputChange('mobileNumber', e)
+                  onInputChange('selectedFruit', e)
                 }}
               >
                 <SelectTrigger className="w-full bg-white" >
@@ -165,8 +170,8 @@ export function Form() {
               </Select>
             </FieldGroup>
             <FieldGroup>
-              <RadioGroup defaultValue="comfortable" className="w-fit flex" onValueChange={(e) => {
-                onInputChange('mobileNumber', e)
+              <RadioGroup value={values.radioButton ?? ''} className="w-fit flex" onValueChange={(e) => {
+                onInputChange('radioButton', e)
               }}>
                 <RadioGroupItem className="bg-white" value="yes" id="yes" />
                 <Label className="text-white" htmlFor="yes">Yes</Label>
