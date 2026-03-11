@@ -1,21 +1,15 @@
-import { useState } from "react";
 import "./App.css";
 import { Form } from "./components/Form";
-// import { ShopCard } from "./components/ShopCard";
+import { ShopCard } from "./components/ShopCard";
 
+export const isTrue: boolean = true 
 
 function App() {
-  const [state, setState] = useState(true)
   return (
     <div className="w-full justify-center">
-      <button onClick={() => {
-        setState(s => !s)
-      }}>Click</button>
-      {/* <ShopCard />
-      <ShopCard /> */}
-      {state &&
-        <Form />
-      }
+       <ShopCard/>
+        <Form/>
+      
     </div>
   );
 }
