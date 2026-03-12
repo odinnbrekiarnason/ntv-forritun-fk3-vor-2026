@@ -1,5 +1,5 @@
 import "./App.css";
-import { Form } from "./features/User/LoginForm";
+import { LoginForm } from "./features/User/LoginForm";
 // import { ShopCard } from "./components/ShopCard";
 
 
@@ -10,7 +10,7 @@ function App() {
       {/* <ShopCard />
       <ShopCard /> */}
       
-        <Form />
+        <LoginForm />
       
     </div>
   );
