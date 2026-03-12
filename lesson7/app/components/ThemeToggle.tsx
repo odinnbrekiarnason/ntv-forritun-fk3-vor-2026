@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
+import { Theme, ThemeContext } from "../root";
 
-type Theme = 'light' | 'dark';
+
 
 function getInitialTheme(): Theme {
   if (typeof document === 'undefined') return 'light';
@@ -14,21 +15,36 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setThemeState] = useState<Theme>('light');
+  const theme = useContext<Theme>(ThemeContext);
+  const [themeState, setThemeState] = useState<Theme>(theme)
   const [mounted, setMounted] = useState(false);
+  const storageKey = 'key';
 
   useEffect(() => {
-    setThemeState(getInitialTheme());
+    if(sessionStorage.getItem(storageKey) !== null) {
+      const getStoredTheme = sessionStorage.getItem(storageKey)
+      const parsed = getStoredTheme as Theme
+      setThemeState(parsed);
+      setMounted(true)
+      return
+    }
+    setThemeState(getInitialTheme())
     setMounted(true);
-  }, []);
+  }, [theme, mounted]);
+  
+  useEffect(() => {
+    sessionStorage.setItem(storageKey, theme)
+  })
 
   useEffect(() => {
     if (!mounted) return;
     applyTheme(theme);
   }, [theme, mounted]);
 
+
   const toggle = () => {
-    setThemeState((t) => (t === 'light' ? 'dark' : 'light'));
+    setThemeState((t) => (themeState === 'light' ? 'dark' : 'light'));
+    console.log(themeState, theme)
   };
 
   if (!mounted) {

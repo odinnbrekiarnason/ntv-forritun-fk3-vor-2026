@@ -1,4 +1,6 @@
-import { ThemeToggle } from '../components/ThemeToggle';
+import { createContext, useContext, useState } from 'react';
+import { Theme, ThemeToggle } from '../components/ThemeToggle';
+
 
 export default function Index() {
   return (
