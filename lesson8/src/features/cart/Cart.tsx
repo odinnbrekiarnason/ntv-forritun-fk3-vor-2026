@@ -3,7 +3,7 @@ import { CartItemRow } from './components/CartItemRow';
 import { CartSummary } from './components/CartSummary';
 
 export function Cart() {
-  const { items, removeCartItem, updateItemQuantity} = useAppStore()
+  const { items, removeItem, updateQuantity} = useAppStore()
 
   return (
     <section className="space-y-6">
@@ -17,8 +17,8 @@ export function Cart() {
               <li key={item.product.id}>
                 <CartItemRow
                   item={item}
-                  onQuantityChange={updateItemQuantity}
-                  onRemove={removeCartItem}
+                  onQuantityChange={updateQuantity}
+                  onRemove={removeItem}
                 />
               </li>
             ))}
