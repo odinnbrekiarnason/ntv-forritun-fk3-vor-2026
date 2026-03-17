@@ -11,7 +11,7 @@ import { Label } from "@/shared/ui/label"
 
 
 
-export function Form() {
+export function LoginForm() {
   // TODO: Remove ref data set, and only use state to keep track of realtime local data (written in input)
   // NOTE: You might want to detach the email from the data set (since it's used to index the localstorage)
   /* const dataRef = useRef<FormValuesType>({
@@ -70,6 +70,7 @@ export function Form() {
   const debouncedSearchTerm = useDebounce(TEMP_HOOK_REPLACE, 1000);
   // TODO: Write useEffect to repopulate the localstorage after debounce
   // NOTE: The email has to be present for this to work
+  
 
 
   // TODO: If no email is provided, display only the email input, or some other alternative UX
