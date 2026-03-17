@@ -1,65 +1,53 @@
-<<<<<<< HEAD
-import { useContext, useEffect, useState } from "react";
-import { Theme, ThemeContext } from "../root";
-
-
-=======
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '~/root';
 
-type Theme = {
-  theme: 'light' | 'dark';
-  setTheme: (theme: 'light' | 'dark') => void;
+type ThemeName = 'light' | 'dark';
+type ThemeContextValue = {
+  theme: ThemeName;
+  setTheme: (theme: ThemeName) => void;
 };
->>>>>>> 1f51e3d6f18e00b2de6c02a6558745ea735df33f
 
-function getInitialTheme(): Theme {
+function getInitialTheme(): ThemeName {
   if (typeof document === 'undefined') return 'light';
   return window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light';
 }
 
-function applyTheme(theme: Theme) {
+function applyTheme(theme: ThemeName) {
   document.documentElement.setAttribute('data-theme', theme);
 }
 
 export function ThemeToggle() {
-<<<<<<< HEAD
-  const theme = useContext<Theme>(ThemeContext);
-  const [themeState, setThemeState] = useState<Theme>(theme)
-=======
-  const { theme, setTheme } = useContext<Theme | null>(ThemeContext) as Theme;
-  console.log(theme, setTheme);
->>>>>>> 1f51e3d6f18e00b2de6c02a6558745ea735df33f
+  const context = useContext(ThemeContext as React.Context<ThemeContextValue | null>);
+  if (!context) {
+    throw new Error('ThemeToggle must be used inside ThemeContext.Provider');
+  }
+
+  const { theme, setTheme } = context;
   const [mounted, setMounted] = useState(false);
-  const storageKey = 'key';
+  const storageKey = 'theme';
 
   useEffect(() => {
-    if(sessionStorage.getItem(storageKey) !== null) {
-      const getStoredTheme = sessionStorage.getItem(storageKey)
-      const parsed = getStoredTheme as Theme
-      setThemeState(parsed);
-      setMounted(true)
-      return
+    const storedTheme = sessionStorage.getItem(storageKey);
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      setTheme(storedTheme);
+      setMounted(true);
+      return;
     }
-    setThemeState(getInitialTheme())
+
+    setTheme(getInitialTheme());
     setMounted(true);
-  }, [theme, mounted]);
-  
-  useEffect(() => {
-    sessionStorage.setItem(storageKey, theme)
-  })
+  }, [setTheme]);
 
   useEffect(() => {
     if (!mounted) return;
+    sessionStorage.setItem(storageKey, theme);
     applyTheme(theme);
   }, [theme, mounted]);
 
-
   const toggle = () => {
-    setThemeState((t) => (themeState === 'light' ? 'dark' : 'light'));
-    console.log(themeState, theme)
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   if (!mounted) {
@@ -78,7 +66,7 @@ export function ThemeToggle() {
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
       title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
     >
-      {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+      {theme === 'light' ? 'Dark mode' : 'Light mode'}
     </button>
   );
 }

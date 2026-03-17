@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { Theme, ThemeToggle } from '../components/ThemeToggle';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 
 export default function Index() {
