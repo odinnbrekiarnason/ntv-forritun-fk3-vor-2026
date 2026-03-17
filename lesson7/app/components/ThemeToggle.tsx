@@ -1,7 +1,17 @@
+<<<<<<< HEAD
 import { useContext, useEffect, useState } from "react";
 import { Theme, ThemeContext } from "../root";
 
 
+=======
+import { useContext, useEffect, useState } from 'react';
+import { ThemeContext } from '~/root';
+
+type Theme = {
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+};
+>>>>>>> 1f51e3d6f18e00b2de6c02a6558745ea735df33f
 
 function getInitialTheme(): Theme {
   if (typeof document === 'undefined') return 'light';
@@ -15,8 +25,13 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
+<<<<<<< HEAD
   const theme = useContext<Theme>(ThemeContext);
   const [themeState, setThemeState] = useState<Theme>(theme)
+=======
+  const { theme, setTheme } = useContext<Theme | null>(ThemeContext) as Theme;
+  console.log(theme, setTheme);
+>>>>>>> 1f51e3d6f18e00b2de6c02a6558745ea735df33f
   const [mounted, setMounted] = useState(false);
   const storageKey = 'key';
 
