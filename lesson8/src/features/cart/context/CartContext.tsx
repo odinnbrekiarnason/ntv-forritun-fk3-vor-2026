@@ -16,9 +16,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { items, removeItem, updateQuantity, addToCart} = useAppStore()
 
   return (
-    <CartContext.Provider
-      value={{ items, addToCart, updateQuantity, removeItem }}
-    >
+    <CartContext.Provider value={{ items, addToCart, updateQuantity, removeItem }}>
       {children}
     </CartContext.Provider>
   );
