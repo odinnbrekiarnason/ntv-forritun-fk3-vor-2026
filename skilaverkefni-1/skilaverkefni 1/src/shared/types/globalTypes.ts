@@ -22,17 +22,18 @@ export type StoreActions = {
   createProject: (input: CreateProjectInput) => ProjectType;
   updateTask: (
     taskId: number,
-    updates: Partial<Pick<TaskType, 'taskName' | 'taskContent' | 'isFinished' | 'timeFinished'>>
+    updates: Pick<TaskType, 'taskName' | 'taskContent' | 'isFinished' | 'timeFinished'>
   ) => TaskType | undefined;
   updateProject: (
     projectId: number,
-    updates: Partial<Pick<ProjectType, 'projectName' | 'description'>>
+    updates: Pick<ProjectType, 'projectName' | 'description'>
   ) => ProjectType | undefined;
-  toggleTask: (taskId: number) => TaskType | undefined;
   deleteProject: (projectId: number) => void;
   deleteTask: (taskId: number) => void;
-  updateCounter: (id: number, type: CounterType) => void;
+  incrementCounter: (type: CounterType) => void 
+  decrementCounter: (type: CounterType) => void
   setTheme: (theme: ThemeName) => void;
+  toggleStartPage: () => void
 }
 
 export type StoreStates = {
@@ -46,3 +47,4 @@ export type StoreStates = {
   taskCounter: number;
 }
 
+// gera toggleTask sem component (merkja sem complete)
