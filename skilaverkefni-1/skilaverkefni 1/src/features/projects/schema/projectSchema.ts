@@ -5,7 +5,7 @@ export const projectSchema = z.object({
   description: z.string('Description cannot be a number').trim().max(500, 'Description cannot contain more than 500 characters').optional().default(''),
   timeCreated: z.date().default(new Date),
   taskIds: z.array(z.string()).default([]),
-  id: z.number().nonnegative().nonoptional()
+  id: z.coerce.number().nonnegative().nonoptional()
 })
 
 export type ProjectType = z.infer<typeof projectSchema>

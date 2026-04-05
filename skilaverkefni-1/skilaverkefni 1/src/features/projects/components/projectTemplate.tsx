@@ -5,8 +5,8 @@ import { Input } from "@/shared/components/ui/input"
 
 
 
-export function Project() {
-
+export function CreateProject() {
+  
   
   return (
     <Card className="relative w-full max-w-2xl overflow-hidden border-border/70 bg-linear-to-br from-background via-background to-muted/40 shadow-lg shadow-black/5">
@@ -80,9 +80,11 @@ export function Project() {
         </p>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline">
+
+          <Button variant="outline" > 
             Secondary action
           </Button>
+
           <Button>
             Primary action
           </Button>
