@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { StoreActions, StoreStates, ThemeName } from "../types/globalTypes";
+import type { CreateProjectInput, CreateTaskInput, StoreActions, StoreStates, ThemeName } from "../types/globalTypes";
 import type { ProjectType } from "@/features/projects/schema/projectSchema";
 import type { TaskType } from "@/features/tasks/schema/taskSchema";
 
@@ -19,194 +19,160 @@ const initialStoreState: StoreStates = {
   tasks: [],
   theme: getInitialTheme(),
   startPage: true,
-  selectedProjectId: null,
-  selectedTaskId: null,
+  selectedProjectId: 0,
+  selectedTaskId: 0,
   projectCounter: 0,
   taskCounter: 0,
+  createProjectPage: false,
+  createTaskPage: false,
 }
 
 
 
-export const appstore = create<StoreStates & StoreActions>((set, get) => {
+export const appstore = create<StoreStates & StoreActions>((set) => ({
 
-  return {
-      ...initialStoreState,
+     ...initialStoreState,
 
 
-      setProject: (projectId) => {
-        set({selectedProjectId: projectId})
-      },
-      
-      setTask: (taskId) => {
-        set({selectedTaskId: taskId})
-      },
-
-      createProject: (input) => {
-        const id = get().projectCounter + 1;
-        const data: ProjectType = {
-          projectName: input.projectName,
-          description: input.description ?? '',
-          taskIds: [],
-          id,
-          timeCreated: new Date()
-        }
-
-        set((state) => ({
-          projects: [...state.projects, data],
-          selectedProjectId: data.id,
-          projectCounter: state.projectCounter + 1,
-        }));
-
-        return data
-      },
-
-      createTask: (projectId, input) => {
-        let createdTask: TaskType | undefined
-
+      setProject: (projectId: number) => {
         set((state) => {
-          const project = state.projects.find((i) => i.id === projectId)
-          if(!project) return state;
-
-          const id = state.taskCounter + 1;
-          
-          createdTask = {
-            ...input,
-            id,
-            taskName: input.taskName,
-            taskContent: input.taskContent,
-            timeCreated: new Date(),
-            timeFinished: null,
-            isFinished: false,
-          }
-          
-          return {
-            tasks: [...state.tasks, createdTask],
-            projects: state.projects.map((i) => 
-              i.id === projectId ? {...i, taskIds: [...i.taskIds, id]} : i
-            ),
-            taskCounter: state.taskCounter + 1,
-          };
-        });
-
-        return createdTask
-      },
-
-      updateProject: (projectId, updates) => {
-        let updatedProject: ProjectType | undefined
-
-        set((state) => {
-          const projects = state.projects.map((project) => {
-
-            if(project.id !== projectId) {
-              return project
-            }
-
-            updatedProject = {
-              ...project,
-              ...updates,
-              projectName: updates.projectName ?? project.projectName,
-              description: updates.description ?? project.description
-            }
-
-            return updatedProject;
-          })
-          return { projects }
-        })
-
-        return updatedProject;
-      },
-
-      updateTask: (taskId, updates) => {
-        let updatedTask: TaskType | undefined
-        
-        set((state) => {
-          const tasks = state.tasks.map((task) => {
-
-            if(task.id !== taskId) {
-              return task;
-            }
-
-            updatedTask = {
-              ...task,
-              ...updates,
-              taskName: updates.taskName ?? task.taskName,
-              taskContent: updates.taskContent ?? task.taskContent,
-              isFinished: updates.isFinished ?? task.isFinished,
-              timeFinished: updates.isFinished ? new Date() : null
-            };
-
-            return updatedTask;
+          const exists = state.projects.find((project) => {
+            return project.id === projectId
           });
 
-          return { tasks }
-        })
+          if(exists) return {selectedProjectId: exists.id};
+          
+          return {selectedProjectId: state.selectedProjectId};
+        });
+      },
+      
+      setTask: (taskId: number) => {
+        set((state) => {
+          const exists = state.tasks.find((task) => {
+            return task.id === taskId
+          });
 
-        return updatedTask
+          if(exists) return {selectedTaskId: exists.id}
+
+          return {selectedTaskId: state.selectedTaskId}
+        })
+      },
+
+      createProject: (input: CreateProjectInput) => {
+        set((state) => {
+          const {projectName, description} = input
+          const id = state.projectCounter + 1
+
+          if(projectName) {
+            const createdProject: ProjectType = {
+              projectName,
+              description: description ?? '',
+              timeCreated: new Date(),
+              taskIds: [],
+              id,
+              timeFinished: null,
+              isFinished: false,
+            }
+            
+            return {
+              projects: [...state.projects, createdProject],
+              selectedProjectId: id,
+              projectCounter: id
+            }
+          }
+          return state;
+        })
+      },
+
+      createTask: (projectId: number, input: CreateTaskInput) => {
+        set((state) => {
+          const {taskName, taskContent} = input
+          const id = state.taskCounter + 1
+          
+          const project = state.projects.find((project) => project.id === projectId)
+
+          if(taskName && taskContent && project) {
+            const createdTask: TaskType = {
+              taskName,
+              taskContent,
+              timeCreated: new Date(),
+              isFinished: false,
+              timeFinished: null,
+              id,
+            }
+
+            return {
+              tasks: [...state.tasks, createdTask],
+              projects: state.projects.map((i) => 
+                i.id !== projectId ? i : {...i, taskIds: [...i.taskIds, createdTask.id]}),
+              selectedTaskId: id,
+              taskCounter: id
+            }
+          }
+          return state;
+        })
+      },
+
+      updateProject: (projectId, updates, isDone) => {
+        set((state) => ({
+          projects: state.projects.map((i) => 
+            i.id !== projectId ? i : {...i, 
+              projectName: updates.projectName ?? i.projectName,
+              description: updates.description ?? i.description,
+              isFinished: isDone ? true : i.isFinished,
+              timeFinished: isDone ? new Date() : i.timeFinished
+            }
+          )
+        }))
+      },
+
+      updateTask: (taskId, updates, isDone) => {
+        set((state) => ({
+          tasks: state.tasks.map((i) => 
+            i.id !== taskId ? i : {...i,
+              taskName: updates.taskName ?? i.taskName,
+              taskContent: updates.taskContent ?? i.taskContent,
+              isFinished: isDone ? true : i.isFinished,
+              timeFinished: isDone ? new Date() : i.timeFinished
+          })
+        }));
       },
 
       deleteProject: (projectId) => {
         set((state) => {
-          const deleted = state.projects.find((i) => i.id === projectId);
+          const deleted = state.projects.find((i) => i.id === projectId)
+
+          if(deleted) {
+            const tasksInDeleted = new Set(deleted.taskIds)
+
+            return {
+              projects: state.projects.filter((i) => i.id !== projectId),
+              tasks: state.tasks.filter((task) => !tasksInDeleted.has(task.id)),
+              selectedProjectId: 0,
+              selectedTaskId: tasksInDeleted.has(state.selectedTaskId) ? 0 : state.selectedTaskId,
+            }
+          }
+          return state;
+        })
+      },
+
+      deleteTask: (taskId) => {
+        set((state) => {
+          const deleted = state.tasks.find((i) => i.id === taskId)
+
           if(!deleted) {
             return state;
           }
 
-          const deletedTaskIds = new Set(deleted.taskIds);
-
           return {
-            projects: state.projects.filter((i) => 
-              i.id !== projectId
-          ),
-            tasks: state.tasks.filter((task) => 
-              !deletedTaskIds.has(task.id)
-          ),
-            selectedProjectId: null,
-            selectedTaskId: null,
-          };
-        });        
-      },
-
-      deleteTask: (taskId) => {
-        set((state) => ({
-          tasks: state.tasks.filter((task) => task.id !== taskId),
-          projects: state.projects.map((project) => ({
-            ...project,
-            taskIds: project.taskIds.filter((id) => id !== taskId)
-          })),
-          selectedTaskId: null
-        }));
-      },
-
-      incrementCounter: (type) => {
-        switch(type) {
-          case 'project' :
-            set((state) => ({
-              projectCounter: state.projectCounter + 1,
-            }));
-            return;
-
-          case 'task' :
-            set((state) => ({
-              taskCounter: state.taskCounter + 1,
-            }));
-            return;
-        }
-      },
-
-      decrementCounter: (type) => {
-        switch(type) {
-          case 'project' :
-            set((state) => ({
-              projectCounter: Math.max(0, state.projectCounter - 1),
-            }));
-            return;
-
-          case 'task' :
-            set((state) => ({
-              taskCounter: Math.max(0, state.taskCounter - 1),
-            }));
-            return;
-        }
+            projects: state.projects.map((project) => ({
+              ...project,
+              taskIds: project.taskIds.filter((id) => id !== taskId),
+            })),
+            tasks: state.tasks.filter((task) => task.id !== taskId),
+            selectedTaskId: state.selectedTaskId === taskId ? 0 : state.selectedTaskId,
+          }
+        })
       },
 
       setTheme: (theme) => {
@@ -221,9 +187,6 @@ export const appstore = create<StoreStates & StoreActions>((set, get) => {
           }
         })
       }
-
-
-    };
-  });
+  }));
 
 

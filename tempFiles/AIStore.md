@@ -168,3 +168,25 @@
       set({ theme });
     },
   };
+
+
+
+  updateProject: (
+  projectId: number,
+  updates: Partial<Pick<ProjectType, "projectName" | "description">>,
+  isDone: boolean
+) => {
+  set((state) => ({
+    projects: state.projects.map((project) =>
+      project.id !== projectId
+        ? project
+        : {
+            ...project,
+            projectName: updates.projectName ?? project.projectName,
+            description: updates.description ?? project.description,
+            isFinished: isDone ? true : project.isFinished,
+            timeFinished: isDone ? new Date() : project.timeFinished,
+          }
+    ),
+  }));
+},

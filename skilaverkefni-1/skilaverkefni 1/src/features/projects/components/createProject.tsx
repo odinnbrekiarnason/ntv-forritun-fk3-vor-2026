@@ -1,9 +1,7 @@
-import { appstore } from "@/shared/appStore/appstore"
 import { Button } from "@/shared/components/ui/button"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/components/ui/card"
 import { Field, FieldContent, FieldDescription, FieldTitle } from "@/shared/components/ui/field"
 import { Input } from "@/shared/components/ui/input"
-import { useStore } from "zustand"
 
 
 
@@ -32,7 +30,7 @@ export function CreateProject() {
 
       <CardContent className="relative space-y-5 pt-5">
         <Field>
-          <FieldTitle>Project name</FieldTitle>
+          <FieldTitle >Project name</FieldTitle>
           <FieldDescription>
             Add your input wiring here.
           </FieldDescription>

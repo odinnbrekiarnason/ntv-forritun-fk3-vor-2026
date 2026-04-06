@@ -5,6 +5,8 @@ export const projectSchema = z.object({
   description: z.string('Description cannot be a number').trim().max(500, 'Description cannot contain more than 500 characters').optional().default(''),
   timeCreated: z.date().default(new Date),
   taskIds: z.array(z.number()).default([]),
+  isFinished: z.boolean().optional(),
+  timeFinished: z.date().nullable().default(null),
   id: z.coerce.number().nonnegative().nonoptional()
 })
 
