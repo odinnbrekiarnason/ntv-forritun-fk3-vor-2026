@@ -1,23 +1,15 @@
 import { create } from "zustand";
-import type { CreateProjectInput, CreateTaskInput, StoreActions, StoreStates, ThemeName } from "../types/globalTypes";
+import type { StoreActions, StoreStates, ThemeName } from "../types/globalTypes";
+import type { CreateTaskInput } from "@/features/tasks/types/createTaskType";
+import type { CreateProjectInput } from "@/features/projects/types/CreateProjectType";
 import type { ProjectType } from "@/features/projects/schema/projectSchema";
 import type { TaskType } from "@/features/tasks/schema/taskSchema";
 
-function getInitialTheme(): ThemeName {
-  if (typeof document === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
-}
 
-function applyTheme(theme: ThemeName) {
-  document.documentElement.setAttribute('data-theme', theme);
-}
 
 const initialStoreState: StoreStates = {
   projects: [],
   tasks: [],
-  theme: getInitialTheme(),
   startPage: true,
   selectedProjectId: 0,
   selectedTaskId: 0,
@@ -175,17 +167,10 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
         })
       },
 
-      setTheme: (theme) => {
-        applyTheme(theme)
-        set({theme: theme})
-      },
-
       toggleStartPage: () => {
-        set((state) => {
-          return {
+        set((state) => ({
             startPage: state.startPage === true ? false : true 
-          }
-        })
+        }))
       }
   }));
 

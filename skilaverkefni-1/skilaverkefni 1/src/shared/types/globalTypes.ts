@@ -1,17 +1,8 @@
 import type { ProjectType } from "@/features/projects/schema/projectSchema";
+import type { CreateProjectInput } from "@/features/projects/types/CreateProjectType";
 import type { TaskType } from "@/features/tasks/schema/taskSchema";
+import type { CreateTaskInput } from "@/features/tasks/types/createTaskType";
 
-export type ThemeName = 'light' | 'dark'
-
-export type CreateProjectInput = {
-  projectName: string;
-  description?: string;
-}
-
-export type CreateTaskInput = {
-  taskName: string;
-  taskContent: string;
-}
 
 export interface StoreActions {
   setProject: (projectId: number) => void;
@@ -22,14 +13,12 @@ export interface StoreActions {
   updateProject: (projectId: number, updates: Partial<Pick<ProjectType, 'projectName' | 'description'>>, isDone: boolean) => void;
   deleteProject: (projectId: number) => void;
   deleteTask: (taskId: number) => void;
-  setTheme: (theme: ThemeName) => void;
   toggleStartPage: () => void
 }
 
 export type StoreStates = {
   projects: ProjectType[];
   tasks: TaskType[];
-  theme: ThemeName;
   projectCounter: number;
   taskCounter: number;
   selectedProjectId: number;

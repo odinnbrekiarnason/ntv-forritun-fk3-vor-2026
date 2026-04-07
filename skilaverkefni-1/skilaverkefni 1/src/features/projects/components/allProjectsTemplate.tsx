@@ -1,22 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import type { ProjectType } from "../schema/projectSchema";
+import { appstore } from "@/shared/appStore/appstore";
+import { onCreateProject } from "./modals/onCreateProject";
+import { useState } from "react";
 
 export function AllProjectsTemplate() {
-  const projects: ProjectType[] = [
-    {
-      id: 1,
-      projectName: "Project template",
-      description: "Replace with real projects from store.",
-      timeCreated: new Date(),
-      taskIds: [1, 2],
-      isFinished: false,
-      timeFinished: null,
-    },
-  ];
-  const selectedProjectId = 0;
-  const onSelectProject = (_projectId: number) => {};
-  const onCreateProject = () => {};
+  const { projects, selectedProjectId } = appstore()
+  const onSelectProject = appstore((state) => state.selectedProjectId = selectedProjectId);
+  const createProject = onCreateProject();
 
   return (
     <Card className="w-full border-border/70 bg-linear-to-br from-background via-background to-muted/30 shadow-lg shadow-black/5">
@@ -40,15 +32,17 @@ export function AllProjectsTemplate() {
         ) : (
           <ul className="space-y-2">
             {projects.map((project) => {
-              const selected = selectedProjectId === project.id;
               return (
                 <li key={project.id}>
                   <button
                     type="button"
-                    onClick={() => onSelectProject?.(project.id)}
+                    value={selectedProjectId}
+                    onClick={(e) => {
+                      onSelectProject
+                    }}
                     className={[
                       "w-full rounded-lg border px-3 py-3 text-left transition",
-                      selected
+                      selectedProjectId
                         ? "border-primary bg-primary/10"
                         : "border-border/60 bg-card/70 hover:border-primary/40 hover:bg-primary/5",
                     ].join(" ")}

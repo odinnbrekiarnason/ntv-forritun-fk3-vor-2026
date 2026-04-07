@@ -1,0 +1,54 @@
+import { projectSchema, type ProjectType } from '../../features/projects/schema/projectSchema'
+import { taskSchema, type TaskType } from '../../features/tasks/schema/taskSchema'
+import { validateSchema, ValidationResult } from '../../shared/middleware/validator'
+
+
+
+export const useLocalStorage = (data: ProjectType | TaskType, dataType: 'ProjectType' | 'TaskType', key: string, action: 'get' | 'set') => {
+  switch (action) {
+    case 'set':
+      switch (dataType) {
+        case 'ProjectType':
+          const stringified = JSON.stringify(data)
+          localStorage.setItem(key, stringified)
+          break;
+
+        case 'TaskType':
+          const parsed = JSON.stringify(data)
+          localStorage.setItem(key, parsed)
+          break;
+
+        default: return console.log('ERROR: Incorrect data input')
+      };
+
+    case 'get':
+      switch (dataType) {
+        case 'ProjectType':
+          const data = localStorage.getItem(key)
+          if (data) {
+            const parsed: ValidationResult<ProjectType> = validateSchema(projectSchema, data)
+            
+            if (parsed.success) {
+              const result: ProjectType = parsed.data
+              return [result];
+            }
+            return console.log('ERROR: Incorrect dataType', parsed.fieldErrors)
+          }
+          return console.log('ERROR: Could not find item in localstorage');
+
+        case 'TaskType':
+          const storage = localStorage.getItem(key)
+
+          if (storage) {
+            const parsed: ValidationResult<TaskType> = validateSchema(taskSchema, storage)
+
+            if (parsed.success) {
+              const result: TaskType = parsed.data;
+
+              return [result]
+            }
+          }
+        default: return console.log('ERROR: Incorrect data type')
+      }
+  }
+}

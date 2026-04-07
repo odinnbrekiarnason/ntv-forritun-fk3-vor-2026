@@ -2,21 +2,17 @@ import { Button } from "@/shared/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import type { ProjectType } from "../schema/projectSchema";
 import type { TaskType } from "@/features/tasks/schema/taskSchema";
+import { appstore } from "@/shared/appStore/appstore";
+import { useStore } from "zustand";
+import { useState } from "react";
+import { onCreateProject } from "./modals/onCreateProject";
 
 export function SelectedProjectTemplate() {
-  const project: ProjectType | null = {
-    id: 1,
-    projectName: "Project template",
-    description: "Replace with selected project from store.",
-    timeCreated: new Date(),
-    taskIds: [],
-    isFinished: false,
-    timeFinished: null,
-  };
-  const tasks: TaskType[] = [];
-  const onCreateTask = () => {};
-  const onBack = () => {};
-
+  const { selectedProjectId } = appstore()
+  const project = appstore((state) => state.projects.find((project) => project.id === selectedProjectId))
+  const tasks = appstore((state) => state.tasks)
+  const { toggleStartPage } = useStore(appstore);
+  
   if (!project) {
     return (
       <Card className="w-full border-dashed border-border/70 bg-muted/20">
@@ -35,7 +31,7 @@ export function SelectedProjectTemplate() {
         <CardDescription>{project.description || "No description yet."}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-          <Button type="button" variant="outline" onClick={onBack}>
+          <Button type="button" variant="outline" onClick={toggleStartPage}>
             Back to projects
           </Button>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -45,7 +41,7 @@ export function SelectedProjectTemplate() {
           </div>
           <div className="rounded-lg border border-border/60 bg-card/70 p-3">
             <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Task count</p>
-            <p className="text-sm font-medium">{tasks.length}</p>
+            <p className="text-sm font-medium">{project.taskIds.length}</p>
           </div>
           <div className="rounded-lg border border-border/60 bg-card/70 p-3">
             <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Status</p>
@@ -53,8 +49,8 @@ export function SelectedProjectTemplate() {
           </div>
         </div>
           {project.taskIds.length !== 0 && 
-          <Button type="button" onClick={onCreateTask}>
-            Create Task
+          <Button type="button" onClick={createTask()}>
+            Create Task for this Project
           </Button>
           }
         <div className="space-y-2">
@@ -63,7 +59,7 @@ export function SelectedProjectTemplate() {
           </h3> 
           {project.taskIds.length === 0 ? (
             <p className="rounded-lg border border-dashed border-border/70 px-3 py-4 text-sm text-muted-foreground">
-              <Button type="button" onClick={onCreateTask}>
+              <Button type="button" onClick={createTask()}>
                 No tasks yet, Create your first task here!
               </Button>
             </p>
