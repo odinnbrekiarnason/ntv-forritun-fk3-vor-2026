@@ -13,7 +13,9 @@ export interface StoreActions {
   updateProject: (projectId: number, updates: Partial<Pick<ProjectType, 'projectName' | 'description'>>, isDone: boolean) => void;
   deleteProject: (projectId: number) => void;
   deleteTask: (taskId: number) => void;
-  toggleStartPage: () => void
+  toggleStartPage: () => void;
+  toggleCreateProjectPage: () => void;
+  toggleCreateTaskPage: () => void;
 }
 
 export type StoreStates = {

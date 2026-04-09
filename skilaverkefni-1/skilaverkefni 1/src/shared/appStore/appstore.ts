@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import type { StoreActions, StoreStates, ThemeName } from "../types/globalTypes";
+import type { StoreActions, StoreStates } from "../types/globalTypes";
 import type { CreateTaskInput } from "@/features/tasks/types/createTaskType";
 import type { CreateProjectInput } from "@/features/projects/types/CreateProjectType";
 import type { ProjectType } from "@/features/projects/schema/projectSchema";
 import type { TaskType } from "@/features/tasks/schema/taskSchema";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 
 
@@ -19,8 +20,6 @@ const initialStoreState: StoreStates = {
   createTaskPage: false,
 }
 
-
-
 export const appstore = create<StoreStates & StoreActions>((set) => ({
 
      ...initialStoreState,
@@ -32,7 +31,14 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
             return project.id === projectId
           });
 
-          if(exists) return {selectedProjectId: exists.id};
+          if(exists) {
+            return ({
+              selectedProjectId: exists.id,
+              startPage: false,
+              createProjectPage: false,
+              createTaskPage: false,
+            })
+          };
           
           return {selectedProjectId: state.selectedProjectId};
         });
@@ -170,6 +176,18 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
       toggleStartPage: () => {
         set((state) => ({
             startPage: state.startPage === true ? false : true 
+        }))
+      },
+
+      toggleCreateProjectPage: () => {
+        set((state) => ({
+          createProjectPage: state.createProjectPage === true ? false : true
+        }))
+      },
+
+      toggleCreateTaskPage: () => {
+        set((state) => ({
+          createTaskPage: state.createTaskPage === true ? false : true
         }))
       }
   }));

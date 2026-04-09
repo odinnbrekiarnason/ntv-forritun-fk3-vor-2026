@@ -1,14 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
-import type { ProjectType } from "../schema/projectSchema";
 import { appstore } from "@/shared/appStore/appstore";
-import { onCreateProject } from "./modals/onCreateProject";
-import { useState } from "react";
+
 
 export function AllProjectsTemplate() {
-  const { projects, selectedProjectId } = appstore()
-  const onSelectProject = appstore((state) => state.selectedProjectId = selectedProjectId);
-  const createProject = onCreateProject();
+  const { projects, selectedProjectId, setProject} = appstore()
+  const handleClick = (value: string) => {
+    const id = parseInt(value)
+    setProject(id)
+  }
 
   return (
     <Card className="w-full border-border/70 bg-linear-to-br from-background via-background to-muted/30 shadow-lg shadow-black/5">
@@ -18,8 +18,8 @@ export function AllProjectsTemplate() {
             <CardTitle>All projects</CardTitle>
             <CardDescription>Select one project to see its tasks and details.</CardDescription>
           </div>
-          <Button type="button" onClick={onCreateProject}>
-            New project
+          <Button type="button" onClick={() => {}}>
+            Create new project
           </Button>
         </div>
       </CardHeader>
@@ -36,13 +36,11 @@ export function AllProjectsTemplate() {
                 <li key={project.id}>
                   <button
                     type="button"
-                    value={selectedProjectId}
-                    onClick={(e) => {
-                      onSelectProject
-                    }}
+                    value={project.id}
+                    onClick={(e) => handleClick(e.currentTarget.value)}
                     className={[
                       "w-full rounded-lg border px-3 py-3 text-left transition",
-                      selectedProjectId
+                      project.id
                         ? "border-primary bg-primary/10"
                         : "border-border/60 bg-card/70 hover:border-primary/40 hover:bg-primary/5",
                     ].join(" ")}

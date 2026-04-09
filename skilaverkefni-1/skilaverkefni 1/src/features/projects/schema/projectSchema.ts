@@ -3,10 +3,10 @@ import * as z from 'zod'
 export const projectSchema = z.object({
   projectName: z.string('Project name cannot be a number').trim().min(3, 'Project name cannot contain less than 3 characters').nonoptional('Project name is required'),
   description: z.string('Description cannot be a number').trim().max(500, 'Description cannot contain more than 500 characters').optional().default(''),
-  timeCreated: z.date().default(new Date),
+  timeCreated: z.coerce.date().default(new Date),
   taskIds: z.array(z.number()).default([]),
   isFinished: z.boolean().optional(),
-  timeFinished: z.date().nullable().default(null),
+  timeFinished: z.coerce.date().nullable().default(null),
   id: z.coerce.number().nonnegative().nonoptional()
 })
 

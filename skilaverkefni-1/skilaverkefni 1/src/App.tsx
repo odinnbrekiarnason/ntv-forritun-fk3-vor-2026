@@ -1,22 +1,30 @@
-import { useStore } from 'zustand'
 import './App.css'
+import { AllProjectsTemplate } from './features/projects/components/pages/allProjectsPage'
+import { CreateProjectPage } from './features/projects/components/pages/createProjectPage'
+import { SelectedProjectPage } from './features/projects/components/pages/selectedProjectPage'
+import { CreateTaskTemplate } from './features/tasks/components/createTask'
 import { appstore } from './shared/appStore/appstore'
 import { StartPage } from './shared/components/startPage'
-import { SelectedProjectTemplate } from './features/projects/components/selectedProjectTemplate'
-import { CreateProject } from './features/projects/components/createProject'
-import { CreateTaskTemplate } from './features/tasks/components/createTask'
+
 
 function App() {
- return (
-  <div>
-    <StartPage/>
-    <div/>
-    <SelectedProjectTemplate/>
-    <div/>
-    <CreateProject/>
-    <div/>
-    <CreateTaskTemplate/>
-  </div>
+  const {startPage, createTaskPage, createProjectPage, selectedProjectId} = appstore()
+  const baseProjects = {
+
+  }
+
+
+  return (
+    <div>{startPage === true &&
+      <StartPage />
+    }
+      <div />
+        <AllProjectsTemplate />
+      <div />
+      <CreateProjectPage />
+      <div />
+      <CreateTaskTemplate />
+    </div>
  )
 }
 
