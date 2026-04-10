@@ -7,18 +7,21 @@ import type { TaskType } from "@/features/tasks/schema/taskSchema";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 
+const localStorageKey = 'tempKey'
 
 const initialStoreState: StoreStates = {
-  projects: [],
-  tasks: [],
-  startPage: true,
-  selectedProjectId: 0,
-  selectedTaskId: 0,
-  projectCounter: 0,
-  taskCounter: 0,
-  createProjectPage: false,
-  createTaskPage: false,
-}
+      projects: [],
+      tasks: [],
+      startPage: true,
+      selectedProjectId: 0,
+      selectedTaskId: 0,
+      projectCounter: 0,
+      taskCounter: 0,
+      createProjectPage: false,
+      createTaskPage: false,
+      allProjectsPage: false,
+    }
+
 
 export const appstore = create<StoreStates & StoreActions>((set) => ({
 
@@ -37,7 +40,7 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
               startPage: false,
               createProjectPage: false,
               createTaskPage: false,
-            })
+            });
           };
           
           return {selectedProjectId: state.selectedProjectId};
@@ -53,7 +56,7 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
           if(exists) return {selectedTaskId: exists.id}
 
           return {selectedTaskId: state.selectedTaskId}
-        })
+        });
       },
 
       createProject: (input: CreateProjectInput) => {
@@ -70,7 +73,8 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
               id,
               timeFinished: null,
               isFinished: false,
-            }
+            };
+            useLocalStorage('ProjectType', 'set', localStorageKey, createdProject)
             
             return {
               projects: [...state.projects, createdProject],
@@ -175,21 +179,39 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
 
       toggleStartPage: () => {
         set((state) => ({
-            startPage: state.startPage === true ? false : true 
+            startPage: state.startPage === true ? false : true, 
+            allProjectsPage: state.allProjectsPage = false,
+            createProjectPage: state.createProjectPage = false,
+            createTaskPage: state.createTaskPage = false,
         }))
       },
 
       toggleCreateProjectPage: () => {
         set((state) => ({
-          createProjectPage: state.createProjectPage === true ? false : true
+          createProjectPage: state.createProjectPage === true ? false : true,
+          startPage: state.startPage = false, 
+          allProjectsPage: state.allProjectsPage = false,
+          createTaskPage: state.createTaskPage = false,
         }))
       },
 
       toggleCreateTaskPage: () => {
         set((state) => ({
+          createProjectPage: state.createProjectPage = false,
+          startPage: state.startPage = false, 
+          allProjectsPage: state.allProjectsPage = false,
           createTaskPage: state.createTaskPage === true ? false : true
         }))
-      }
+      },
+
+      toggleAllProjectsPage: () => {
+        set((state) => ({
+          createProjectPage: state.createProjectPage = false,
+          startPage: state.startPage = false, 
+          createTaskPage: state.createTaskPage = false,
+          allProjectsPage: state.allProjectsPage === true ? false : true
+        }))
+      },
   }));
 
 

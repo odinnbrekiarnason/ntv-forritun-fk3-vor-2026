@@ -16,6 +16,7 @@ export interface StoreActions {
   toggleStartPage: () => void;
   toggleCreateProjectPage: () => void;
   toggleCreateTaskPage: () => void;
+  toggleAllProjectsPage: () => void;
 }
 
 export type StoreStates = {
@@ -25,6 +26,7 @@ export type StoreStates = {
   taskCounter: number;
   selectedProjectId: number;
   selectedTaskId: number;
+  allProjectsPage: boolean;
   createProjectPage: boolean;
   createTaskPage: boolean;
   startPage: boolean;

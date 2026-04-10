@@ -17,7 +17,7 @@ export function CreateTaskTemplate() {
 
 	return (
     <Field>
-      <Card className="w-full max-w-2xl border-border/70 bg-linear-to-br from-background via-background to-muted/40 shadow-lg shadow-black/5">
+      <Card className="mx-auto w-full max-w-2xl border-border/70 bg-linear-to-br from-background via-background to-muted/40 shadow-lg shadow-black/5">
         <CardHeader>
           <CardTitle>Create task</CardTitle>
           <CardDescription>

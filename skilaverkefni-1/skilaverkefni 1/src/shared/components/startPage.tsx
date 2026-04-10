@@ -8,7 +8,7 @@ import { appstore } from "../appStore/appstore"
 
 
 export function StartPage() {
-  const {projectCounter, taskCounter, toggleCreateProjectPage} = appstore()
+  const {projectCounter, taskCounter, toggleCreateProjectPage, toggleAllProjectsPage} = appstore()
 
   return (
     <main className="flex min-h-[80svh] w-full items-center justify-center p-4 sm:p-8">
@@ -61,7 +61,7 @@ export function StartPage() {
           <Button className="w-full sm:w-auto" type="button" onClick={toggleCreateProjectPage}>
             Create new project
           </Button>
-          <Button className="w-full sm:w-auto" type="button" variant="outline">
+          <Button className="w-full sm:w-auto" type="button" variant="outline" onClick={toggleAllProjectsPage}>
             Browse projects
           </Button>
         </CardFooter>

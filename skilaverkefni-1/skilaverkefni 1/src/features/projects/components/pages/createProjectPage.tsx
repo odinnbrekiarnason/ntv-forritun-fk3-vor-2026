@@ -11,7 +11,7 @@ import type { CreateProjectInput } from "../../types/CreateProjectType"
 export function CreateProjectPage() {
   const [projectInput, setProjectInput] = useState<CreateProjectInput> ({
     projectName: '',
-    description: "Replace with selected project from store."
+    description: ""
   }); 
 
   const handleInputChange = useCallback((key: keyof CreateProjectInput, value: string) => {
@@ -22,7 +22,7 @@ export function CreateProjectPage() {
   const toggleStartPage = appstore((state) => state.toggleStartPage)
 
   return (
-    <Card className="relative w-full max-w-2xl overflow-hidden border-border/70 bg-linear-to-br from-background via-background to-muted/40 shadow-lg shadow-black/5">
+    <Card className="relative mx-auto w-full max-w-2xl overflow-hidden border-border/70 bg-linear-to-br from-background via-background to-muted/40 shadow-lg shadow-black/5">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-r from-primary/12 via-transparent to-primary/6" />
 
       <CardHeader className="relative border-b border-border/60 pb-5">

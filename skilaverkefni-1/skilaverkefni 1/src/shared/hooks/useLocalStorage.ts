@@ -69,7 +69,7 @@ export const useLocalStorage = (dataType: DataType, action: ActionType, key: str
   }
 }
 
-export const getInitialStoreState = (key: string): void | StoreStates => {
+export const getInitialStoreState = (key: string): StoreStates => {
   const isPresent = localStorage.getItem(key)
   let initialStates: StoreStates = {
       projects: [],
@@ -81,10 +81,11 @@ export const getInitialStoreState = (key: string): void | StoreStates => {
       taskCounter: 0,
       createProjectPage: false,
       createTaskPage: false,
+      allProjectsPage: false,
     };
 
   if (isPresent === null) {
-    localStorage.setItem('States', JSON.stringify(initialStates));
+    localStorage.setItem(key, JSON.stringify(initialStates));
     return initialStates;
   }
 
@@ -105,3 +106,5 @@ export const getInitialStoreState = (key: string): void | StoreStates => {
     return initialStates;
   }
 }
+
+// TODO: In getInitialStoreState, write defaults with the same input key (not hardcoded 'States') and narrow return type to StoreStates.
