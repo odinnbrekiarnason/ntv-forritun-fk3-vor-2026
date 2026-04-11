@@ -4,7 +4,7 @@ import { appstore } from "@/shared/appStore/appstore";
 
 
 export function AllProjectsTemplate() {
-  const { projects, setProject, toggleCreateProjectPage} = appstore()
+  const { projects, setProject, toggleCreateProjectPage, toggleStartPage} = appstore()
   const handleClick = (value: string) => {
     const id = parseInt(value)
     setProject(id)
@@ -19,8 +19,13 @@ export function AllProjectsTemplate() {
             <CardDescription>Select one project to see its tasks and details.</CardDescription>
           </div>
         </div>
+        {projects.length !== 0 && 
         <Button variant={'ghost'} type="button" onClick={() => toggleCreateProjectPage()}>
             Create new project
+        </Button>
+        }
+        <Button variant={'ghost'} type="button" onClick={() => toggleStartPage()}>
+            Back to start
         </Button>
       </CardHeader>
 

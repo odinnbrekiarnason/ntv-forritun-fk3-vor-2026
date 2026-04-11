@@ -7,7 +7,7 @@ import type { CreateTaskInput } from "@/features/tasks/types/createTaskType";
 export interface StoreActions {
   setProject: (projectId: number) => void;
   setTask: (taskId: number) => void;
-  createTask: (projectId: number, input: CreateTaskInput) => void ;
+  createTask: (projectId: number, input: CreateTaskInput) => void;
   createProject: (input: CreateProjectInput) => void;
   updateTask: (taskId: number, updates: Partial<Pick<TaskType, 'taskName' | 'taskContent'>>, isDone: boolean) => void;
   updateProject: (projectId: number, updates: Partial<Pick<ProjectType, 'projectName' | 'description'>>, isDone: boolean) => void;
