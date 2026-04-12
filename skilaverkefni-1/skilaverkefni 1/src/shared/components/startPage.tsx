@@ -4,15 +4,17 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/shared/components/ui/separator"
 import { FolderKanban, Sparkles } from "lucide-react"
 import { appstore } from "../appStore/appstore"
+import { getInitialStates } from "../hooks/useLocalStorage"
 
 
 
 export function StartPage() {
-  const {projectCounter, toggleCreateProjectPage, toggleAllProjectsPage} = appstore()
+  const {toggleCreateProjectPage, toggleAllProjectsPage} = appstore()
+  const states = getInitialStates('tempKey')
 
   return (
     <main className="flex min-h-[80svh] w-full items-center justify-center p-4 sm:p-8">
-      <Card className="relative w-full max-w-3xl overflow-hidden border-border/70 bg-linear-to-br from-background via-background to-muted/30 shadow-xl shadow-black/5">
+      <Card className="relative w-full max-w-3xl overflow-hidden border-border/70 bg-linear-to-br from-indigo-300 to-muted/50 shadow-xl shadow-black/5">
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
 
         <CardHeader className="relative space-y-4 pb-5">
@@ -36,7 +38,7 @@ export function StartPage() {
             <div className="rounded-xl border border-border/60 bg-card/70 p-4 text-left">
               <p className="mb-2 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                 <FolderKanban className="h-4 w-4" />
-                Current number of Projects: {projectCounter}
+                Current number of Projects: {states.projects.length}
               </p>
               <p className="text-2xl font-semibold text-foreground"></p>
             </div>
@@ -50,10 +52,10 @@ export function StartPage() {
         </CardContent>
 
         <CardFooter className="relative flex flex-col gap-3 sm:flex-row sm:justify-between">
-          <Button className="w-full sm:w-auto" type="button" onClick={toggleCreateProjectPage}>
+          <Button className="w-full sm:w-auto bg-green-700" type="button" onClick={toggleCreateProjectPage}>
             Create new project
           </Button>
-          <Button className="w-full sm:w-auto" type="button" variant="outline" onClick={toggleAllProjectsPage}>
+          <Button className="w-full sm:w-auto bg-blue-700 text-white" type="button" variant="outline" onClick={toggleAllProjectsPage}>
             Browse projects
           </Button>
         </CardFooter>

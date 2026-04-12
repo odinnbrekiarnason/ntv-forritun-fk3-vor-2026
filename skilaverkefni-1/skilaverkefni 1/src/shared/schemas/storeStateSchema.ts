@@ -7,6 +7,12 @@ export const storeStateSchema = z.object({
   tasks: z.array(taskSchema),
   projectCounter: z.number().int().nonnegative(),
   taskCounter: z.number().int().nonnegative(),
+  selectedProjectId: z.number().int().nonnegative(),
+  selectedTaskId: z.number().int().nonnegative(),
+  startPage: z.boolean(),
+  createProjectPage: z.boolean(),
+  createTaskPage: z.boolean(),
+  allProjectsPage: z.boolean()
 })
 
-export type StoreStateSchemaType = z.infer<typeof storeStateSchema>
+export type StoreStateType = z.infer<typeof storeStateSchema>

@@ -1,25 +1,16 @@
 import { create } from "zustand";
-import type { StoreActions, StoreStates } from "../types/globalTypes";
+import type { StoreActions } from "../types/globalTypes";
 import type { ProjectType } from "@/features/projects/schema/projectSchema";
 import type { TaskType } from "@/features/tasks/schema/taskSchema";
 import { getInitialStates, useLocalStorage } from "../hooks/useLocalStorage";
+import type { StoreStateType } from "../schemas/storeStateSchema";
 
 const key = 'tempKey'
-
-const getter = getInitialStates('tempKey')
-
-const initialState: StoreStates = {
-  ...getter,
-  startPage: true,
-  selectedProjectId: 0,
-  selectedTaskId: 0,
-  createProjectPage: false,
-  createTaskPage: false,
-  allProjectsPage: false,
-}
+const initialState = getInitialStates(key)
 
 
-export const appstore = create<StoreStates & StoreActions>((set) => ({
+
+export const appstore = create<StoreStateType & StoreActions>((set) => ({
   ...initialState,
 
   setProject: (projectId) => {
@@ -67,7 +58,7 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
 
       if (projectName) {
         const createdProject: ProjectType = {
-          projectName,
+          projectName: `${projectName[0].toUpperCase()}${projectName.slice(1)}`,
           description: description ?? '',
           timeCreated: new Date(),
           taskIds: [],
@@ -83,6 +74,7 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
           selectedProjectId: id,
           projectCounter: id,
           createProjectPage: false,
+          allProjectsPage: false
         }
       }
       return state;
@@ -98,49 +90,48 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
 
       if (taskName && taskContent && project) {
         const createdTask: TaskType = {
-          taskName,
+          taskName: `${taskName[0].toUpperCase()}${taskName.slice(1)} `,
           taskContent,
           timeCreated: new Date(),
           isFinished: false,
           timeFinished: null,
           id,
         }
+
+        useLocalStorage(key, createdTask, 'task')
         
         return {
           tasks: [...state.tasks, createdTask],
           projects: state.projects.map((i) =>
             i.id !== projectId ? i : { ...i, taskIds: [...i.taskIds, createdTask.id] }),
           selectedTaskId: id,
-          taskCounter: id
+          taskCounter: id,
+          createTaskPage: false,
         }
       }
       return state;
     })
   },
 
-  updateProject: (projectId, updates, isDone) => {
+  updateProject: (projectId, updates) => {
     set((state) => ({
       projects: state.projects.map((i) =>
         i.id !== projectId ? i : {
           ...i,
           projectName: updates.projectName ?? i.projectName,
           description: updates.description ?? i.description,
-          isFinished: isDone ? true : i.isFinished,
-          timeFinished: isDone ? new Date() : i.timeFinished
         }
-      )
+      ),
     }))
   },
 
-  updateTask: (taskId, updates, isDone) => {
+  updateTask: (taskId, updates) => {
     set((state) => ({
       tasks: state.tasks.map((i) =>
         i.id !== taskId ? i : {
           ...i,
           taskName: updates.taskName ?? i.taskName,
-          taskContent: updates.taskContent ?? i.taskContent,
-          isFinished: isDone ? true : i.isFinished,
-          timeFinished: isDone ? new Date() : i.timeFinished
+          taskContent: updates.taskContent ?? i.taskContent
         })
     }));
   },
@@ -150,13 +141,18 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
       const deleted = state.projects.find((i) => i.id === projectId)
 
       if (deleted) {
-
-        return {
+        
+        const newState: StoreStateType = {
+          ...state,
           projects: state.projects.filter((i) => i.id !== projectId),
           tasks: state.tasks.filter((task) => !deleted.taskIds.includes(task.id)),
           selectedProjectId: 0,
           selectedTaskId: deleted.taskIds.includes(state.selectedTaskId) ? 0 : state.selectedTaskId,
+          allProjectsPage: true
         }
+
+        useLocalStorage(key, null, null, null, JSON.stringify(newState))
+        return { ...newState }
       }
       return state;
     })
@@ -166,18 +162,21 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
     set((state) => {
       const deleted = state.tasks.find((i) => i.id === taskId)
 
-      if (!deleted) {
-        return state;
-      }
+      if (deleted) {
+        const newState: StoreStateType = {
+          ...state,
+          projects: state.projects.map((project) => ({
+            ...project,
+            taskIds: project.taskIds.filter((id) => id !== taskId),
+          })),
+          tasks: state.tasks.filter((task) => task.id !== taskId),
+          selectedTaskId: state.selectedTaskId === taskId ? 0 : state.selectedTaskId,
+        }
 
-      return {
-        projects: state.projects.map((project) => ({
-          ...project,
-          taskIds: project.taskIds.filter((id) => id !== taskId),
-        })),
-        tasks: state.tasks.filter((task) => task.id !== taskId),
-        selectedTaskId: state.selectedTaskId === taskId ? 0 : state.selectedTaskId,
+        useLocalStorage(key, null, null, null, JSON.stringify(newState))
+        return { ...newState }
       }
+      return state;
     })
   },
 
@@ -196,7 +195,7 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
     set((state) => ({
       createProjectPage: state.createProjectPage === true ? false : true,
       startPage: state.startPage = false,
-      allProjectsPage: state.allProjectsPage = false,
+      allProjectsPage: true,
       createTaskPage: state.createTaskPage = false,
       selectedProjectId: 0,
       selectedTaskId: 0
@@ -209,7 +208,7 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
       selectedTaskId: 0 ? 0 : state.selectedTaskId,
       createProjectPage: state.createProjectPage = false,
       startPage: state.startPage = false,
-      allProjectsPage: state.allProjectsPage = false,
+      allProjectsPage: state.allProjectsPage,
     }))
   },
 
@@ -222,6 +221,48 @@ export const appstore = create<StoreStates & StoreActions>((set) => ({
       selectedProjectId: 0,
       selectedTaskId: 0
     }))
+  },
+
+  toggleProjectComplete(projectId) {
+    set((state) => {
+      const selected = state.projects.find((project) => project.id === projectId)
+      
+      if(!selected) {
+        return state;
+      }
+      const result: ProjectType = {...selected, isFinished: !selected.isFinished ? true : false, timeFinished: !selected.timeFinished ? new Date() : null }
+      useLocalStorage(key, result, 'project', projectId)
+      
+      return {
+        projects: [...state.projects.map((i) => {
+          if(i.id === projectId) {
+            return {...i, ...result}
+          }
+          return i
+        })]
+      }
+    })
+  },
+
+  toggleTaskComplete(taskId) {
+    set((state) => {
+      const selected = state.tasks.find((task) => task.id === taskId)
+      
+      if(!selected) {
+        return state;
+      }
+      const result: TaskType = {...selected, isFinished: !selected.isFinished ? true : false, timeFinished: !selected.timeFinished ? new Date() : null }
+      useLocalStorage(key, result, 'task', taskId)
+      
+      return {
+        tasks: [...state.tasks.map((i) => {
+          if(i.id === taskId) {
+            return {...i, ...result}
+          }
+          return i
+        })]
+      }
+    })
   },
 
 }));

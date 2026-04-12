@@ -11,7 +11,7 @@ export function AllProjectsTemplate() {
   }
 
   return (
-    <Card className="w-full border-border/70 bg-linear-to-br from-background via-background to-muted/30 shadow-lg shadow-black/5">
+    <Card className="w-full border-border/70 bg-linear-to-br from-mist-600 to-muted/40 shadow-lg shadow-black/5">
       <CardHeader>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
           <div className="space-y-1">
@@ -20,11 +20,11 @@ export function AllProjectsTemplate() {
           </div>
         </div>
         {projects.length !== 0 && 
-        <Button variant={'ghost'} type="button" onClick={() => toggleCreateProjectPage()}>
+        <Button variant='ghost' className="justify-self-center" type="button" onClick={toggleCreateProjectPage}>
             Create new project
         </Button>
         }
-        <Button variant={'ghost'} type="button" onClick={() => toggleStartPage()}>
+        <Button variant='ghost' className="justify-self-center" type="button" onClick={toggleStartPage}>
             Back to start
         </Button>
       </CardHeader>
@@ -48,7 +48,7 @@ export function AllProjectsTemplate() {
                     className={[
                       "w-full rounded-lg border px-3 py-3 text-left transition",
                       project.id
-                        ? "border-primary bg-primary/10"
+                        ? "border-primary bg-indigo-300"
                         : "border-border/60 bg-card/70 hover:border-primary/40 hover:bg-primary/5",
                     ].join(" ")}
                   >

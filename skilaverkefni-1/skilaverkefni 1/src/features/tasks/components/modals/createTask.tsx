@@ -1,10 +1,10 @@
 import { appstore } from "@/shared/appStore/appstore";
 import { Button } from "@/shared/components/ui/button";
 import { handleInputChange } from '@/shared/handlers/handleInputChange'
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Field, FieldContent, FieldDescription, FieldError, FieldTitle } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
-import type { CreateTaskInput } from "../types/createTaskType";
+import type { CreateTaskInput } from "../../types/createTaskType";
 import { useState } from "react";
 import type { CreateProjectInput } from "@/features/projects/types/CreateProjectType";
 
@@ -48,7 +48,8 @@ export function CreateTaskTemplate() {
   }; 
 
 	return (
-      <Card className="mx-auto w-full max-w-2xl border-border/70 bg-linear-to-br from-gray-500 to-muted/40 shadow-lg shadow-black/5">
+    <Field>
+      <Card className="mx-auto w-full max-w-2xl border-border/70 bg-linear-to-br from-indigo-300 to-muted/40 shadow-lg shadow-black/5">
         <CardHeader>
           <CardTitle>Create task for project {selectedProjectName?.projectName}</CardTitle>
           <CardDescription>
@@ -88,15 +89,15 @@ export function CreateTaskTemplate() {
             </FieldContent>
           </Field>
         </CardContent>
-
-        <CardFooter className="justify-end gap-2">
+        <div className="space-x-3">
           <Button variant="outline" type="button" onClick={toggleCreateTaskPage}>
             Cancel
           </Button>
-          <Button className="bg-blue-800" type="button" onClick={handleSaveTask} disabled={disabled}>
+          <Button type="button" onClick={handleSaveTask} disabled={disabled} >
             Save task
           </Button>
-        </CardFooter>
+          </div>
       </Card>
+    </Field>
 	);
 }

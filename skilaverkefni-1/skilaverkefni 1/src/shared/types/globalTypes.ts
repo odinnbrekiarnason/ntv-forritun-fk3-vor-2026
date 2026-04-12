@@ -9,27 +9,14 @@ export interface StoreActions {
   setTask: (taskId: number) => void;
   createTask: (projectId: number, input: CreateTaskInput) => void;
   createProject: (input: CreateProjectInput) => void;
-  updateTask: (taskId: number, updates: Partial<Pick<TaskType, 'taskName' | 'taskContent'>>, isDone: boolean) => void;
-  updateProject: (projectId: number, updates: Partial<Pick<ProjectType, 'projectName' | 'description'>>, isDone: boolean) => void;
+  updateTask: (taskId: number, updates: Partial<Pick<TaskType, 'taskName' | 'taskContent'>>) => void;
+  updateProject: (projectId: number, updates: Partial<Pick<ProjectType, 'projectName' | 'description'>>) => void;
   deleteProject: (projectId: number) => void;
   deleteTask: (taskId: number) => void;
+  toggleProjectComplete: (projectId: number) => void;
+  toggleTaskComplete: (taskId: number) => void;
   toggleStartPage: () => void;
   toggleCreateProjectPage: () => void;
   toggleCreateTaskPage: () => void;
   toggleAllProjectsPage: () => void;
 }
-
-export type StoreStates = {
-  projects: ProjectType[];
-  tasks: TaskType[];
-  projectCounter: number;
-  taskCounter: number;
-  selectedProjectId: number;
-  selectedTaskId: number;
-  allProjectsPage: boolean;
-  createProjectPage: boolean;
-  createTaskPage: boolean;
-  startPage: boolean;
-}
-
-// gera toggleTask sem component (merkja sem complete)

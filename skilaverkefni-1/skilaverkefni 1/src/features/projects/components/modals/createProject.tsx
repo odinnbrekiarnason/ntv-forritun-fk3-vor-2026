@@ -1,6 +1,6 @@
 import { appstore } from "@/shared/appStore/appstore"
 import { Button } from "@/shared/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/shared/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card"
 import { Field, FieldContent, FieldDescription, FieldTitle } from "@/shared/components/ui/field"
 import { Input } from "@/shared/components/ui/input"
 import { useState } from "react"
@@ -17,24 +17,23 @@ export function CreateProjectPage() {
     taskContent: '',
     taskName: '',
   }); 
-  const {createProject, toggleStartPage } = appstore()
-
+  const { createProject, toggleCreateProjectPage } = appstore()
+  
   return (
-    <Card className="relative mx-auto w-full max-w-2xl overflow-hidden border-border/70 bg-linear-to-br from-background via-background to-muted/40 shadow-lg shadow-black/5">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-r from-primary/12 via-transparent to-primary/6" />
-
-      <CardHeader className="relative border-b border-border/60 pb-5">
+    <Card className="mx-auto w-full max-w-2xl border-border/70 bg-linear-to-br from-indigo-300 to-muted/40 shadow-lg shadow-black/5">
+      <CardHeader className="border-b border-border/60 pb-5">
         <div className="space-y-1.5">
-          <CardTitle className="text-lg">{projectInput.projectName.length === 0 ? 'Project title' : projectInput.projectName}</CardTitle>
+          <CardTitle className="text-lg">{projectInput.projectName.length === 0 ? 'Project Title' : `${projectInput.projectName[0].toUpperCase()}${projectInput.projectName.slice(1)}`}</CardTitle>
         </div>
       </CardHeader>
 
-      <CardContent className="relative space-y-5 pt-5">
+      <CardContent className="space-y-5 pt-5">
         <Field>
           <FieldTitle>Project name</FieldTitle>
           <FieldContent>
             <Input 
-            placeholder="Input your Project name" 
+            autoFocus={true}
+            placeholder="Input your Project name"
             value={projectInput.projectName} 
             onChange={(e) => handleInputChange('projectName', e.target.value, setProjectInput)}/>
           </FieldContent>
@@ -56,20 +55,14 @@ export function CreateProjectPage() {
           </FieldContent>
         </Field>
       </CardContent>
-      <CardFooter className="justify-between gap-3">
-        <p className="text-sm text-muted-foreground">
-          Footer note or helper text.
-        </p>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" type="button" onClick={toggleStartPage}>
-            cancel
-          </Button>
-
-          <Button type="button" onClick={() => (createProject(projectInput) ) }>
-            Save project
-          </Button>
-        </div>
-      </CardFooter>
+      <div className="space-x-3">
+        <Button variant="outline" type="button" onClick={toggleCreateProjectPage}>
+          Cancel
+        </Button>
+        <Button className="bg-blue-800" type="button" onClick={() => createProject(projectInput)}>
+          Save project
+        </Button>
+      </div>
     </Card>
   )
 }
