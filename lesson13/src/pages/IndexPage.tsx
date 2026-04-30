@@ -1,6 +1,6 @@
 import { Counter } from '@/components/Counter';
 import { Greeting } from '@/components/Greeting';
-import { QuoteCard } from '@/components/QuoteCard';
+import { QuoteCard } from '@/components/quotes/QuoteCard';
 
 export function IndexPage() {
   return (
