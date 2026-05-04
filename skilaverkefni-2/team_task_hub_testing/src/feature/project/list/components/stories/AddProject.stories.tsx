@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import AddProject from './AddProject';
+import AddProject from '../AddProject';
 
 const meta = {
   title: 'Components/projectCard',
