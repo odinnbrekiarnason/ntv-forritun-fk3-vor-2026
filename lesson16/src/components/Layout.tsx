@@ -1,13 +1,6 @@
-import type { AppPage } from '@/navigation';
-import type { ReactNode } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-type LayoutProps = {
-  activePage: AppPage;
-  onNavigate: (page: AppPage) => void;
-  children: ReactNode;
-};
-
-function navButtonClassName(isActive: boolean) {
+const navClass = ({isActive}: {isActive: boolean}) => {
   return [
     'rounded-md px-3 py-2 text-sm font-medium transition-colors',
     isActive
@@ -16,7 +9,9 @@ function navButtonClassName(isActive: boolean) {
   ].join(' ');
 }
 
-export function Layout({ activePage, onNavigate, children }: LayoutProps) {
+export function Layout() {
+  const navTo = useNavigate();
+
   return (
     <div className="bg-background min-h-screen">
       <header className="border-border bg-card/50 border-b backdrop-blur-sm">
@@ -25,24 +20,42 @@ export function Layout({ activePage, onNavigate, children }: LayoutProps) {
             Lesson 16
           </p>
           <nav className="flex flex-wrap gap-2" aria-label="Main navigation">
+            
             <button
               type="button"
-              className={navButtonClassName(activePage === 'home')}
-              onClick={() => onNavigate('home')}
+              className={navClass({isActive: false})}
+              onClick={() => navTo('/')}
             >
               Home
             </button>
+            
             <button
               type="button"
-              className={navButtonClassName(activePage === 'about')}
-              onClick={() => onNavigate('about')}
+              className={navClass({isActive: false})}
+              onClick={() => navTo('about', )}
             >
               About
+            </button>
+            <button
+              type="button"
+              className={navClass({isActive: false})}
+              onClick={() => navTo('login')}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className={navClass({isActive: false})}
+              onClick={() => navTo('signup')}
+            >
+              Signup
             </button>
           </nav>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-8">
+        <Outlet/>
+      </main>
     </div>
   );
 }
