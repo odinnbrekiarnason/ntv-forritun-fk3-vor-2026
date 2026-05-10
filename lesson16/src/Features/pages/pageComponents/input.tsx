@@ -1,33 +1,49 @@
-import { FormInput } from "lucide-react"
-import type { HTMLInputTypeAttribute } from "react";
-
-
 const inputTypes = {
   text: 'text',
   email: 'email',
-  password: 'password'
+  password: 'password',
+  confirmPassword: 'Confirm Password'
 } as const;
 
-type InputProps = {
-  type: keyof typeof inputTypes,
-  classname?: string,
-  label?: string,
-  error?: string,
-  value?: string,
-  onChange: (value: string) => void
+type InputProps<T extends keyof typeof inputTypes> = {
+  type: T;
+  value?: string;
+  onChange: (value: string) => void;
+  error?: boolean;
 }
 
 
-export function Input({type, classname, label, error, value, onChange, ...props}: InputProps) {
-  const componentClass = `border rounded-md px-3 py-2 ${classname}`;
+export function Input<T extends keyof typeof inputTypes>({type, value, onChange, ...props}: InputProps<T>) {
+  const componentClass = `border rounded-md px-3 py-2`;
 
-  return (
-    <div>
-      {label && <label className="block mb-1">{label}</label>}
-      {error && <span className="text-red-500 text-sm">{error}</span>}
+  if(type === 'confirmPassword') {
+    const error = props.error;
+    const compClass = [
+      "border rounded-md px-3 py-2 focus:outline-none focus:ring-2",error ? 
+      "border-red-500 focus:border-red-500 focus:ring-red-200" : 
+      "focus:border-blue-500 focus:ring-blue-200"].join(" ");
+    
+    return (
+      <div>
+        <label className={error ? "block mb-1 text-red-500" : "block mb-1"}>{error ? 'Passwords Do Not Match' : 'Confirm Password'}</label>
         <input 
-          className={componentClass} 
-          type={inputTypes[type]} 
+          placeholder={`Confirm Password`}
+          className={compClass}
+          type="password"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          {...props}
+          />
+      </div>
+    )
+  } 
+  else return (
+    <div>
+       <label className="block mb-1">{type}</label>
+        <input 
+          placeholder={`input ${type}`}
+          className={componentClass }
+          type={inputTypes[type] || 'text'} 
           value={value}
           onChange={(e) => onChange(e.target.value)}
           {...props}

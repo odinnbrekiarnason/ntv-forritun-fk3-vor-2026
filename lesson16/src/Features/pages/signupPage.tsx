@@ -1,17 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import Input from "./pageComponents/input";
 import { useEffect, useState } from "react";
+import { Signup, type inputStates } from "../user/signup";
+
 
 
 export function SignupPage() {
   const navTo = useNavigate();
-  const [matcher, setMatcher] = useState<boolean | undefined>(undefined);
-  
-  type inputStates = {
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }
+  const [pwCheck, setPwCheck] = useState<boolean | undefined>(undefined);
 
   const [inputs, setInputs] = useState<inputStates>({
     email: '',
@@ -20,15 +16,22 @@ export function SignupPage() {
   })
 
   useEffect(() => {
-    if(inputs.password.length !== 0 && inputs.confirmPassword.length !== 0) {
-      const check = inputs.password === inputs.confirmPassword;
-      if(!check) {
-        setMatcher(false);
-      } else {
-        setMatcher(true);
-      }
-    } 
-  }, [inputs.confirmPassword, inputs.password]);
+    setTimeout(() => {
+      if(inputs.email.search('@') === -1 && inputs.email.length >= 1) setPwCheck(false);
+      
+      if(inputs.password.length !== 0 && inputs.confirmPassword.length !== 0) {
+        const check = inputs.password === inputs.confirmPassword;
+          if(!check) {
+            setPwCheck(false);
+          } else {
+            setPwCheck(true);
+          }
+        } else if(inputs.password.length >= 0 && inputs.confirmPassword.length === 0) {
+          setPwCheck(true);
+        }
+      }, 500)
+    }, []);
+  
 
   const handleInputChange = (value: string, key: keyof inputStates) => {
     setInputs((prevInputs) => ({ ...prevInputs, [key]: value }));
@@ -36,34 +39,42 @@ export function SignupPage() {
 
   return (
     <div className="flex flex-col gap-4 items-center">
-      <h1>Signup</h1>
-      <button onClick={() => navTo('/')}>Go to home</button>
+      <header>
+        <h1>Signup</h1>
+      </header>
       <Input
         type="email"
-        placeholder="Email"
-        label="Email"
         value={inputs.email}
         onChange={(e) => handleInputChange(e, 'email')}
       />
       <Input
         type="password"
-        placeholder="Password"
-        label="Password"
         value={inputs.password}
         onChange={(e) => handleInputChange(e, 'password')}
       />
       <Input
-        type="password"
-        placeholder="Confirm Password"
+        type="confirmPassword"
         value={inputs.confirmPassword}
-        label={matcher === undefined ? 'Confirm Password' : matcher ? 'Passwords match' : 'Passwords do not match'}
-        classname={matcher === undefined ? '' : matcher ? 'border-green-500' : 'border-red-500 bg-red-500/50'}
         onChange={(e) => handleInputChange(e, 'confirmPassword')}
+        error={pwCheck === false}
       />
-      <main>
-        <button type="submit" className="text-muted-foreground hover:bg-muted hover:text-foreground" hidden={matcher === false && inputs.email.search('@') === -1}>
-          Create account
-        </button>
+      <main className="flex flex-col gap-4">
+        <div className="flex justify-center">
+          {pwCheck !== false &&
+          <button
+            type="submit"
+            className="text-blue-500 border-2 rounded-4xl hover:border-purple-500 hover:text-foreground"
+            onClick={() => {Signup(inputs) && navTo('/welcome')}}
+          >
+            Create account
+          </button>
+          }
+        </div>
+        <div className="flex justify-center">
+          <button className="text-primary border-2 rounded-4xl hover:border-purple-500" onClick={() => navTo('/login')}>
+            Already have an account? Log in here!
+          </button>
+        </div>
       </main>
     </div>
   )
