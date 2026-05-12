@@ -1,11 +1,11 @@
 import { Button } from '@/shared/components/ui/button';
 import { Dialog, DialogTrigger } from '@/shared/components/ui/dialog';
 
-function AddProject() {
+function AddProject({ onClick }: { onClick: () => void }) {
   return (
     <Dialog>
     <DialogTrigger asChild>
-      <Button type="button">Add project</Button>
+      <Button onClick={onClick} type="button">Add project</Button>
     </DialogTrigger>
     </Dialog>
   );

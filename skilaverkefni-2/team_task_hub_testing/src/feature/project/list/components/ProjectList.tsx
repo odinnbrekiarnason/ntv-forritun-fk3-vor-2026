@@ -22,7 +22,6 @@ function ProjectList() {
   }
 
   return (
-    <>
       <Dialog
         open={addProjectOpen}
         onOpenChange={handleProjectDialogOpenChange}
@@ -31,14 +30,13 @@ function ProjectList() {
           <CardHeader>
             <div className="flex justify-between">
               <CardTitle>Projects</CardTitle>
-              {activeProject ? null : <AddProject />}
+              {activeProject ? null : <AddProject onClick={() => setAddProjectOpen(true)} />}
               {activeProject ? (
                 <Button onClick={() => clearActiveProject()}>back</Button>
               ) : null}
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               <ProjectTasksChart />
               <div className="flex flex-col gap-4 w-full">
                 {projects.length > 0 ? (
@@ -51,14 +49,12 @@ function ProjectList() {
                   </p>
                 )}
               </div>
-            </div>
           </CardContent>
         </Card>
         <DialogContent className="gap-0 sm:max-w-md">
           <ProjectForm onClose={() => setAddProjectOpen(false)} />
         </DialogContent>
       </Dialog>
-    </>
   );
 }
 
