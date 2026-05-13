@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/ui/button';
 import { useGlobalContext } from '@/shared/context';
 import { TrashIcon } from 'lucide-react';
 
-function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project }: { project: Project }) {
   const { removeProject, setActiveProject } = useGlobalContext();
   return (
     <Card

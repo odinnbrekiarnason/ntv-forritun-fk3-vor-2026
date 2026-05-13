@@ -1,5 +1,6 @@
 import { Button } from '@/shared/components/ui/button';
 import {
+  Dialog,
   DialogClose,
   DialogDescription,
   DialogFooter,
@@ -35,32 +36,33 @@ function ProjectForm({ onClose }: { onClose: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <DialogHeader>
-        <DialogTitle>Add project</DialogTitle>
-        <DialogDescription>
-          Create a new project. You can add tasks after it is created.
-        </DialogDescription>
-      </DialogHeader>
-          <label htmlFor={nameId} className="text-sm font-medium">
-            Project name
-          </label>
-          <div/>
-          <Input
-            id={nameId}
-            name="name"
-            type="text"
-            placeholder="e.g. Website redesign"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            required
-            autoComplete="off"
-            autoFocus
-          />
+      <Dialog>
+        <DialogHeader>
+          <DialogTitle>Add project</DialogTitle>
+          <DialogDescription>
+            Create a new project. You can add tasks after it is created.
+          </DialogDescription>
+        </DialogHeader>
+        <label htmlFor={nameId} className="text-sm font-medium">
+          Project name
+        </label>
+        <div />
+        <Input
+          id={nameId}
+          name="name"
+          type="text"
+          placeholder="e.g. Website redesign"
+          value={projectName}
+          onChange={(e) => setProjectName(e.target.value)}
+          required
+          autoComplete="off"
+          autoFocus
+        />
         <div className="flex flex-col">
           <label htmlFor={descriptionId} className="text-sm font-medium">
             Description
           </label>
-          <div/>
+          <div />
           <Input
             id={descriptionId}
             name="description"
@@ -71,15 +73,16 @@ function ProjectForm({ onClose }: { onClose: () => void }) {
             autoComplete="off"
           />
         </div>
-      <DialogFooter className="gap-2 sm:gap-0">
-        <DialogClose asChild>
-          <Button type="button" variant="outline">
-            Cancel
-          </Button>
-        </DialogClose>
-        <div/>
-        <Button type="submit">Add project</Button>
-      </DialogFooter>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <DialogClose asChild>
+            <Button type="button" variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
+          <div />
+          <Button type="submit">Add project</Button>
+        </DialogFooter>
+      </Dialog>
     </form>
   );
 }
