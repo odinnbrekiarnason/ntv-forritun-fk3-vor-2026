@@ -1,7 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import { GlobalProvider } from '@/shared/context';
-import { fn } from 'storybook/test';
+import { fn, mocks } from 'storybook/test';
 
+import type { GlobalContextValue } from '@/shared/context';
+import { GlobalContext } from '@/shared/context/globalContextTypes';
 
 import ProjectList from '../ProjectList';
 
