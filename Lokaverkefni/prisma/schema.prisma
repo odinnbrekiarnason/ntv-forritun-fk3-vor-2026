@@ -11,3 +11,68 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Gpu {
+  id        BigInt  @id @default(autoincrement())
+  modelName String  @map("model_name")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("gpu")
+}
+
+model Cpu {
+  id        BigInt  @id @default(autoincrement())
+  modelType String  @map("model_type")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("cpu")
+}
+
+model Motherboard {
+  id        BigInt  @id @default(autoincrement())
+  modelName String  @map("model_name")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("motherboard")
+}
+
+model RamMemory {
+  id        BigInt  @id @default(autoincrement())
+  modelName String  @map("model_name")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("ram_memory")
+}
+
+model StorageDrive {
+  id        BigInt  @id @default(autoincrement())
+  modelName String  @map("model_name")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("storage_drive")
+}
+
+model PowerSupply {
+  id        BigInt  @id @default(autoincrement())
+  modelName String  @map("model_name")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("power_supply")
+}
+
+model CpuCooler {
+  id        BigInt  @id @default(autoincrement())
+  modelName String  @map("model_name")
+  price     Decimal @db.Decimal(10, 2)
+  stock     Int
+
+  @@map("cpu_cooler")
+}
+
+
