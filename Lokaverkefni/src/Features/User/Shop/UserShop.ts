@@ -1,11 +1,10 @@
 import { create } from "zustand";
-import type { UserActions, UserState } from "../Types/ShopTypes";
-
-
+import { CreateUser } from "../../../API/User/UserScripts/CRUD";
+import type { UserActions, UserState } from "../../../Shared/User/UserTypes";
 
 
 export const userShop = create<UserState & UserActions>((set) => ({
-    id: "",
+    id: 0,
     name: "",
     email: "",
     cart: [],
@@ -16,8 +15,21 @@ export const userShop = create<UserState & UserActions>((set) => ({
         return false;
     },
 
-    create: () => {},
-    read: () => {},
-    update: () => {},
-    delete: () => {},
+    create: (userName, password, email) => {
+      const result = CreateUser(userName, email, password);
+
+      if(result instanceof Promise) {
+        set((user) => ({
+          ...user,
+          ...result,
+          isAuthenticated: true,
+        }))
+      }
+    },
+
+    read: (username, email) => {},
+
+    update: (email, password) => {},
+
+    delete: (email, password) => {},
 }));

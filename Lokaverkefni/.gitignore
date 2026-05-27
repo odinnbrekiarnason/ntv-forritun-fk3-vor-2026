@@ -25,3 +25,12 @@ dist-ssr
 
 /src/generated/prisma
 .env
+
+# Local secrets and generated DB migrations
+prisma/migrations/
+
+# Requested package and lock files
+package.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
