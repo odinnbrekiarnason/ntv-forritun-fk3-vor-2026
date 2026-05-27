@@ -1,6 +1,6 @@
 
-import { prisma } from "../../../lib/prisma";
-import type { DBUserNoPw } from "../../../Shared/User/schemas";
+import { prisma } from "../../../../lib/prisma";
+import type { DBUserNoPw } from "../../../../Shared/User/schemas";
 import { scrambler } from "../passwordScrambler";
 
 export async function CreateUser(username: string, email: string, password: string): Promise<DBUserNoPw | undefined> {

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CreateUser } from "../../../API/User/UserScripts/CRUD";
+import { CreateUser } from "../../API/User/UserScripts/CRUD";
 import type { UserActions, UserState } from "../../../Shared/User/UserTypes";
 
 
