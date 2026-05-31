@@ -9,7 +9,6 @@ export const Routes = {
 
 export const APIEndpoints = {
   PRODUCTS: "/api/products",
-  CART: "/api/cart",
   CHECKOUT: "/api/checkout",
   LOGIN: "/api/login",
   REGISTER: "/api/register",
