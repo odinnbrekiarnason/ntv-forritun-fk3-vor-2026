@@ -1,20 +1,18 @@
-import { Button } from "@/Shared/components/ui/button";
 import { Card, CardContent, CardAction, CardTitle, CardHeader } from "@/Shared/components/ui/card";
 import { SignInButton, SignUpButton } from "@clerk/react";
-
 
 export function HomePage() {
 
   return (
       <Card className="w-full h-auto bg-transparent border-2 border-solid border-gray-300">
         <CardAction className="flex gap-3 p-6 absolute top-0 right-90">
-          <Button variant="outline" className="w-30">
-            <SignUpButton mode="modal"/>
-          </Button>
+          
+            <SignUpButton mode="modal" />
+          
           <div className="h-3"/>
-          <Button variant="outline" className="w-30">
+          
             <SignInButton mode='modal'/>
-          </Button>
+          
         </CardAction>
         <div className="h-10"/>
         <CardHeader>

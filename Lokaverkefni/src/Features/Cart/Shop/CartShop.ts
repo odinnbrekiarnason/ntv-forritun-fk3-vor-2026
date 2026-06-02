@@ -2,14 +2,14 @@ import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
 
 
-export const UseCartShop = create<CartShopType>((set) => ({
+export const UseCartShop = create<CartShopType>((_set) => ({
   userId: "",
   items: [],
 
-  addToCart: (productId, quantity) => {
+  addToCart: (_productId, _quantity) => {
   },
 
-  changeQuantity: (productId) => {},
+  changeQuantity: (_productId) => {},
 
   clearCart: () => {}
 }))

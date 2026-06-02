@@ -32,3 +32,5 @@ prisma/migrations/
 # Requested package and lock files
 pnpm-lock.yaml
 yarn.lock
+
+/generated/prisma

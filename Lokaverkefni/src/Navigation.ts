@@ -8,8 +8,5 @@ export const Routes = {
 }
 
 export const APIEndpoints = {
-  PRODUCTS: "/api/products",
-  CHECKOUT: "/api/checkout",
-  LOGIN: "/api/login",
-  REGISTER: "/api/register",
+  PRODUCTS: "http://localhost:3000/api/products"
 }

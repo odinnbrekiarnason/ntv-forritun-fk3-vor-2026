@@ -1,6 +1,6 @@
 import './App.css'
 import { Route, Routes } from 'react-router'
-import { HomePage } from './Shared/Homepage'
+import { HomePage } from './Shared/pages/Homepage'
 
 function App() {
 
