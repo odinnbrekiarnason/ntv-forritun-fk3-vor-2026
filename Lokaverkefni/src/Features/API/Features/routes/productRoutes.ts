@@ -3,8 +3,7 @@ import db from "../../../../../config/db";
 
 const router = express.Router();
 
-
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (_req: Request, res: Response, next: NextFunction) => {
 	try {
 		const products = await db.any(`
 			SELECT id, type, price, stock, description, img_url

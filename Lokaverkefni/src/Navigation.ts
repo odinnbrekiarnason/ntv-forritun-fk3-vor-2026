@@ -8,5 +8,6 @@ export const Routes = {
 }
 
 export const APIEndpoints = {
-  PRODUCTS: "http://localhost:3000/api/products"
+  PRODUCTS: "http://localhost:3000/api/products",
+  CLERK: "http://localhost:3000/api/clerk/webhook"
 }
