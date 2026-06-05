@@ -5,7 +5,6 @@ export interface CartItemType {
   quantity: number;
 } 
 
-
 export const cartSchema = z.object({
   userId: z.string().nonempty(),
   items: z.array(

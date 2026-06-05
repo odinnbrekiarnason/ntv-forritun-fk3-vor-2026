@@ -1,14 +1,6 @@
 import { APIEndpoints } from "@/Navigation";
+import type { Product } from "@/Shared/Schemas/ProductsSchema";
 
-export interface Product {
-  id: number;
-  type: string;
-  productName: string;
-  price: number;
-  stock: number;
-  description: string;
-  img_url: string;
-}
 
 export const getProducts = async (): Promise<Product[] | undefined> => {
   try {
