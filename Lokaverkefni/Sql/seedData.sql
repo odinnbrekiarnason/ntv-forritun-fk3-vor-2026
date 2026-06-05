@@ -21,13 +21,14 @@ INSERT INTO producers (name) VALUES
 ('be quiet!'),
 ('DEEPCOOL');
 
-INSERT INTO products (type, price, stock, description, img_url, producer_id, category_id)
+INSERT INTO products (type, productName, price, stock, description, img_url, producer_id, category_id)
 SELECT
     'GPU',
+    'GeForce RTX 4090',
     1499.99,
     10,
     'High-end gaming graphics card with 24GB GDDR6X',
-    'https://example.com/images/rtx4090.jpg',
+    'http://localhost:3000/images/rtx4090.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -37,10 +38,11 @@ UNION ALL
 
 SELECT
     'GPU',
+    'Radeon RX 7900 XTX',
     999.99,
     15,
     'Powerful AMD Radeon graphics card',
-    'https://example.com/images/rx7900xtx.jpg',
+    'http://localhost:3000/images/rx7900xtx.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -50,10 +52,11 @@ UNION ALL
 
 SELECT
     'CPU',
+    'Ryzen 9 7950X',
     699.99,
     20,
     '16-core 32-thread flagship CPU',
-    'https://example.com/images/ryzen97950x.jpg',
+    'http://localhost:3000/images/ryzen97950x.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -63,10 +66,11 @@ UNION ALL
 
 SELECT
     'CPU',
+    'Core i9-13900K',
     599.99,
     25,
     '24-core hybrid architecture processor',
-    'https://example.com/images/i913900k.jpg',
+    'http://localhost:3000/images/i913900k.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -76,10 +80,11 @@ UNION ALL
 
 SELECT
     'Motherboard',
+    'ROG Strix Z790',
     399.99,
     10,
     'Premium Z790 gaming motherboard',
-    'https://example.com/images/rogstrixz790.jpg',
+    'http://localhost:3000/images/rogstrixz790.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -89,10 +94,11 @@ UNION ALL
 
 SELECT
     'Motherboard',
+    'X670 AORUS',
     499.99,
     15,
     'High-end X670E motherboard for AMD Ryzen',
-    'https://example.com/images/x670aorus.jpg',
+    'http://localhost:3000/images/x670aorus.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -102,10 +108,11 @@ UNION ALL
 
 SELECT
     'RAM',
+    'Corsair Vengeance 16GB DDR4',
     89.99,
     20,
     '16GB (2x8GB) DDR4 3200MHz',
-    'https://example.com/images/corsairvengeance.jpg',
+    'http://localhost:3000/images/corsairvengeance.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -115,10 +122,11 @@ UNION ALL
 
 SELECT
     'RAM',
+    'G.Skill Trident Z5 32GB DDR5',
     199.99,
     15,
     '32GB (2x16GB) DDR5 6000MHz RGB',
-    'https://example.com/images/gskilltrident.jpg',
+    'http://localhost:3000/images/gskilltrident.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -128,10 +136,11 @@ UNION ALL
 
 SELECT
     'Storage',
+    'Samsung 970 EVO 1TB',
     149.99,
     10,
     '1TB NVMe PCIe 3.0 SSD',
-    'https://example.com/images/samsung970evo.jpg',
+    'http://localhost:3000/images/samsung970evo.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -141,10 +150,11 @@ UNION ALL
 
 SELECT
     'Storage',
+    'WD Blue 2TB HDD',
     79.99,
     15,
     '2TB 3.5" SATA HDD',
-    'https://example.com/images/wdblue2tb.jpg',
+    'http://localhost:3000/images/wdblue2tb.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -154,10 +164,11 @@ UNION ALL
 
 SELECT
     'Power Supply',
+    'ASRock 850W Gold',
     129.99,
     10,
     '850W 80+ Gold Fully Modular',
-    'https://example.com/images/asrock850w.jpg',
+    'http://localhost:3000/images/asrock850w.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -167,10 +178,11 @@ UNION ALL
 
 SELECT
     'Power Supply',
+    'be quiet! 750W Platinum',
     149.99,
     15,
     '750W 80+ Platinum Fully Modular',
-    'https://example.com/images/bequiet750w.jpg',
+    'http://localhost:3000/images/bequiet750w.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -180,10 +192,11 @@ UNION ALL
 
 SELECT
     'CPU Cooler',
+    'be quiet! Dark Rock Pro 4',
     89.99,
     10,
     'Dual-tower air cooler',
-    'https://example.com/images/darkrockpro4.jpg',
+    'http://localhost:3000/images/darkrockpro4.jpg',
     p.id,
     c.id
 FROM producers p, category c 
@@ -193,10 +206,11 @@ UNION ALL
 
 SELECT
     'CPU Cooler',
+    'DeepCool Castle 360',
     159.99,
     15,
     '360mm AIO liquid cooler',
-    'https://example.com/images/deepcoolcastle360.jpg',
+    'http://localhost:3000/images/deepcoolcastle360.jpg',
     p.id,
     c.id
 FROM producers p, category c 

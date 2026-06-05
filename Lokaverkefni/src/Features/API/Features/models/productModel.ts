@@ -3,6 +3,7 @@ import { APIEndpoints } from "@/Navigation";
 export interface Product {
   id: number;
   type: string;
+  productName: string;
   price: number;
   stock: number;
   description: string;

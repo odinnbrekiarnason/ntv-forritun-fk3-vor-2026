@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get("/", async (_req: Request, res: Response, next: NextFunction) => {
 	try {
-		const products = await db.any(`
-			SELECT id, type, price, stock, description, img_url
+		const products = await db.many(`
+			SELECT id, type, productName, price, stock, description, img_url
 			FROM products
 			ORDER BY id ASC
 		`);
