@@ -23,14 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
-/src/generated/prisma
 .env
-
-# Local secrets and generated DB migrations
-prisma/migrations/
 
 # Requested package and lock files
 pnpm-lock.yaml
 yarn.lock
 
-/generated/prisma
+
