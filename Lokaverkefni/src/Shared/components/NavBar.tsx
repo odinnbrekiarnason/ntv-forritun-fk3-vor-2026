@@ -5,9 +5,9 @@ export function NavBar() {
 	const { signOut } = useClerk();
 
 	return (
-		<nav className="w-full border-b border-gray-300 bg-white/90 px-6 py-4 backdrop-blur">
+		<nav className="w-full border-b border-black-300 border-blue-700 px-6 py-4" >
 			<div className="mx-auto flex w-full max-w-7xl items-center justify-between">
-				<h1 className="text-lg font-semibold tracking-tight">Online Store</h1>
+				<h1 className="text-lg font-semibold tracking-tight text-white">Online Store</h1>
 
 				<div className="flex items-center gap-3">
 					{!isSignedIn && (

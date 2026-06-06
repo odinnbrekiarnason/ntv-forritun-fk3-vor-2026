@@ -49,7 +49,7 @@ SELECT
   999.99,
   15,
   'Powerful AMD Radeon graphics card',
-  'https://placehold.co/1200x800/991b1b/ffffff?text=Radeon+RX+7900+XTX',
+  'https://www.amd.com/content/dam/amd/en/images/products/graphics/2648997-amd-radeon-7900xtx.jpg',
   p.id
 FROM producers p
 WHERE p.name = 'AMD'
@@ -60,7 +60,7 @@ SELECT
   699.99,
   20,
   '16-core 32-thread flagship CPU',
-  'https://placehold.co/1200x800/1d4ed8/ffffff?text=Ryzen+9+7950X',
+  'https://www.amd.com/content/dam/amd/en/images/products/cpu/ryzen-9-7950x/ryzen-9-7950x-product-gallery-thumbnail-267-1.jpg',
   p.id
 FROM producers p
 WHERE p.name = 'AMD'
@@ -71,7 +71,7 @@ SELECT
   599.99,
   25,
   '24-core hybrid architecture processor',
-  'https://placehold.co/1200x800/374151/ffffff?text=Core+i9-13900K',
+  'https://www.intel.com/content/dam/www/public/us/en/images/product/13th-gen-core/i9-13900k-processor-hero-600.jpg',
   p.id
 FROM producers p
 WHERE p.name = 'Intel'
@@ -82,7 +82,7 @@ SELECT
   399.99,
   10,
   'Premium Z790 gaming motherboard',
-  'https://placehold.co/1200x800/111827/ffffff?text=ROG+Strix+Z790',
+  'https://www.asus.com/media/global/products/ROG_Strix_Z790/ROG_Strix_Z790_Product_Image.jpg',
   p.id
 FROM producers p
 WHERE p.name = 'ASUS'
@@ -93,7 +93,7 @@ SELECT
   499.99,
   15,
   'High-end X670E motherboard for AMD Ryzen',
-  'https://placehold.co/1200x800/0f766e/ffffff?text=X670+AORUS',
+  'https://www.gigabyte.com/Motherboard/X670-AORUS-ELITE-AX-rev-10#kf',
   p.id
 FROM producers p
 WHERE p.name = 'GIGABYTE'
