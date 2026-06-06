@@ -7,7 +7,7 @@ export const ProductSchema = z.object({
   stock: z.number().nonnegative().nonoptional('stock Required'),
   description: z.string().nonempty().nonoptional('description Required'),
   img_url: z.string().nonempty().nonoptional('img_url Required'),
-  productName: z.string().nonempty().nonoptional('productName Required'),
+  product_name: z.string().nonempty().nonoptional('product_name Required'),
 });
 
 export type Product = z.infer<typeof ProductSchema>;

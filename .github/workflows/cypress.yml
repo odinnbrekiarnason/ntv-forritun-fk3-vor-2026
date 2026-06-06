@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: skilaverkefni-2/team_task_hub_testing
+        working-directory: Lokaverkefni
 
     steps:
       - name: Checkout repository

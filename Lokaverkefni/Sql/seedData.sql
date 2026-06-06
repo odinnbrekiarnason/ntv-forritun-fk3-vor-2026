@@ -1,3 +1,5 @@
+BEGIN;
+
 INSERT INTO category (name) VALUES
 ('GPU'),
 ('CPU'),
@@ -21,197 +23,167 @@ INSERT INTO producers (name) VALUES
 ('be quiet!'),
 ('DEEPCOOL');
 
-INSERT INTO products (type, productName, price, stock, description, img_url, producer_id, category_id)
+INSERT INTO products (
+  type,
+  product_name,
+  price,
+  stock,
+  description,
+  img_url,
+  producer_id
+)
 SELECT
-    'GPU',
-    'GeForce RTX 4090',
-    1499.99,
-    10,
-    'High-end gaming graphics card with 24GB GDDR6X',
-    'http://localhost:3000/images/rtx4090.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'NVIDIA' AND c.name = 'GPU'
-
+  'GPU',
+  'GeForce RTX 4090',
+  1499.99,
+  10,
+  'High-end gaming graphics card with 24GB GDDR6X',
+  'https://images.nvidia.com/aem-dam/Solutions/geforce/ada/rtx-4090/geforce-rtx-4090-product-gallery-thumbnail-267-1.jpg',
+  p.id
+FROM producers p
+WHERE p.name = 'NVIDIA'
 UNION ALL
-
 SELECT
-    'GPU',
-    'Radeon RX 7900 XTX',
-    999.99,
-    15,
-    'Powerful AMD Radeon graphics card',
-    'http://localhost:3000/images/rx7900xtx.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'AMD' AND c.name = 'GPU'
-
+  'GPU',
+  'Radeon RX 7900 XTX',
+  999.99,
+  15,
+  'Powerful AMD Radeon graphics card',
+  'https://placehold.co/1200x800/991b1b/ffffff?text=Radeon+RX+7900+XTX',
+  p.id
+FROM producers p
+WHERE p.name = 'AMD'
 UNION ALL
-
 SELECT
-    'CPU',
-    'Ryzen 9 7950X',
-    699.99,
-    20,
-    '16-core 32-thread flagship CPU',
-    'http://localhost:3000/images/ryzen97950x.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'AMD' AND c.name = 'CPU'
-
+  'CPU',
+  'Ryzen 9 7950X',
+  699.99,
+  20,
+  '16-core 32-thread flagship CPU',
+  'https://placehold.co/1200x800/1d4ed8/ffffff?text=Ryzen+9+7950X',
+  p.id
+FROM producers p
+WHERE p.name = 'AMD'
 UNION ALL
-
 SELECT
-    'CPU',
-    'Core i9-13900K',
-    599.99,
-    25,
-    '24-core hybrid architecture processor',
-    'http://localhost:3000/images/i913900k.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'Intel' AND c.name = 'CPU'
-
+  'CPU',
+  'Core i9-13900K',
+  599.99,
+  25,
+  '24-core hybrid architecture processor',
+  'https://placehold.co/1200x800/374151/ffffff?text=Core+i9-13900K',
+  p.id
+FROM producers p
+WHERE p.name = 'Intel'
 UNION ALL
-
 SELECT
-    'Motherboard',
-    'ROG Strix Z790',
-    399.99,
-    10,
-    'Premium Z790 gaming motherboard',
-    'http://localhost:3000/images/rogstrixz790.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'ASUS' AND c.name = 'Motherboard'
-
+  'Motherboard',
+  'ROG Strix Z790',
+  399.99,
+  10,
+  'Premium Z790 gaming motherboard',
+  'https://placehold.co/1200x800/111827/ffffff?text=ROG+Strix+Z790',
+  p.id
+FROM producers p
+WHERE p.name = 'ASUS'
 UNION ALL
-
 SELECT
-    'Motherboard',
-    'X670 AORUS',
-    499.99,
-    15,
-    'High-end X670E motherboard for AMD Ryzen',
-    'http://localhost:3000/images/x670aorus.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'GIGABYTE' AND c.name = 'Motherboard'
-
+  'Motherboard',
+  'X670 AORUS',
+  499.99,
+  15,
+  'High-end X670E motherboard for AMD Ryzen',
+  'https://placehold.co/1200x800/0f766e/ffffff?text=X670+AORUS',
+  p.id
+FROM producers p
+WHERE p.name = 'GIGABYTE'
 UNION ALL
-
 SELECT
-    'RAM',
-    'Corsair Vengeance 16GB DDR4',
-    89.99,
-    20,
-    '16GB (2x8GB) DDR4 3200MHz',
-    'http://localhost:3000/images/corsairvengeance.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'Corsair' AND c.name = 'RAM'
-
+  'RAM',
+  'Corsair Vengeance 16GB DDR4',
+  89.99,
+  20,
+  '16GB (2x8GB) DDR4 3200MHz',
+  'https://assets.corsair.com/image/upload/c_pad,q_85,h_926,w_926,f_auto/products/Memory/CMW16GX4M2C3200C16/Gallery/Vengeance_RGB_Pro_01.webp',
+  p.id
+FROM producers p
+WHERE p.name = 'Corsair'
 UNION ALL
-
 SELECT
-    'RAM',
-    'G.Skill Trident Z5 32GB DDR5',
-    199.99,
-    15,
-    '32GB (2x16GB) DDR5 6000MHz RGB',
-    'http://localhost:3000/images/gskilltrident.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'G.Skill' AND c.name = 'RAM'
-
+  'RAM',
+  'G.Skill Trident Z5 32GB DDR5',
+  199.99,
+  15,
+  '32GB (2x16GB) DDR5 6000MHz RGB',
+  'https://placehold.co/1200x800/7c3aed/ffffff?text=G.Skill+Trident+Z5+32GB',
+  p.id
+FROM producers p
+WHERE p.name = 'G.Skill'
 UNION ALL
-
 SELECT
-    'Storage',
-    'Samsung 970 EVO 1TB',
-    149.99,
-    10,
-    '1TB NVMe PCIe 3.0 SSD',
-    'http://localhost:3000/images/samsung970evo.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'Samsung' AND c.name = 'Storage'
-
+  'Storage',
+  'Samsung 970 EVO 1TB',
+  149.99,
+  10,
+  '1TB NVMe PCIe 3.0 SSD',
+  'https://placehold.co/1200x800/14532d/ffffff?text=Samsung+970+EVO+1TB',
+  p.id
+FROM producers p
+WHERE p.name = 'Samsung'
 UNION ALL
-
 SELECT
-    'Storage',
-    'WD Blue 2TB HDD',
-    79.99,
-    15,
-    '2TB 3.5" SATA HDD',
-    'http://localhost:3000/images/wdblue2tb.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'Western Digital' AND c.name = 'Storage'
-
+  'Storage',
+  'WD Blue 2TB HDD',
+  79.99,
+  15,
+  '2TB 3.5" SATA HDD',
+  'https://placehold.co/1200x800/1e3a8a/ffffff?text=WD+Blue+2TB+HDD',
+  p.id
+FROM producers p
+WHERE p.name = 'Western Digital'
 UNION ALL
-
 SELECT
-    'Power Supply',
-    'ASRock 850W Gold',
-    129.99,
-    10,
-    '850W 80+ Gold Fully Modular',
-    'http://localhost:3000/images/asrock850w.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'ASRock' AND c.name = 'Power Supply'
-
+  'Power Supply',
+  'ASRock 850W Gold',
+  129.99,
+  10,
+  '850W 80+ Gold Fully Modular',
+  'https://placehold.co/1200x800/b45309/ffffff?text=ASRock+850W+Gold',
+  p.id
+FROM producers p
+WHERE p.name = 'ASRock'
 UNION ALL
-
 SELECT
-    'Power Supply',
-    'be quiet! 750W Platinum',
-    149.99,
-    15,
-    '750W 80+ Platinum Fully Modular',
-    'http://localhost:3000/images/bequiet750w.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'be quiet!' AND c.name = 'Power Supply'
-
+  'Power Supply',
+  'be quiet! 750W Platinum',
+  149.99,
+  15,
+  '750W 80+ Platinum Fully Modular',
+  'https://placehold.co/1200x800/111827/ffffff?text=be+quiet%21+750W+Platinum',
+  p.id
+FROM producers p
+WHERE p.name = 'be quiet!'
 UNION ALL
-
 SELECT
-    'CPU Cooler',
-    'be quiet! Dark Rock Pro 4',
-    89.99,
-    10,
-    'Dual-tower air cooler',
-    'http://localhost:3000/images/darkrockpro4.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'be quiet!' AND c.name = 'CPU Cooler'
-
+  'CPU Cooler',
+  'be quiet! Dark Rock Pro 4',
+  89.99,
+  10,
+  'Dual-tower air cooler',
+  'https://placehold.co/1200x800/334155/ffffff?text=Dark+Rock+Pro+4',
+  p.id
+FROM producers p
+WHERE p.name = 'be quiet!'
 UNION ALL
-
 SELECT
-    'CPU Cooler',
-    'DeepCool Castle 360',
-    159.99,
-    15,
-    '360mm AIO liquid cooler',
-    'http://localhost:3000/images/deepcoolcastle360.jpg',
-    p.id,
-    c.id
-FROM producers p, category c 
-WHERE p.name = 'DEEPCOOL' AND c.name = 'CPU Cooler';
+  'CPU Cooler',
+  'DeepCool Castle 360',
+  159.99,
+  15,
+  '360mm AIO liquid cooler',
+  'https://placehold.co/1200x800/0891b2/ffffff?text=DeepCool+Castle+360',
+  p.id
+FROM producers p
+WHERE p.name = 'DEEPCOOL';
+
+COMMIT;
