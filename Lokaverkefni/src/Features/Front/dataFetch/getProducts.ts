@@ -2,7 +2,7 @@ import { APIEndpoints } from "@/Navigation";
 import type { Product } from "@/Shared/Schemas/ProductsSchema";
 
 
-export const getProductsFrontend = async (): Promise<Product[] | undefined> => {
+export const getAllProductsFrontend = async (): Promise<Product[] | undefined> => {
   try {
     const response = await fetch(APIEndpoints.PRODUCTS);
 

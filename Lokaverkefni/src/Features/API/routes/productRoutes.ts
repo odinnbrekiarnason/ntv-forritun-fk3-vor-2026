@@ -1,7 +1,7 @@
 import express from "express";
 import { errorHandler } from "../middleware/APIErrorHandler";
-import { getAllProducts } from "../controllers/allProducts";
-import { getProductById } from "../controllers/oneProduct";
+import { getAllProducts } from "../controllers/productCTRL/allProducts";
+import { getProductById } from "../controllers/productCTRL/oneProduct";
 
 const router = express.Router();
 

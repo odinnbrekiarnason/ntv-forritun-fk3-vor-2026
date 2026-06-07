@@ -9,8 +9,8 @@ export const getProductById = async(req: Request, res: Response, next: NextFunct
       res.status(403).json({ error: "Invalid product ID" });
       next();
     } else {
-      const parsed = parseInt(prev, 10);
-      const result = await pool.oneOrNone('Select * from products where id = $1', [parsed]);
+      
+      const result = await pool.oneOrNone('Select * from products where id = $1', [prev]);
 
       if(!result) {
         res.status(404).json({error: "Product not found"});

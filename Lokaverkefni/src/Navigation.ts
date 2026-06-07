@@ -6,5 +6,6 @@ export const Routes = {
 }
 
 export const APIEndpoints = {
-  PRODUCTS: "http://localhost:3000/api/products"
+  PRODUCTS: "/api/products",
+  USER: "/api/profiles/:userId"
 }

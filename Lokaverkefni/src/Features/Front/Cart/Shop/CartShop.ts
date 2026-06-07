@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { CartShopType } from '../CartSchema/cartSchema';
+import type { CartItemType, CartShopType } from '../CartSchema/cartSchema';
 import { useUser } from '@clerk/react';
 
 const getUserId = useUser()
@@ -11,9 +11,12 @@ export const UseCartShop = create<CartShopType>((set) => ({
 
 
   addToCart: (productId, quantity) => {
+    const item = { productId, quantity };
   },
 
-  changeQuantity: (productId) => {},
+  changeQuantity: (productId) => {
+    
+  },
 
   clearCart: () => {
     set(state => ({ ...state, items: [] }));

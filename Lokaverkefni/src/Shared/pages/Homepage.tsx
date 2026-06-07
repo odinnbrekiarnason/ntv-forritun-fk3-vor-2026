@@ -1,29 +1,27 @@
-import { Card, CardContent, CardAction, CardTitle, CardHeader } from "@/Shared/components/ui/card";
-import { Show, SignInButton, SignUpButton } from "@clerk/react";
+import { Card, CardContent, CardTitle, CardHeader } from "@/Shared/components/ui/card";
+import { Routes } from "@/Navigation";
+import { ShoppingCart } from "lucide-react";
 import stockImg from "/images/stockImg.png" ;
 import { useNavigate } from "react-router";
 
 export function HomePage() {
   const nav = useNavigate();
+
   return (
-      <Card className="w-full h-auto bg-transparent border-2 border-solid border-gray-300">
-        <CardAction className="flex gap-3 p-6 absolute top-0 right-90">
-
-          <Show when={"signed-out"}>
-            <SignUpButton mode="modal" />
-              <div className="h-3"/>
-            <SignInButton mode='modal'/>
-          </Show>
-
-          <Show when={"signed-in"}>
-            <button onClick={() => nav("/products")} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">
-              View Products
-            </button>
-          </Show>
-        </CardAction>
-
+      <Card className="w-full h-auto bg-transparent">
         <div className="h-10"/>
+        
         <CardHeader className="flex flex-col items-center gap-4">
+          <div className="flex w-full justify-end">
+            <button
+              type="button"
+              onClick={() => nav(Routes.CART)}
+              aria-label="Open cart"
+              className="rounded-full border border-slate-300 bg-white p-2 text-slate-700 shadow-sm transition hover:border-slate-500 hover:bg-slate-50"
+            >
+              <ShoppingCart className="h-5 w-5" />
+            </button>
+          </div>
           <CardTitle className="text-4xl h-12">Welcome to my online store!</CardTitle>
 
           <img src={stockImg} alt="Stock Image" className="w-100 h-100 mt-4 rounded-md object-cover" />
