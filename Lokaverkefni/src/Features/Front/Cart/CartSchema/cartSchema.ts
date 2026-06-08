@@ -16,9 +16,12 @@ export const cartSchema = z.object({
 })
 
 export interface CartShopType {
+  cartId: string,
   userId: string,
   items: CartItemType[],
   addToCart: (productId: string, quantity: number) => void;
-  changeQuantity: (productId: string) => void;
+  changeQuantity: (productId: string, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  completePurchase: () => void;
   clearCart: () => void;
 }
