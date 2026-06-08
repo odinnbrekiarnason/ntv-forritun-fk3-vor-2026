@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ntv-forritun-fk3-vor-2026",
+  "compatibility_date": "2026-06-08",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "Lokaverkefni"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
