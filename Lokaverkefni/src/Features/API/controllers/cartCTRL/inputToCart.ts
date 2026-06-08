@@ -1,21 +1,26 @@
 import type { Request, Response, NextFunction } from "express";
 import pool from "@config/db";
+import { UseCartShop } from "@/Features/Front/Cart/Shop/CartShop";
 
 
 export const inputToCart = (_req: Request, _res: Response, _next: NextFunction) => {
-  try{
-    const { productId, quantity } = _req.body;
+  const cartShop = UseCartShop();
 
-    if(!productId || typeof productId !== "string" || !quantity || typeof quantity !== "number") {
-      _res.status(400).json({error: "Invalid input"});
+  try {
+    const items = cartShop.items;
+    const user = cartShop.userId;
+    const productId = items.map(item => item.productId);
+    const quantity = items.map(item => item.quantity);
+
+    const result = pool.none("INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *", [user, productId, quantity]);
+
+    if (!result) {
+      console.log('FUCKED UP')
       _next();
     } else {
-      
-      
-      _res.status(200).json({message: "Item added to cart"});
+      _res.status(200).json({ message: "Item added to cart" });
     }
-    
-  } catch(e: any) {
+  } catch (e: any) {
     console.log(e.message);
     _next(e);
   }

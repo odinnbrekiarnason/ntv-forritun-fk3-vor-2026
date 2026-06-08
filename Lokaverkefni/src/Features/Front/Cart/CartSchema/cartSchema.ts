@@ -1,24 +1,12 @@
-import z from "zod";
-
-export interface CartItemType {
+export interface CartItem {
   productId: string;
   quantity: number;
-} 
-
-export const cartSchema = z.object({
-  userId: z.string().nonempty(),
-  items: z.array(
-    z.object({
-      productId: z.string().nonempty(),
-      quantity: z.number().min(1)
-    })
-  )
-})
+}
 
 export interface CartShopType {
   cartId: string,
   userId: string,
-  items: CartItemType[],
+  items: CartItem[],
   addToCart: (productId: string, quantity: number) => void;
   changeQuantity: (productId: string, quantity: number) => void;
   removeFromCart: (productId: string) => void;
