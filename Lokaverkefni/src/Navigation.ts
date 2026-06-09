@@ -7,5 +7,17 @@ export const Routes = {
 
 export const APIEndpoints = {
   PRODUCTS: "/api/products",
-  USER: "/api/profiles/:userId"
+  USER: "/api/user",
+  ORDER: "/api/order",
+  CART: "/api/cart"
 }
+
+export const getApiUrl = (path: string) => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
+
+  if (!baseUrl) {
+    return path;
+  }
+
+  return `${baseUrl.replace(/\/$/, "")}${path}`;
+};

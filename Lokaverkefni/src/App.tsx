@@ -5,16 +5,10 @@ import { StorePage } from './Features/Front/Shared/pages/StorePage'
 import { NavBar } from './Features/Front/Shared/navbar/NavBar'
 import { ShoppingCart } from './Features/Front/Cart/components/ShoppingCart'
 import { UserProfile, useUser } from '@clerk/react'
-//import { useEffect } from 'react'
 
 function App() {
   const user = useUser().isLoaded;
-  /* if(user) {
-    useEffect(() => {
-      
-    })
-  } */
-
+  
   return (
     <div className="App">
       <NavBar />

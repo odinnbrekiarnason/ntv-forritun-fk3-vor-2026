@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { Product } from "../Schemas/ProductsSchema";
 import { ProductCard } from "./pageComponents/productCard";
 
-const categories = ["All", "GPU", "CPU", "RAM", "Storage"] as const;
+const categories = ["All", "GPU", "CPU", "RAM", "Storage", "Power Supply", "CPU Cooler"] as const;
 
 export function StorePage() {
   const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>(

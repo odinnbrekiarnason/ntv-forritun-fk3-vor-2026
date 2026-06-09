@@ -1,4 +1,4 @@
-name: CI
+name: RAILWAY_CI
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  PROJECT: "lesson8"
+  PROJECT: "lokaverkefni"
 
 jobs:
   build:

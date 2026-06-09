@@ -1,10 +1,10 @@
-import { APIEndpoints } from "@/Navigation";
+import { APIEndpoints, getApiUrl } from "@/Navigation";
 import type { Product } from "@/Features/Front/Shared/Schemas/ProductsSchema";
 
 
 export const getAllProductsFrontend = async(): Promise<Product[] | undefined> => {
   try {
-    const response = await fetch(APIEndpoints.PRODUCTS);
+    const response = await fetch(getApiUrl(APIEndpoints.PRODUCTS));
 
     if (!response.ok) {
       throw new Error(`Failed to fetch products (${response.status})`);
@@ -26,7 +26,7 @@ export const getAllProductsFrontend = async(): Promise<Product[] | undefined> =>
 
 export const getProductByIdFrontend = async(id: string): Promise<Product | undefined> => {
   try {
-    const response = await fetch(`${APIEndpoints.PRODUCTS}/${id}`);
+    const response = await fetch(getApiUrl(`${APIEndpoints.PRODUCTS}/${id}`));
     if(!response.ok) {
       return undefined;
     }

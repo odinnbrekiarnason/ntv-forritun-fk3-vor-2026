@@ -1,13 +1,11 @@
 import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
-import { useUser } from '@clerk/react';
+import { useAuth, useUser } from '@clerk/react';
+import { postOrder } from '../../useAPI/post/postOrder';
 
-const getUserId = useUser()
-
-
-export const UseCartShop = create<CartShopType>((set) => ({
+export const UseCartShop = create<CartShopType>((set, get) => ({
   cartId: crypto.randomUUID(),
-  userId: getUserId.user?.id || "",
+  userId: "",
   items: [],
 
   addToCart: (productId, quantity) => {
@@ -31,8 +29,13 @@ export const UseCartShop = create<CartShopType>((set) => ({
     }));
   },
 
-  completePurchase: () => {
-
+  completePurchase: async() => {
+    const orderData = get().items;
+    const result = await postOrder(orderData, get().userId);
+    if(result) {
+      console.log("Order completed successfully:", result);
+      set((state) => ({ ...state, items: [] }));
+    }
   },
 
   clearCart: () => {

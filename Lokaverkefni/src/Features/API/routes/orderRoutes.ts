@@ -1,11 +1,10 @@
 import express from "express";
 import { errorHandler } from "../middleware/APIErrorHandler";
-import { getUserById, inputUserInDB } from "../controllers/userCTRL/userController";
+import { createOrder } from "../controllers/orderCTRL/orderController";
 
 const router = express.Router();
 
-router.post("/", inputUserInDB);
-router.get("/:userId", getUserById);
+router.post("/", createOrder);
 
 router.use(errorHandler);
 

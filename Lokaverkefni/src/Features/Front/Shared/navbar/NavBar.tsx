@@ -1,27 +1,22 @@
 import { useAuth, useClerk} from "@clerk/react";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ShoppingCartButton } from "../components/shoppingCartButton";
 import { ProductPageButton } from "../components/productPageButton";
 import { ShoppingCart } from "../../Cart/components/ShoppingCart";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export function NavBar() {
 	const { isSignedIn } = useAuth();
 	const { signOut, openSignIn, openSignUp} = useClerk();
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isSignedIn) {
-      return;
-    }
-    
-  }, [isSignedIn])
+  const nav = useNavigate();
 
 	return (
 		<>
 		<nav className="w-full h-20 bg-accent px-4 py-2" >
 			<div className="relative mx-auto flex h-full w-full max-w-7xl items-center justify-end">
-				<h1 className="absolute left-1/2 top-0.5 -translate-x-1/2 -translate-y-1/2 text-xs font-semibold leading-none tracking-tight text-white">Online Store</h1>
+				<h1 className="absolute left-1/2 top-0.5 -translate-x-1/2 -translate-y-1/2 text-xs font-semibold leading-none tracking-tight text-white" onClick={() => nav("/")}>Online Store</h1>
 
 				<div className="flex items-center gap-3">
 					{!isSignedIn && (
@@ -79,6 +74,7 @@ export function NavBar() {
 				</div>
 			</div>
 		)}
+    <Outlet />
 		</>
 	);
 }

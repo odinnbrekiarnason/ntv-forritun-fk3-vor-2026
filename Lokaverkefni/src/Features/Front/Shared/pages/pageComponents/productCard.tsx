@@ -1,7 +1,14 @@
 import type { Product } from "@/Features/Front/Shared/Schemas/ProductsSchema";
 import Stock_noPhoto from "/images/Stock_noPhoto.png"
+import { UseCartShop } from "@/Features/Front/Cart/Shop/CartShop";
+import { useNavigate } from "react-router";
+import { useAuth } from "@clerk/react";
 
 export function ProductCard({ product }: { product: Product }) {
+  const cartShop = UseCartShop();
+  const nav = useNavigate();
+  const auth = useAuth();
+
   return (
     <article
       key={product.id}
@@ -33,15 +40,20 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="flex gap-2">
-          <button
+          {auth.isSignedIn &&
+           <button
             type="button"
             className="flex-1 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
+            onClick={() => cartShop.addToCart(product.id, 1)}
           >
             Add To Cart
           </button>
+          }
+         
           <button
             type="button"
             className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500"
+            onClick={() => {nav(`/products/${product.id}`)}}
           >
             Details
           </button>
