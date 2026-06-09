@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
-import { useAuth, useUser } from '@clerk/react';
 import { postOrder } from '../../useAPI/post/postOrder';
 
 export const UseCartShop = create<CartShopType>((set, get) => ({
