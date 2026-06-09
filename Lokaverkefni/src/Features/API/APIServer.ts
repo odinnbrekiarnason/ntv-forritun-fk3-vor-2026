@@ -15,6 +15,6 @@ API.use((request, _response, next) => {
   next();
 });
 
-API.listen(PORT, () => {
+API.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
