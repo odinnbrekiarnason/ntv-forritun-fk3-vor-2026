@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from "express";
 import productRoutes from "./routes/productRoutes";
 import orderRoutes from "./routes/orderRoutes";
@@ -29,6 +30,10 @@ API.use((request, response, next) => {
 	}
 
 	next();
+});
+
+API.get("/", (_request, response) => {
+	response.status(200).json({ status: "ok" });
 });
 
 API.get("/api/health", (_request, response) => {
