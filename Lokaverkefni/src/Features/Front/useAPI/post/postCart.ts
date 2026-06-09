@@ -33,4 +33,3 @@ export const updateCart = async( userId: string, productId: string, quantity: nu
     throw error;
   }
 }
-
