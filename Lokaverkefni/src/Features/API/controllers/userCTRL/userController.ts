@@ -15,9 +15,8 @@ export const inputUserInDB = async (_req: Request, _res: Response, _next: NextFu
 
       if (existingUser) {
         _res.status(403).json({ error: "User already exists in database" });
-        _next();
       } else {
-        await pool.none('Insert into users (id, username, email, shop_role) values ($1, $2, $3, $4)', [id, username, email, "user"]);
+        await pool.none('Insert into users (id, username, email) values ($1, $2, $3)', [id, username, email]);
         _res.status(200).json({ message: "User inserted into database" });
       }
     }
@@ -36,9 +35,9 @@ export const getUserById = async (_req: Request, _res: Response, _next: NextFunc
       _next();
     } else {
       const result = await pool.oneOrNone('Select * from users where id = $1', [userId]);
+      
       if (!result) {
-        _res.status(404).json({ error: "User not found" });
-        _next();
+        _res.status(404).json({ error: "User not found"});
       } else {
         _res.status(200).json(result);
       }

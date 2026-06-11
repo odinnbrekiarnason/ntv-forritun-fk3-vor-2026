@@ -36,10 +36,10 @@ create table products (
 );
 
 create table users (
-  id uuid primary key default gen_random_uuid(),
+  id varchar(100) primary key,
   userName varchar(255) not null,
   email varchar(50) not null unique,
-  shop_role varchar(255) not null
+  shop_role varchar(255) not null default 'member'
 );
 
 create table orders (
@@ -49,7 +49,7 @@ create table orders (
   created_at timestamp without time zone default current_timestamp,
   finished_at timestamp without time zone,
 
-  user_id uuid,
+  user_id varchar(100),
   constraint fk_user_id foreign key (user_id) references users(id) on delete cascade
 );
 
@@ -57,7 +57,7 @@ create table cart (
   id uuid primary key default gen_random_uuid(),
   total_price decimal(10, 2) default 0,
 
-  user_id uuid,
+  user_id varchar(100),
   constraint fk_user_id foreign key (user_id) references users(id) on delete cascade,
   constraint uq_cart_user unique (user_id)
 );

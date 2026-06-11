@@ -9,7 +9,22 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
 
   addToCart: (productId, quantity) => {
     const item = { productId, quantity };
-    set(state => ({ ...state, items: [...state.items, item] }));
+    set(state => {
+      const existingItem = state.items.find(i => i.productId === productId);
+      if (existingItem) {
+        return {
+          ...state,
+          items: state.items.map(i =>
+            i.productId === productId ? { ...i, quantity: i.quantity + quantity } : i
+          )
+        };
+      } else {
+        return {
+          ...state,
+          items: [...state.items, item]
+        };
+      }
+    })
   },
 
   changeQuantity: (productId, quantity) => {

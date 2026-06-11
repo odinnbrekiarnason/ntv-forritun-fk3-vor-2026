@@ -36,20 +36,17 @@ export function StorePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f6f8ff_0%,#edf4ff_45%,#f5f7ff_100%)] px-4 py-8 text-left sm:px-6 lg:px-10">
+    <div className="min-h-screen px-4 py-8 text-left sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        <header className="rounded-3xl border border-slate-200/70 bg-white/70 p-6 shadow-lg shadow-slate-200/40 backdrop-blur sm:p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+        <header className="rounded-3xl border border-slate-200/70 bg-gray-700/50 p-6 shadow-lg shadow-slate-200/40 sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white">
             Custom PC Parts
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Build Your Next Rig
           </h1>
-          <p className="mt-3 max-w-2xl text-sm text-slate-600 sm:text-base">
-            A basic storefront layout with categories and product cards. Hook your
-            backend data into this later.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="mt-6 flex flex-wrap gap-2 text-2xl">
+            Categories:
             {categories.map((category) => {
               const isActive = activeCategory === category;
 

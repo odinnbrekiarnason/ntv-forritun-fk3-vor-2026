@@ -15,8 +15,8 @@ export function NavBar() {
 	return (
 		<>
 		<nav className="w-full h-20 bg-accent px-4 py-2" >
-			<div className="relative mx-auto flex h-full w-full max-w-7xl items-center justify-end">
-				<h1 className="absolute left-1/2 top-0.5 -translate-x-1/2 -translate-y-1/2 text-xs font-semibold leading-none tracking-tight text-white hover:cursor-pointer" onClick={() => nav("/")}>Online Store</h1>
+			<div className="relative mx-auto flex h-full w-full max-w-7xl items-center justify-between">
+				<h1 className="h-9" onClick={() => nav("/")}>Computer Parts</h1>
 
 				<div className="flex items-center gap-3">
 					{!isSignedIn && (
@@ -39,6 +39,13 @@ export function NavBar() {
 					)}
 					{isSignedIn && (
             <>
+            <button
+              type="button"
+              className="rounded-md bg-black px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800"
+              onClick={() => nav("/profile")}
+              >
+                Profile
+              </button>
 						  <button
 						  	type="button"
 						  	onClick={() => signOut({ redirectUrl: "/" })}
@@ -70,7 +77,7 @@ export function NavBar() {
 					>
 						<X className="h-4 w-4" />
 					</button>
-					<ShoppingCart />
+					<ShoppingCart onCheckout={() => setIsCartOpen(false)} />
 				</div>
 			</div>
 		)}
