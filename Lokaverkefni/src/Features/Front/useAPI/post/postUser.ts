@@ -15,7 +15,7 @@ export const postUserToDB = async(user: {clerk_uid: string, username: string, em
 }
 
 type LoginUser = {
-  clerk_uid: string;
+  id: string;
   username?: string | null;
   firstName?: string | null;
   lastName?: string | null;
@@ -49,7 +49,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
       return;
     }
 
-    const storageKey = `user_synced_${user.clerk_uid}`;
+    const storageKey = `user_synced_${user.id}`;
     if (sessionStorage.getItem(storageKey)) {
       return;
     }
@@ -57,7 +57,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
     const saveUser = async () => {
       try {
         await postUserToDB({
-          clerk_uid: user.clerk_uid,
+          clerk_uid: user.id,
           username: buildUsername(user),
           email,
         });
