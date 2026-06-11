@@ -1,7 +1,7 @@
 import { APIEndpoints, getApiUrl } from "@/Navigation";
 import { useEffect } from "react";
 
-export const postUserToDB = async(user: {clerk_uid: string, username: string, email: string}) => {
+export const postUserToDB = async(user: {clerk_uid: string, username: string, email: string, shop_role: string}) => {
   try{
     const result = await fetch(getApiUrl(APIEndpoints.USER), {
       method: "post", 
@@ -60,6 +60,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
           clerk_uid: user.id,
           username: buildUsername(user),
           email,
+          shop_role: "member"
         });
         sessionStorage.setItem(storageKey, "true");
       } catch (error) {
