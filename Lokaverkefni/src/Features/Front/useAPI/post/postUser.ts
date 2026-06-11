@@ -1,7 +1,7 @@
 import { APIEndpoints, getApiUrl } from "@/Navigation";
 import { useEffect } from "react";
 
-export const postUserToDB = async(user: {id: string, username: string, email: string}) => {
+export const postUserToDB = async(user: {clerk_uid: string, username: string, email: string}) => {
   try{
     const result = await fetch(getApiUrl(APIEndpoints.USER), {
       method: "post", 
@@ -15,7 +15,7 @@ export const postUserToDB = async(user: {id: string, username: string, email: st
 }
 
 type LoginUser = {
-  id: string;
+  clerk_uid: string;
   username?: string | null;
   firstName?: string | null;
   lastName?: string | null;
@@ -49,7 +49,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
       return;
     }
 
-    const storageKey = `user_synced_${user.id}`;
+    const storageKey = `user_synced_${user.clerk_uid}`;
     if (sessionStorage.getItem(storageKey)) {
       return;
     }
@@ -57,7 +57,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
     const saveUser = async () => {
       try {
         await postUserToDB({
-          id: user.id,
+          clerk_uid: user.clerk_uid,
           username: buildUsername(user),
           email,
         });
