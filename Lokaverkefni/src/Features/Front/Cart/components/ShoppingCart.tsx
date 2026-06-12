@@ -6,6 +6,7 @@ import { getProductByIdFrontend } from "../../useAPI/get/getProducts";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import type { Product } from "../../Shared/Schemas/ProductsSchema";
+import { useUser } from "@clerk/react";
 
 type ShoppingCartProps = {
   onCheckout?: () => void;
@@ -13,9 +14,10 @@ type ShoppingCartProps = {
 
 export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
   const { items, clearCart } = UseCartShop();
-  const nav = useNavigate();
+  const { user } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [price, setPrice] = useState(0);
+  const nav = useNavigate();
 
   const calculatePrice = () => {
     let total = 0;
@@ -80,7 +82,7 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
 				<CardFooter className="flex-col items-stretch gap-2 border-t border-slate-100 bg-white">
 					<button 
           className="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
-          onClick={() => {
+          onClick={async () => {
             onCheckout?.();
             nav("/checkout");
           }}
@@ -88,10 +90,6 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
 						Checkout
 					</button>
 					<div className="mt-1 flex items-center justify-between text-xs text-slate-500">
-						<span className="flex items-center gap-1">
-							<Truck className="h-3.5 w-3.5" />
-							Free shipping over $200
-						</span>
 						<span className="flex items-center gap-1">
 							<ShieldCheck className="h-3.5 w-3.5" />
 							Secure checkout

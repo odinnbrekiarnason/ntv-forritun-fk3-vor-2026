@@ -2,8 +2,8 @@ import z from 'zod';
 
 export const OrderSchema = z.object({
   userId: z.string().nonempty('userId Required'),
-  items: z.array(z.object({
+  orderData: z.array(z.object({
     productId: z.string().nonempty('productId Required'),
-    quantity: z.number().nonnegative().nonoptional('quantity Required'),
-  })).nonempty('items Required'),
+    quantity: z.number().int().min(1, 'quantity Required'),
+  })).nonempty('orderData Required'),
 })

@@ -2,9 +2,10 @@ import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
 import { postOrder } from '../../useAPI/post/postOrder';
 
+
+
 export const UseCartShop = create<CartShopType>((set, get) => ({
   cartId: crypto.randomUUID(),
-  userId: "",
   items: [],
 
   addToCart: (productId, quantity) => {
@@ -25,6 +26,7 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
         };
       }
     })
+    sessionStorage.setItem("cart", JSON.stringify(get().items));
   },
 
   changeQuantity: (productId, quantity) => {
@@ -34,6 +36,7 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
         item.productId === productId ? { ...item, quantity } : item
       )
     }));
+    sessionStorage.setItem("cart", JSON.stringify(get().items));
   },
 
   removeFromCart: (productId) => {
@@ -41,18 +44,28 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
       ...state,
       items: state.items.filter(item => item.productId !== productId)
     }));
+    sessionStorage.setItem("cart", JSON.stringify(get().items));
   },
 
-  completePurchase: async() => {
+  completePurchase: async(userId: string) => {
+    if (!userId) {
+      console.error("Cannot complete purchase without userId");
+      return;
+    }
+
     const orderData = get().items;
-    const result = await postOrder(orderData, get().userId);
+    const result = await postOrder(orderData, userId);
     if(result) {
       console.log("Order completed successfully:", result);
       set((state) => ({ ...state, items: [] }));
+      sessionStorage.setItem("cart", JSON.stringify(get().items));
+    } else {
+      console.error("Failed to complete order");
     }
   },
 
   clearCart: () => {
     set(state => ({ ...state, items: [] }));
+    sessionStorage.setItem("cart", JSON.stringify(get().items));
   }
 }))

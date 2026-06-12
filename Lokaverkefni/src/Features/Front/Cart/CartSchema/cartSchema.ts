@@ -5,11 +5,10 @@ export interface CartItem {
 
 export interface CartShopType {
   cartId: string,
-  userId: string,
   items: CartItem[],
   addToCart: (productId: string, quantity: number) => void;
   changeQuantity: (productId: string, quantity: number) => void;
   removeFromCart: (productId: string) => void;
-  completePurchase: () => void;
+  completePurchase: (userId: string) => Promise<void>;
   clearCart: () => void;
 }

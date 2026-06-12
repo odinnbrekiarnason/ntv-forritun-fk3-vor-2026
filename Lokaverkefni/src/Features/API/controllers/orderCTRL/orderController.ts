@@ -25,7 +25,7 @@ export const createOrder = async (_req: Request, _res: Response, _next: NextFunc
       }
     }
 
-    const userExists = await pool.oneOrNone("select id from users where id = $1", [userId]);
+    const userExists = await pool.oneOrNone("select clerk_uid from users where clerk_uid = $1", [userId]);
     if (!userExists) {
       _res.status(404).json({ error: "User not found" });
       return;
@@ -65,14 +65,6 @@ export const createOrder = async (_req: Request, _res: Response, _next: NextFunc
       await t.none(
         "update orders set total_price = $1, finished_at = current_timestamp where id = $2",
         [total.total, newOrder.id],
-      );
-
-      await t.none(
-        `
-        delete from cart_items
-        where cart_id in (select id from cart where user_id = $1)
-        `,
-        [userId],
       );
 
       return { id: newOrder.id, totalPrice: total.total };
