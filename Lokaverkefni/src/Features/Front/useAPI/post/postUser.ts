@@ -50,6 +50,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
     }
 
     const firstName = user.firstName ?? email.split("@")[0];
+    console.log(firstName, 'this is the users first name');
 
     const storageKey = `user_synced_${user.id}`;
     if (sessionStorage.getItem(storageKey)) {
