@@ -56,7 +56,7 @@ export function ProductPage() {
   const reviewUrl = product.yt_review_url;
 
   return (
-    <section className="mx-auto mt-8 max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-md sm:p-8">
+    <section className="mx-auto mt-8 mb-16 min-h-screen max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-md sm:p-8">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="space-y-4">
           <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
@@ -87,8 +87,8 @@ export function ProductPage() {
           <h1 className="text-3xl font-bold text-slate-900">{product.product_name}</h1>
           <p className="text-2xl font-semibold text-slate-900">${product.price}</p>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-            <p>{product.description}</p>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-6">
+            <p className="text-base leading-relaxed text-slate-700">{product.description}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
