@@ -62,7 +62,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
         await postUserToDB({
           clerk_uid: user.id,
           username: buildUsername(user),
-          firstName,
+          firstName: firstName,
           email,
           shop_role: "member"
         });
