@@ -5,8 +5,9 @@ export const inputUserInDB = async (_req: Request, _res: Response, _next: NextFu
   try {
     const payload = _req.body?.user ?? _req.body;
     const { clerk_uid, username, email } = payload;
+    const firstname = (payload.firstname ?? payload.firstName ?? "").trim();
 
-    if (!clerk_uid || !username || !email) {
+    if (!clerk_uid || !username || !email || !firstname) {
       _res.status(403).json({ error: "User not authenticated" });
       _next();
     } else {
@@ -16,7 +17,10 @@ export const inputUserInDB = async (_req: Request, _res: Response, _next: NextFu
       if (existingUser) {
         _res.status(403).json({ error: "User already exists in database" });
       } else {
-        await pool.none('Insert into users (clerk_uid, username, email) values ($1, $2, $3)', [clerk_uid, username, email]);
+        await pool.none(
+          'Insert into users (clerk_uid, username, email, firstname) values ($1, $2, $3, $4)',
+          [clerk_uid, username, email, firstname],
+        );
         _res.status(200).json({ message: "User inserted into database" });
       }
     }
