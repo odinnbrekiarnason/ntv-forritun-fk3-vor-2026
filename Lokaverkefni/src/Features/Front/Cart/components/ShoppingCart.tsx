@@ -1,12 +1,12 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/Features/Front/Shared/components/ui/card";
-import { ShieldCheck, ShoppingCart as ShoppingCartIcon, Truck } from "lucide-react";
+import { ShieldCheck, ShoppingCart as ShoppingCartIcon } from "lucide-react";
 import { CartItem } from "./CartItem";
 import { UseCartShop } from "../Shop/CartShop";
 import { getProductByIdFrontend } from "../../useAPI/get/getProducts";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import type { Product } from "../../Shared/Schemas/ProductsSchema";
-import { useUser } from "@clerk/react";
+//import { useUser } from "@clerk/react";
 
 type ShoppingCartProps = {
   onCheckout?: () => void;
@@ -14,7 +14,7 @@ type ShoppingCartProps = {
 
 export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
   const { items, clearCart } = UseCartShop();
-  const { user } = useUser();
+  //const { user } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [price, setPrice] = useState(0);
   const nav = useNavigate();

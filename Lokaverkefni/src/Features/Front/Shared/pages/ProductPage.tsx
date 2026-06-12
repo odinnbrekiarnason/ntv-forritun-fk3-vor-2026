@@ -85,7 +85,7 @@ export function ProductPage() {
             {product.type}
           </p>
           <h1 className="text-3xl font-bold text-slate-900">{product.product_name}</h1>
-          <p className="text-2xl font-semibold text-slate-900">${product.price.toFixed(2)}</p>
+          <p className="text-2xl font-semibold text-slate-900">${product.price}</p>
 
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
             <p>{product.description}</p>
