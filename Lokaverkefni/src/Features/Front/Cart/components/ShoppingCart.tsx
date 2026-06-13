@@ -4,43 +4,66 @@ import { CartItem } from "./CartItem";
 import { UseCartShop } from "../Shop/CartShop";
 import { getProductByIdFrontend } from "../../Hooks/useAPI/get/getProducts";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Product } from "../../Shared/Schemas/ProductsSchema";
-//import { useUser } from "@clerk/react";
+import { getInitialStorage } from "../../Hooks/useStorage/useStorage";
+import { useUser } from "@clerk/react";
 
 type ShoppingCartProps = {
   onCheckout?: () => void;
 };
 
 export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
-  const { items, clearCart } = UseCartShop();
-  //const { user } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
-  const [price, setPrice] = useState(0);
+  const { items, clearCart, setInitalState } = UseCartShop();
+  const { user, isSignedIn } = useUser();
   const nav = useNavigate();
 
-  
-  useEffect(() => {
-    const fetchProducts = async() => {
-      const productIds = items.map(item => item.productId);
-      const productPromises = productIds.map(id => getProductByIdFrontend(id));
-      const productsData = await Promise.all(productPromises);
-      setProducts(productsData.filter((p) => p !== undefined));
-    }
-    const calculatePrice = async() => {
+  const price = useMemo(() => {
     let total = 0;
-    items.forEach(item => {
-      const product = products.find(p => p.id === item.productId);
-      if(product) {
+    items.forEach((item) => {
+      const product = products.find((p) => p.id === item.productId);
+      if (product) {
         total += product.price * item.quantity;
       }
     });
-    setPrice(total);
-  }
+    return total;
+  }, [items, products]);
 
-    calculatePrice();
-    fetchProducts();
+  useEffect(() => {
+    if (!isSignedIn) {
+      nav("/products");
+    }
+  }, [isSignedIn, nav]);
+
+  useEffect(() => {
+    if (!isSignedIn || !user) {
+      return;
+    }
+
+    const initialStorage = getInitialStorage(user);
+    setInitalState(initialStorage.cartId, initialStorage.items);
+  }, [isSignedIn, user, setInitalState]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (items.length === 0) {
+        setProducts([]);
+        return;
+      }
+
+      const productIds = items.map((item) => item.productId);
+      const productPromises = productIds.map((id) => getProductByIdFrontend(id));
+      const productsData = await Promise.all(productPromises);
+      setProducts(productsData.filter((p) => p !== undefined));
+    };
+
+    void fetchProducts();
   }, [items]);
+
+  if (!isSignedIn) {
+    return null;
+  }
 
 	return (
 		<div className="w-full max-w-md">
@@ -83,7 +106,7 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
 				<CardFooter className="flex-col items-stretch gap-2 border-t border-slate-100 bg-white">
 					<button 
           className="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
-          onClick={async () => {
+          onClick={() => {
             onCheckout?.();
             nav("/checkout");
           }}

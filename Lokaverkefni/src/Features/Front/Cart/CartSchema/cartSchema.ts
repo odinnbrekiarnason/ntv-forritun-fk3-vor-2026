@@ -6,6 +6,7 @@ export interface CartItem {
 export interface CartShopType {
   cartId: string,
   items: CartItem[],
+  setInitalState: (cartId: string, items: CartItem[]) => void;
   addToCart: (productId: string, quantity: number) => void;
   changeQuantity: (productId: string, quantity: number) => void;
   removeFromCart: (productId: string) => void;

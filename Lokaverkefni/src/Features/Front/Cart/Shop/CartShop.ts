@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
 import { postOrder } from '../../Hooks/useAPI/post/postOrder';
-import { getInitialStorage } from '../../Hooks/useStorage/useStorage';
-
-const initialState = getInitialStorage();
 
 export const UseCartShop = create<CartShopType>((set, get) => ({
   cartId: "default",
   items: [],
-  ...initialState,
+
+  setInitalState: (cartId, items) => {
+    set({ cartId, items });
+  },
 
   addToCart: (productId, quantity) => {
     const item = { productId, quantity };
