@@ -29,9 +29,9 @@ export function ProductCard({ product }: { product: Product }) {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
               {product.type}
             </p>
-            <h2 className="mt-1 text-slate-900 text-lg font-semibold">
+            <p className="mt-1 text-slate-900 text-lg font-semibold">
               {product.product_name}
-            </h2>
+            </p>
           </div>
           <p className="text-lg font-bold text-slate-900">{product.price}</p>
         </div>
