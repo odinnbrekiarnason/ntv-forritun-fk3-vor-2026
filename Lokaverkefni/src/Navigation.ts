@@ -1,3 +1,8 @@
+const path = import.meta.env.VITE_API_BASE_URL || "";
+if(path === "") {
+  console.warn("API base URL is not defined. Please set VITE_API_BASE_URL in your environment variables.");
+}
+
 export const Routes = {
   HOME: "/",
   PRODUCTS: "/products",
@@ -12,13 +17,10 @@ export const APIEndpoints = {
 }
 
 export function getApiUrl(endpoint: string): string {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
-
-  if (!baseUrl) {
-    throw new Error(
-      "VITE_API_BASE_URL is missing. Set it to your Railway API origin so requests do not fall back to the current host.",
-    );
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+  if(!baseUrl) {
+    console.warn("API base URL is not defined. Please set VITE_API_BASE_URL in your environment variables.");
   }
 
-  return `${baseUrl.replace(/\/$/, "")}${endpoint}`;
+  return `${baseUrl}${endpoint}`;
 }

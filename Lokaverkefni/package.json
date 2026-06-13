@@ -7,7 +7,6 @@
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:api\"",
     "dev:client": "vite",
     "dev:api": "tsx src/Features/API/APIServer.ts",
-    "build": "npm run build:client",
     "build:client": "vite build",
     "build:api": "tsc -b src/Features/API/APIServer.ts",
     "lint": "eslint .",

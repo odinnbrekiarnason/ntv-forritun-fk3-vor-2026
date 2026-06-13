@@ -1,6 +1,5 @@
 import { APIEndpoints, getApiUrl } from "@/Navigation";
 import { useEffect } from "react";
-import { parseApiJson } from "../apiClient";
 
 export const postUserToDB = async(user: {clerk_uid: string, username: string, email: string, shop_role: string, firstName: string}) => {
   try{
@@ -9,7 +8,12 @@ export const postUserToDB = async(user: {clerk_uid: string, username: string, em
       body: JSON.stringify({ user }), 
       headers: {"Content-Type": "application/json"
       }});
-    return await parseApiJson<{ message?: string; error?: string }>(result);
+
+    if(!result.ok) {
+      console.error("Failed to post user:", result.statusText);
+      return undefined;
+    }
+    return await result.json();
   } catch(e) {
     console.error(e);
   }
@@ -71,7 +75,7 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
         console.error("Failed to run login callback", error);
       }
     };
-    console.log('Running login callback for user:', user);
+    console.log('Running login callback for user');
     void saveUser();
   }, [isLoaded, isSignedIn, user]);
 };

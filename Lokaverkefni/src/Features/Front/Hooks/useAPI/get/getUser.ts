@@ -1,10 +1,12 @@
 import { APIEndpoints, getApiUrl } from "@/Navigation";
-import { parseApiJson } from "../apiClient";
 
 export const getUserFrontEnd = async(userId: string) => {
   try{
     const response = await fetch(getApiUrl(`${APIEndpoints.USER}/${userId}`));
-    const data = await parseApiJson<{ id: string, name: string, email: string }>(response);
+    const data = await response.ok ? await response.json() : undefined;
+    if(!data) {
+      return undefined;
+    }
     
     return data;
   } catch (error) {
