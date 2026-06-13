@@ -8,10 +8,10 @@
     "dev:client": "vite",
     "dev:api": "tsx src/Features/API/APIServer.ts",
     "build:client": "vite build",
-    "build:api": "tsc -b src/Features/API",
+    "build:api": "tsc -b src/Features/API/APIServer.ts",
     "lint": "eslint .",
-    "preview": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build:client && wrangler dev",
+    "deploy": "npm run build:client && wrangler deploy",
     "e2e": "npx cypress run"
   },
   "dependencies": {
