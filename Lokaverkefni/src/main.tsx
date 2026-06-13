@@ -5,8 +5,6 @@ import { createRoot } from 'react-dom/client'
 import { ClerkProvider } from '@clerk/react'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
-const key = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
-
 const colorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)')
 
 function autoTheme(isDark: boolean) {
@@ -24,7 +22,7 @@ function RootLayout() {
 
   return (
     <ClerkProvider 
-    publishableKey={key}
+    publishableKey='pk_test_b3V0Z29pbmctYmFib29uLTM1LmNsZXJrLmFjY291bnRzLmRldiQ'
     routerPush={(to) => nav(to)}
     routerReplace={(to) => nav(to, {replace: true})}
     >
