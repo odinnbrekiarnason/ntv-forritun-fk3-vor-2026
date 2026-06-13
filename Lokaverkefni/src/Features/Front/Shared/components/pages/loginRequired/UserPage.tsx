@@ -20,14 +20,10 @@ export const UserPage = () => {
 						</p>
 					)}
 				</div>
-
-				<div className="grid grid-cols-1 gap-6 p-4 sm:p-6 lg:grid-cols-[240px_1fr] lg:p-8">
-				
-					<div className="overflow-hidden rounded-xl border border-slate-200 bg-white p-2 sm:p-4">
+				<div className="grid grid-cols-1 gap-6 p-4 sm:p-6 lg:grid-cols-[240px_1fr] lg:p-8">				
 						<div className="overflow-x-auto">
 							<UserProfile />
 						</div>
-					</div>
 				</div>
 			</div>
 		</section>
