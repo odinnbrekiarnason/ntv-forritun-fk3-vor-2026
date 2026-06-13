@@ -1,5 +1,6 @@
 import { APIEndpoints, getApiUrl } from "@/Navigation";
 import { useEffect } from "react";
+import { parseApiJson } from "../apiClient";
 
 export const postUserToDB = async(user: {clerk_uid: string, username: string, email: string, shop_role: string, firstName: string}) => {
   try{
@@ -8,7 +9,7 @@ export const postUserToDB = async(user: {clerk_uid: string, username: string, em
       body: JSON.stringify({ user }), 
       headers: {"Content-Type": "application/json"
       }});
-    return await result.json();
+    return await parseApiJson<{ message?: string; error?: string }>(result);
   } catch(e) {
     console.error(e);
   }

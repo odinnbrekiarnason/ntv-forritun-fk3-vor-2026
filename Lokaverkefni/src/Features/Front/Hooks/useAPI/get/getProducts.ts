@@ -1,16 +1,12 @@
 import { APIEndpoints, getApiUrl } from "@/Navigation";
 import type { Product } from "@/Features/Front/Shared/Schemas/ProductsSchema";
+import { parseApiJson } from "../apiClient";
 
 
 export const getAllProductsFrontend = async(): Promise<Product[] | undefined> => {
   try {
     const response = await fetch(getApiUrl(APIEndpoints.PRODUCTS));
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch products (${response.status})`);
-    }
-
-    const data = (await response.json()) as Product[];
+    const data = await parseApiJson<Product[]>(response);
 
     if (data === undefined) {
       throw new Error("No products found");
@@ -31,7 +27,7 @@ export const getProductByIdFrontend = async(id: string): Promise<Product | undef
       return undefined;
     }
 
-    const data = (await response.json()) as Product;
+    const data = await parseApiJson<Product>(response);
 
     if(data === undefined) {
       return undefined;

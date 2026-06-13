@@ -13,7 +13,7 @@ export function CartItem({ name, price, quantity, imageUrl, id }: CartItemProps)
   const {removeFromCart, changeQuantity} = UseCartShop();
 	return (
 		<article className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
-			<div className="pointer-events-none absolute inset-0 bg-gradient-to-rrom-transparent via-slate-100/30 to-transparent opacity-0 transition group-hover:opacity-100" />
+			<div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-slate-100/30 to-transparent opacity-0 transition group-hover:opacity-100" />
 
 			<div className="relative flex gap-3">
 				<div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">

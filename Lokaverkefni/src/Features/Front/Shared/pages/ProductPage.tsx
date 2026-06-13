@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { Product } from "../../Schemas/ProductsSchema";
-import { getProductByIdFrontend } from "../../../Hooks/useAPI/get/getProducts";
+import type { Product } from "../Schemas/ProductsSchema";
+import { getProductByIdFrontend } from "../../Hooks/useAPI/get/getProducts";
 import { useNavigate, useParams } from "react-router";
-import { UseCartShop } from "../../../Cart/Shop/CartShop";
+import { UseCartShop } from "../../Cart/Shop/CartShop";
 import { useAuth } from "@clerk/react";
 
 const StockNoPhoto = "/images/Stock_noPhoto.png";
