@@ -1,3 +1,4 @@
+import type { Product } from "@/Features/Front/Shared/Schemas/ProductsSchema";
 import pool from "@config/db";
 import type { NextFunction, Request, Response } from "express";
 
@@ -10,7 +11,9 @@ export const getAllProducts = async(_req: Request, _res: Response, _next: NextFu
        _next();
     }
 
-    _res.status(200).json(result);
+    const parsedResult = result as Product[]
+
+    _res.status(200).json(parsedResult);
   } catch(e: any) {
     console.log(e);
     _next(e);
