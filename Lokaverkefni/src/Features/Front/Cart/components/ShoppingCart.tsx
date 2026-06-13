@@ -29,9 +29,6 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
     });
     setPrice(total);
   }
-  useEffect(() => {
-    calculatePrice();
-  }, [products, items]);
 
   useEffect(() => {
     const fetchProducts = async() => {
@@ -40,6 +37,7 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
       const productsData = await Promise.all(productPromises);
       setProducts(productsData.filter((p) => p !== undefined));
     }
+    calculatePrice();
     fetchProducts();
   }, [items]);
 
