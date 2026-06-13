@@ -1,7 +1,7 @@
-/* import { useUser } from "@clerk/react";
+import { useUser } from "@clerk/react";
 import type { CartItem, CartShopType } from "../../Cart/CartSchema/cartSchema";
 
-function getInitialStorage(): Pick<CartShopType, "cartId" | "items"> | undefined {
+export function getInitialStorage(): Pick<CartShopType, "cartId" | "items"> | undefined {
   const { isSignedIn, user } = useUser();
   if (!isSignedIn) return undefined;
 
@@ -21,8 +21,3 @@ function getInitialStorage(): Pick<CartShopType, "cartId" | "items"> | undefined
 }
 
 
-export function useStorage () {
-  const initialStorage = getInitialStorage();
-  
-}
- */

@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
 import { postOrder } from '../../Hooks/useAPI/post/postOrder';
+import { getInitialStorage } from '../../Hooks/useStorage/useStorage';
 
+const initialState = getInitialStorage();
 
 export const UseCartShop = create<CartShopType>((set, get) => ({
   cartId: "default",
   items: [],
+  ...initialState,
 
   addToCart: (productId, quantity) => {
     const item = { productId, quantity };
@@ -25,7 +28,6 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
         };
       }
     })
-    sessionStorage.setItem("cart", JSON.stringify(get().items));
   },
 
   changeQuantity: (productId, quantity) => {
@@ -35,7 +37,6 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
         item.productId === productId ? { ...item, quantity } : item
       )
     }));
-    sessionStorage.setItem("cart", JSON.stringify(get().items));
   },
 
   removeFromCart: (productId) => {
@@ -43,28 +44,20 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
       ...state,
       items: state.items.filter(item => item.productId !== productId)
     }));
-    sessionStorage.setItem("cart", JSON.stringify(get().items));
   },
 
   completePurchase: async(userId: string) => {
-    if (!userId) {
-      console.error("Cannot complete purchase without userId");
+    const orderData = get().items;
+    const success = await postOrder(orderData, userId);
+    if(!success) {
+      console.error("Failed to complete purchase");
       return;
     }
-
-    const orderData = get().items;
-    const result = await postOrder(orderData, userId);
-    if(result) {
-      console.log("Order completed successfully:", result);
-      set((state) => ({ ...state, items: [] }));
-      sessionStorage.setItem("cart", JSON.stringify(get().items));
-    } else {
-      console.error("Failed to complete order");
-    }
+    console.log("Purchase completed successfully");
+    set(state => ({ ...state, items: [] }));
   },
 
   clearCart: () => {
     set(state => ({ ...state, items: [] }));
-    sessionStorage.setItem("cart", JSON.stringify(get().items));
   }
 }))

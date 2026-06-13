@@ -1,6 +1,5 @@
 import type { CartItem } from "../../../Cart/CartSchema/cartSchema";
 import { APIEndpoints, getApiUrl } from "@/Navigation";
-import { parseApiJson } from "../apiClient";
 
 export const postOrder = async (orderData: CartItem[], userId: string) => {
   try {
@@ -11,8 +10,13 @@ export const postOrder = async (orderData: CartItem[], userId: string) => {
         "Content-Type": "application/json"
       }
     });
-    return await parseApiJson<{ message?: string; error?: string }>(result);
+    if(!result.ok) {
+      console.error("Failed to post order:", result.statusText);
+      return false;
+    }
+    return result.ok;
   } catch (e) {
     console.error(e);
+    return false;
   }
 }

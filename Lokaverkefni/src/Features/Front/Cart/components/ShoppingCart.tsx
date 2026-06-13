@@ -19,7 +19,15 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
   const [price, setPrice] = useState(0);
   const nav = useNavigate();
 
-  const calculatePrice = () => {
+  
+  useEffect(() => {
+    const fetchProducts = async() => {
+      const productIds = items.map(item => item.productId);
+      const productPromises = productIds.map(id => getProductByIdFrontend(id));
+      const productsData = await Promise.all(productPromises);
+      setProducts(productsData.filter((p) => p !== undefined));
+    }
+    const calculatePrice = async() => {
     let total = 0;
     items.forEach(item => {
       const product = products.find(p => p.id === item.productId);
@@ -30,13 +38,6 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
     setPrice(total);
   }
 
-  useEffect(() => {
-    const fetchProducts = async() => {
-      const productIds = items.map(item => item.productId);
-      const productPromises = productIds.map(id => getProductByIdFrontend(id));
-      const productsData = await Promise.all(productPromises);
-      setProducts(productsData.filter((p) => p !== undefined));
-    }
     calculatePrice();
     fetchProducts();
   }, [items]);
