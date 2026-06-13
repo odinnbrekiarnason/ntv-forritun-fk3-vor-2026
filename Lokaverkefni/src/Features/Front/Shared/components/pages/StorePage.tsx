@@ -1,6 +1,6 @@
-import { getAllProductsFrontend } from "@/Features/Front/useAPI/get/getProducts";
+import { getAllProductsFrontend } from "@/Features/Front/Hooks/useAPI/get/getProducts";
 import { useEffect, useMemo, useState } from "react";
-import type { Product } from "../Schemas/ProductsSchema";
+import type { Product } from "../../Schemas/ProductsSchema";
 import { ProductCard } from "./pageComponents/productCard";
 
 const categories = ["All", "GPU", "CPU", "RAM", "Storage", "Power Supply", "CPU Cooler"] as const;

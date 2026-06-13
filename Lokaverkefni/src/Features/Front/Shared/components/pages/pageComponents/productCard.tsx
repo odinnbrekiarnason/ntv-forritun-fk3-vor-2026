@@ -8,6 +8,7 @@ export function ProductCard({ product }: { product: Product }) {
   const cartShop = UseCartShop();
   const nav = useNavigate();
   const auth = useAuth();
+  const hasStock = product.stock > 0;
 
   return (
     <article
@@ -43,7 +44,10 @@ export function ProductCard({ product }: { product: Product }) {
           {auth.isSignedIn &&
            <button
             type="button"
-            className="flex-1 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
+            disabled={!hasStock}
+            className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition ${
+              hasStock ? "bg-slate-900 hover:bg-slate-700" : "bg-slate-400 cursor-not-allowed"
+            }`}
             onClick={() => cartShop.addToCart(product.id, 1)}
           >
             Add To Cart

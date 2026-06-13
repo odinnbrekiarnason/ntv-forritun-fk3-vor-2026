@@ -2,7 +2,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/Features
 import { ShieldCheck, ShoppingCart as ShoppingCartIcon } from "lucide-react";
 import { CartItem } from "./CartItem";
 import { UseCartShop } from "../Shop/CartShop";
-import { getProductByIdFrontend } from "../../useAPI/get/getProducts";
+import { getProductByIdFrontend } from "../../Hooks/useAPI/get/getProducts";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import type { Product } from "../../Shared/Schemas/ProductsSchema";
@@ -29,6 +29,9 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
     });
     setPrice(total);
   }
+  useEffect(() => {
+    calculatePrice();
+  }, [products, items]);
 
   useEffect(() => {
     const fetchProducts = async() => {
@@ -38,7 +41,6 @@ export function ShoppingCart({ onCheckout }: ShoppingCartProps) {
       setProducts(productsData.filter((p) => p !== undefined));
     }
     fetchProducts();
-    calculatePrice();
   }, [items]);
 
 	return (

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle, CardHeader } from "@/Features/Front/Shared/components/ui/card";
 import stockImg from "/images/stockImg.png";
-import { ProductPageButton } from "../components/productPageButton";
+import { ProductPageButton } from "../Buttons/productPageButton";
 
 export function HomePage() {
   return (

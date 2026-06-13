@@ -1,11 +1,10 @@
 import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
-import { postOrder } from '../../useAPI/post/postOrder';
-
+import { postOrder } from '../../Hooks/useAPI/post/postOrder';
 
 
 export const UseCartShop = create<CartShopType>((set, get) => ({
-  cartId: crypto.randomUUID(),
+  cartId: "default",
   items: [],
 
   addToCart: (productId, quantity) => {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import type { Product } from "../Schemas/ProductsSchema";
-import { getProductByIdFrontend } from "../../useAPI/get/getProducts";
+import type { Product } from "../../Schemas/ProductsSchema";
+import { getProductByIdFrontend } from "../../../Hooks/useAPI/get/getProducts";
 import StockNoPhoto from "/images/Stock_noPhoto.png";
 import { useNavigate, useParams } from "react-router";
-import { UseCartShop } from "../../Cart/Shop/CartShop";
+import { UseCartShop } from "../../../Cart/Shop/CartShop";
 import { useAuth } from "@clerk/react";
 
 export function ProductPage() {
@@ -51,7 +51,7 @@ export function ProductPage() {
   const gallery = [product.img_url, product.img_url2, product.img_url3].filter(
     (img): img is string => Boolean(img),
   );
-  const hasStock = product.stock > 0;
+  const hasStock = product.stock >= 0;
   const isAvailable = product.is_available ?? hasStock;
   const reviewUrl = product.yt_review_url;
 

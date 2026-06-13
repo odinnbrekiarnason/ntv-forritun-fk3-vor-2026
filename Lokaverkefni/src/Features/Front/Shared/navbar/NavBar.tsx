@@ -1,8 +1,8 @@
 import { useAuth, useClerk} from "@clerk/react";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { ShoppingCartButton } from "../components/shoppingCartButton";
-import { ProductPageButton } from "../components/productPageButton";
+import { ShoppingCartButton } from "../components/Buttons/shoppingCartButton";
+import { ProductPageButton } from "../components/Buttons/productPageButton";
 import { ShoppingCart } from "../../Cart/components/ShoppingCart";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export function NavBar() {
 		<>
 		<nav className="w-full h-20 bg-accent px-4 py-2" >
 			<div className="relative mx-auto flex h-full w-full max-w-7xl items-center justify-between">
-				<h1 className="h-9" onClick={() => nav("/")}>Computer Parts</h1>
+				<h1 className="h-9 hover:cursor-pointer" onClick={() => nav("/")}>Computer Parts</h1>
 
 				<div className="flex items-center gap-3">
 					{!isSignedIn && (

@@ -1,12 +1,13 @@
 import './App.css'
 import { Route, Routes } from 'react-router'
-import { HomePage } from './Features/Front/Shared/pages/Homepage'
-import { StorePage } from './Features/Front/Shared/pages/StorePage'
+import { HomePage } from './Features/Front/Shared/components/pages/Homepage'
+import { StorePage } from './Features/Front/Shared/components/pages/StorePage'
 import { NavBar } from './Features/Front/Shared/navbar/NavBar'
 import { ShoppingCart } from './Features/Front/Cart/components/ShoppingCart'
-import { UserProfile, useUser } from '@clerk/react'
-import { useOnLogin } from './Features/Front/useAPI/post/postUser'
-import { ProductPage } from './Features/Front/Shared/pages/ProductPage'
+import { useUser } from '@clerk/react'
+import { useOnLogin } from './Features/Front/Hooks/useAPI/post/postUser'
+import { ProductPage } from './Features/Front/Shared/components/pages/ProductPage'
+import { UserPage } from './Features/Front/Shared/components/pages/loginRequired/UserPage'
 
 function App() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -25,7 +26,7 @@ function App() {
           { isSignedIn &&
           <>
             <Route path="/cart" element={<ShoppingCart />} />
-            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/profile" element={<UserPage />} />
             <Route path="/checkout" element={<div><h1>Checkout Page - Under Construction</h1></div>} />
           </>
           }
