@@ -22,13 +22,7 @@ export const UserPage = () => {
 				</div>
 
 				<div className="grid grid-cols-1 gap-6 p-4 sm:p-6 lg:grid-cols-[240px_1fr] lg:p-8">
-					<aside className="rounded-xl border border-slate-200 bg-white p-4">
-						<h2 className="text-sm font-semibold text-slate-900">Profile Settings</h2>
-						<p className="mt-2 text-sm leading-relaxed text-slate-600">
-							Use the panel on the right to update personal information, password and other preferences.
-						</p>
-					</aside>
-
+				
 					<div className="overflow-hidden rounded-xl border border-slate-200 bg-white p-2 sm:p-4">
 						<div className="overflow-x-auto">
 							<UserProfile />
