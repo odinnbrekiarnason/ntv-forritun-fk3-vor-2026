@@ -4,6 +4,7 @@
   "compatibility_date": "2026-06-08",
   "vars" : {
     "VITE_API_BASE_URL": "https://ntv-forritun-fk3-vor-2026-production.up.railway.app",
+    "VITE_CLERK_PUBLISHABLE_KEY": "pk_test_b3V0Z29pbmctYmFib29uLTM1LmNsZXJrLmFjY291bnRzLmRldiQ"
   },
   "observability": {
     "enabled": true,
