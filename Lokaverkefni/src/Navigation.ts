@@ -12,22 +12,11 @@ export const APIEndpoints = {
   CART: "/api/cart"
 }
 
-export const getApiUrl = (path: string) => {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
-  const isBrowser = typeof window !== "undefined";
-  const isLocalHost = isBrowser
-    ? ["localhost", "127.0.0.1"].includes(window.location.hostname)
-    : false;
-
-  if (!baseUrl) {
-    if (!isLocalHost) {
-      throw new Error(
-        "Missing VITE_API_BASE_URL. Set it to your Railway API origin to avoid same-host /api requests.",
-      );
-    }
-
-    return path;
+export function getApiUrl(endpoint: string): string {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+  if(!baseUrl) {
+    console.warn("API base URL is not defined. Please set VITE_API_BASE_URL in your environment variables.");
   }
 
-  return `${baseUrl.replace(/\/$/, "")}${path}`;
-};
+  return `${baseUrl}${endpoint}`;
+}
