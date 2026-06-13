@@ -27,13 +27,9 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-              {product.product_name}
-            </p>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
               {product.type}
             </p>
-
-            <h2 className="mt-1 text-lg font-semibold text-slate-900">
+            <h2 className="mt-1 text-slate-900 text-lg font-semibold">
               {product.product_name}
             </h2>
           </div>
