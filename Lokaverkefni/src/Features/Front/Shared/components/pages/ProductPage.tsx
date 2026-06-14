@@ -4,14 +4,14 @@ import { getProductByIdFrontend, getProductDetailsFrontend } from "../../../Hook
 import { useNavigate, useParams } from "react-router";
 import { UseCartShop } from "../../../Cart/Shop/CartShop";
 import { useAuth } from "@clerk/react";
+import { InfoCard } from "./pageComponents/infoCard";
 
 const StockNoPhoto = "/images/Stock_noPhoto.png";
 
 export function ProductPage() {
-  const [extraDetails, setExtraDetails] = useState<ProductDetail | null>(null);
+  const [extraDetails, setExtraDetails] = useState<ProductDetail["specs"] | null>(null);
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
   const { productId } = useParams();
   const cartShop = UseCartShop();
   const auth = useAuth();
@@ -44,7 +44,7 @@ export function ProductPage() {
       }
 
       const parsedDetails = details as ProductDetail | null;
-      setExtraDetails(parsedDetails);
+      setExtraDetails(parsedDetails?.specs);
       setIsLoading(false);
     };
 
@@ -111,9 +111,7 @@ export function ProductPage() {
             <p className="text-base leading-relaxed text-slate-700">{product.description}</p>
           </div>
           <div>
-            {extraDetails && (
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-6"> {JSON.stringify(extraDetails)} </div>
-            )}
+            <InfoCard specs={extraDetails} />
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
