@@ -10,6 +10,7 @@ export function CheckoutPage() {
 	const [email, setEmail] = useState("");
   const { completePurchase } = UseCartShop();
   const nav = useNavigate();
+  const { items } = UseCartShop();
 
 	useEffect(() => {
 		if (!isLoaded) {
@@ -170,12 +171,11 @@ export function CheckoutPage() {
 						Cancel
 					</button>
 					<button
+            type="button"
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
             onClick={() => {
               console.log("Completing purchase for user:", user!.id);
-              const test = completePurchase(user!.id, UseCartShop().items);
-              console.log(test);
-              completePurchase(user!.id, UseCartShop().items);
+              completePurchase(user!.id, items);
             }}
 					>
 						Pay now
