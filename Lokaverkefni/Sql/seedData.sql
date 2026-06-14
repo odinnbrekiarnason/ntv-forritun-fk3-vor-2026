@@ -362,4 +362,78 @@ SELECT
 FROM producers p
 WHERE p.name = 'DEEPCOOL';
 
+-- GPU specs
+INSERT INTO gpu_specs (product_id, memory_type, vram_gb, boost_clock_mhz, tdp_w)
+SELECT p.id, 'GDDR7', 32, 2407, 575 FROM products p WHERE p.product_name = 'GeForce RTX 5090'
+UNION ALL
+SELECT p.id, 'GDDR6X', 24, 2520, 450 FROM products p WHERE p.product_name = 'GeForce RTX 4090'
+UNION ALL
+SELECT p.id, 'GDDR6', 24, 2615, 355 FROM products p WHERE p.product_name = 'Radeon RX 7900 XTX'
+UNION ALL
+SELECT p.id, 'GDDR6', 8, 2460, 115 FROM products p WHERE p.product_name = 'GeForce RTX 4060'
+UNION ALL
+SELECT p.id, 'GDDR6', 8, 2491, 132 FROM products p WHERE p.product_name = 'Radeon RX 6600';
+
+-- CPU specs
+INSERT INTO cpu_specs (product_id, cpu_socket, core_count, thread_count, base_clock_ghz, boost_clock_ghz, tdp_w)
+SELECT p.id, 'AM5', 16, 32, 4.50, 5.70, 170 FROM products p WHERE p.product_name = 'Ryzen 9 7950X'
+UNION ALL
+SELECT p.id, 'LGA1700', 24, 32, 3.00, 5.80, 125 FROM products p WHERE p.product_name = 'Core i9-13900K'
+UNION ALL
+SELECT p.id, 'AM4', 6, 12, 3.50, 4.40, 65 FROM products p WHERE p.product_name = 'Ryzen 5 5600'
+UNION ALL
+SELECT p.id, 'LGA1700', 4, 8, 3.30, 4.30, 58 FROM products p WHERE p.product_name = 'Core i3-12100F';
+
+-- Motherboard specs
+INSERT INTO motherboard_specs (product_id, cpu_socket, size, ram_type, ram_slots, max_ram_gb, chipset)
+SELECT p.id, 'LGA1700', 'ATX', 'DDR5', 4, 128, 'Z790' FROM products p WHERE p.product_name = 'ROG Strix Z790'
+UNION ALL
+SELECT p.id, 'AM5', 'ATX', 'DDR5', 4, 128, 'X670E' FROM products p WHERE p.product_name = 'X670 AORUS'
+UNION ALL
+SELECT p.id, 'AM4', 'MATX', 'DDR4', 4, 128, 'B550' FROM products p WHERE p.product_name = 'B550M Steel Legend';
+
+-- RAM specs
+INSERT INTO ram_specs (product_id, ddr_type, total_capacity_gb, module_count, speed_mhz)
+SELECT p.id, 'DDR4', 16, 2, 3200 FROM products p WHERE p.product_name = 'Corsair Vengeance 16GB DDR4 3200'
+UNION ALL
+SELECT p.id, 'DDR5', 32, 2, 6000 FROM products p WHERE p.product_name = 'G.Skill Trident Z5 32GB DDR5'
+UNION ALL
+SELECT p.id, 'DDR5', 64, 2, 6000 FROM products p WHERE p.product_name = 'Corsair Dominator 64GB DDR5'
+UNION ALL
+SELECT p.id, 'DDR4', 16, 2, 3600 FROM products p WHERE p.product_name = 'G.Skill Ripjaws 16GB DDR4'
+UNION ALL
+SELECT p.id, 'DDR4', 8, 1, 2666 FROM products p WHERE p.product_name = 'Corsair ValueSelect 8GB DDR4';
+
+-- Storage specs
+INSERT INTO storage_specs (product_id, storage_type, interface_type, capacity_gb, form_factor)
+SELECT p.id, 'NVMe SSD', 'PCIe 4.0', 2000, 'M.2' FROM products p WHERE p.product_name = 'Samsung 990 PRO 2TB'
+UNION ALL
+SELECT p.id, 'NVMe SSD', 'PCIe 3.0', 1000, 'M.2' FROM products p WHERE p.product_name = 'Samsung 970 EVO 1TB'
+UNION ALL
+SELECT p.id, 'SATA SSD', 'SATA III', 1000, '2.5"' FROM products p WHERE p.product_name = 'Samsung 870 EVO 1TB'
+UNION ALL
+SELECT p.id, 'NVMe SSD', 'PCIe 4.0', 2000, 'M.2' FROM products p WHERE p.product_name = 'WD Black SN850X 2TB'
+UNION ALL
+SELECT p.id, 'HDD', 'SATA III', 2000, '3.5"' FROM products p WHERE p.product_name = 'WD Blue 2TB HDD'
+UNION ALL
+SELECT p.id, 'SATA SSD', 'SATA III', 480, '2.5"' FROM products p WHERE p.product_name = 'WD Green 480GB SATA SSD';
+
+-- PSU specs
+INSERT INTO psu_specs (product_id, wattage, modular_type, form_factor)
+SELECT p.id, 1000, 'Fully Modular', 'ATX' FROM products p WHERE p.product_name = 'Corsair HX1000i Platinum'
+UNION ALL
+SELECT p.id, 850, 'Fully Modular', 'ATX' FROM products p WHERE p.product_name = 'ASRock 850W Gold'
+UNION ALL
+SELECT p.id, 500, 'Non-Modular', 'ATX' FROM products p WHERE p.product_name = 'be quiet! 500W Bronze';
+
+-- CPU Cooler specs
+INSERT INTO cpu_cooler_specs (product_id, cooler_type, radiator_mm, fan_size_mm)
+SELECT p.id, 'AIO', 360, 120 FROM products p WHERE p.product_name = 'DEEPCOOL LT720 360mm'
+UNION ALL
+SELECT p.id, 'Air', NULL, 135 FROM products p WHERE p.product_name = 'be quiet! Dark Rock Pro 4'
+UNION ALL
+SELECT p.id, 'AIO', 360, 120 FROM products p WHERE p.product_name = 'DeepCool Castle 360'
+UNION ALL
+SELECT p.id, 'Air', NULL, 120 FROM products p WHERE p.product_name = 'DEEPCOOL AG400';
+
 COMMIT;
