@@ -43,7 +43,8 @@ export function ProductPage() {
         console.log(details, data.type)
       }
 
-      setExtraDetails(details ?? null);
+      const parsedDetails = details as ProductDetail | null;
+      setExtraDetails(parsedDetails);
       setIsLoading(false);
     };
 

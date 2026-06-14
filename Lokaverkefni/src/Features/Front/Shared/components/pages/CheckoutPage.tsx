@@ -2,6 +2,7 @@ import { getUserFrontEnd } from "@/Features/Front/Hooks/useAPI/get/getUser";
 import { useUser } from "@clerk/react";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { CheckoutInput } from "./pageComponents/input";
 
 export function CheckoutPage() {
 	const { user, isLoaded, isSignedIn } = useUser();
@@ -49,68 +50,50 @@ export function CheckoutPage() {
 					<h2 className="text-lg font-semibold text-slate-900">Card Information</h2>
 
 					<div className="mt-4 grid grid-cols-1 gap-4">
-						<div>
-							<label htmlFor="cardName" className="mb-1.5 block text-sm font-medium text-slate-700">
-								Name on card
-							</label>
-							<input
-								id="cardName"
-								name="cardName"
-								type="text"
-								required
-								autoComplete="cc-name"
-								placeholder="John Smith"
-								className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-							/>
-						</div>
+						<CheckoutInput
+							id="cardName"
+							name="cardName"
+							label="Name on card"
+							type="text"
+							required
+							autoComplete="cc-name"
+							placeholder="John Smith"
+						/>
 
-						<div>
-							<label htmlFor="cardNumber" className="mb-1.5 block text-sm font-medium text-slate-700">
-								Card number
-							</label>
-							<input
-								id="cardNumber"
-								name="cardNumber"
-								type="text"
-								required
-								autoComplete="cc-number"
-								inputMode="numeric"
-								placeholder="1234 5678 9012 3456"
-								className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-							/>
-						</div>
+						<CheckoutInput
+							id="cardNumber"
+							name="cardNumber"
+							label="Card number"
+							type="text"
+							required
+							autoComplete="cc-number"
+							inputMode="numeric"
+							placeholder="1234 5678 9012 3456"
+						/>
 
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-							<div className="sm:col-span-1">
-								<label htmlFor="expiry" className="mb-1.5 block text-sm font-medium text-slate-700">
-									Expiry
-								</label>
-								<input
-									id="expiry"
-									name="expiry"
-									type="text"
-									required
-									autoComplete="cc-exp"
-									placeholder="MM/YY"
-									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-								/>
-							</div>
+							<CheckoutInput
+								id="expiry"
+								name="expiry"
+								label="Expiry"
+								type="text"
+								required
+								autoComplete="cc-exp"
+								placeholder="MM/YY"
+								containerClassName="sm:col-span-1"
+							/>
 
-							<div className="sm:col-span-1">
-								<label htmlFor="cvc" className="mb-1.5 block text-sm font-medium text-slate-700">
-									CVC
-								</label>
-								<input
-									id="cvc"
-									name="cvc"
-									type="password"
-									required
-									autoComplete="cc-csc"
-									inputMode="numeric"
-									placeholder="123"
-									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-								/>
-							</div>
+							<CheckoutInput
+								id="cvc"
+								name="cvc"
+								label="CVC"
+								type="password"
+								required
+								autoComplete="cc-csc"
+								inputMode="numeric"
+								placeholder="123"
+								containerClassName="sm:col-span-1"
+							/>
 						</div>
 					</div>
 				</div>
@@ -119,89 +102,59 @@ export function CheckoutPage() {
 					<h2 className="text-lg font-semibold text-slate-900">Billing Address</h2>
 
 					<div className="mt-4 grid grid-cols-1 gap-4">
-						<div>
-							<label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">
-								Email
-							</label>
-							<input
-								id="email"
-								name="email"
-								type="email"
-								value={email}
-								readOnly
-								className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-							/>
-						</div>
+						<CheckoutInput
+							id="email"
+							name="email"
+							label="Email"
+							type="email"
+							value={email}
+							readOnly
+						/>
 
-						<div>
-							<label htmlFor="addressLine1" className="mb-1.5 block text-sm font-medium text-slate-700">
-								Address line 1
-							</label>
-							<input
-								id="addressLine1"
-								name="addressLine1"
-								type="text"
-								required
-								autoComplete="address-line1"
-								placeholder="Street and house number"
-								className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-							/>
-						</div>
+						<CheckoutInput
+							id="addressLine1"
+							name="addressLine1"
+							label="Address line 1"
+							type="text"
+							required
+							autoComplete="address-line1"
+							placeholder="Street and house number"
+						/>
 
-						<div>
-							<label htmlFor="addressLine2" className="mb-1.5 block text-sm font-medium text-slate-700">
-								Address line 2 (optional)
-							</label>
-							<input
-								id="addressLine2"
-								name="addressLine2"
-								type="text"
-								autoComplete="address-line2"
-								placeholder="Apartment, suite, etc."
-								className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-							/>
-						</div>
+						<CheckoutInput
+							id="addressLine2"
+							name="addressLine2"
+							label="Address line 2 (optional)"
+							type="text"
+							autoComplete="address-line2"
+							placeholder="Apartment, suite, etc."
+						/>
 
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-							<div>
-								<label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">
-									Country
-								</label>
-								<input
-									id="city"
-									name="city"
-									type="text"
-									required
-									autoComplete="address-level2"
-									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-								/>
-							</div>
-							<div>
-								<label htmlFor="state" className="mb-1.5 block text-sm font-medium text-slate-700">
-									State / Region
-								</label>
-								<input
-									id="state"
-									name="state"
-									type="text"
-									required
-									autoComplete="address-level1"
-									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-								/>
-							</div>
-							<div>
-								<label htmlFor="country" className="mb-1.5 block text-sm font-medium text-slate-700">
-									City
-								</label>
-								<input
-									id="country"
-									name="country"
-									type="text"
-									required
-									autoComplete="country-name"
-									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-								/>
-							</div>
+							<CheckoutInput
+								id="city"
+								name="city"
+								label="City"
+								type="text"
+								required
+								autoComplete="address-level2"
+							/>
+							<CheckoutInput
+								id="state"
+								name="state"
+								label="State / Region"
+								type="text"
+								required
+								autoComplete="address-level1"
+							/>
+							<CheckoutInput
+								id="country"
+								name="country"
+								label="Country"
+								type="text"
+								required
+								autoComplete="country-name"
+							/>
 						</div>
 					</div>
 				</div>
