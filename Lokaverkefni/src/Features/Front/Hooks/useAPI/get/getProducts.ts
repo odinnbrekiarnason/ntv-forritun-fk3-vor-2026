@@ -45,6 +45,9 @@ export const getProductByIdFrontend = async(id: string): Promise<Product | undef
 
 export const getProductDetailsFrontend = async(id: string, category: string): Promise<ProductDetail | undefined> => {
   try {
+    if(!category) {
+      throw new Error("Category is required to fetch product details");
+    }
     const response = await fetch(getApiUrl(`${APIEndpoints.PRODUCTS}/${id}/details?category=${category}`));
 
     if(!response.ok) {
