@@ -3,11 +3,13 @@ import { useUser } from "@clerk/react";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { CheckoutInput } from "./pageComponents/input";
+import { UseCartShop } from "@/Features/Front/Cart/Shop/CartShop";
 
 export function CheckoutPage() {
 	const { user, isLoaded, isSignedIn } = useUser();
-  const nav = useNavigate();
 	const [email, setEmail] = useState("");
+  const { completePurchase } = UseCartShop();
+  const nav = useNavigate();
 
 	useEffect(() => {
 		if (!isLoaded) {
@@ -38,7 +40,7 @@ export function CheckoutPage() {
 
   
 	return (
-		<section className="mx-auto mt-8 mb-16 min-h-screen max-w-4xl rounded-2xl border border-slate-200 bg-accent p-6 shadow-md sm:p-8">
+		<section className="mx-auto mt-8 mb-16 min-h-screen max-w-4xl rounded-2xl border border-slate-200 bg-transparent p-6 shadow-md sm:p-8">
 			<div className="mb-6 border-b border-slate-200 pb-4">
 				<p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Checkout</p>
 				<h1 className="mt-2 text-3xl font-bold text-slate-900">Payment Details</h1>
@@ -163,12 +165,16 @@ export function CheckoutPage() {
 					<button
 						type="button"
 						className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500"
+            onClick={() => nav("/")}
 					>
 						Cancel
 					</button>
 					<button
-						type="button"
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
+            onClick={() => {
+              completePurchase(user!.id),
+              nav("/confirmation")}
+            }
 					>
 						Pay now
 					</button>

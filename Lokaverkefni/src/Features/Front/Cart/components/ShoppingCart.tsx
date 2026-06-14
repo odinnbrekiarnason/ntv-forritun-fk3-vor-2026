@@ -6,7 +6,7 @@ import { getProductByIdFrontend } from "../../Hooks/useAPI/get/getProducts";
 import { useNavigate } from "react-router";
 import { useEffect, useMemo, useState } from "react";
 import type { Product } from "../../Shared/Schemas/ProductsSchema";
-import { getInitialStorage } from "../../Hooks/useStorage/useStorage";
+import { getInitialStorage } from "../../Hooks/getStorage/getInitalStorage";
 import { useUser } from "@clerk/react";
 
 type ShoppingCartProps = {
