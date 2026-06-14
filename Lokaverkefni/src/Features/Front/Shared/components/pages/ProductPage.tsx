@@ -10,7 +10,6 @@ const StockNoPhoto = "/images/Stock_noPhoto.png";
 export function ProductPage() {
   const [extraDetails, setExtraDetails] = useState<ProductDetail | null>(null);
   const [product, setProduct] = useState<Product | null>(null);
-  const [type, setType] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
   const { productId } = useParams();
@@ -21,32 +20,34 @@ export function ProductPage() {
   useEffect(() => {
     if (!productId) {
       setProduct(null);
+      setExtraDetails(null);
       setIsLoading(false);
       return;
     }
 
-    const loadProduct = async () => {
+    const loadProductAndDetails = async () => {
       setIsLoading(true);
       const data = await getProductByIdFrontend(productId);
       setProduct(data ?? null);
-      setType(data?.type ?? null);
-      setIsLoading(false);
-    };
-    
-    const loadProductDetails = async () => {
-      setIsLoading(true);
-      const details = await getProductDetailsFrontend(productId, type || "");
+
+      if (!data?.type) {
+        setExtraDetails(null);
+        setIsLoading(false);
+        return;
+      }
+
+      const details = await getProductDetailsFrontend(productId, data.type);
 
       if(!details) {
         console.warn("No extra details found for product ID:", productId);
-        console.log(details, type)
+        console.log(details, data.type)
       }
 
       setExtraDetails(details ?? null);
       setIsLoading(false);
-    }
-    void loadProduct();
-    void loadProductDetails();
+    };
+
+    void loadProductAndDetails();
   }, [productId]);
 
   if (isLoading) {

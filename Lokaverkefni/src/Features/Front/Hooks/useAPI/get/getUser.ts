@@ -1,9 +1,17 @@
 import { APIEndpoints, getApiUrl } from "@/Features/navigation/Navigation";
 
-export const getUserFrontEnd = async(userId: string) => {
+export type FrontendUser = {
+  clerk_uid: string;
+  username: string;
+  firstname: string;
+  email: string;
+  shop_role: string;
+};
+
+export const getUserFrontEnd = async(userId: string): Promise<FrontendUser | undefined> => {
   try{
     const response = await fetch(getApiUrl(`${APIEndpoints.USER}/${userId}`));
-    const data = await response.ok ? await response.json() : undefined;
+    const data = response.ok ? await response.json() as FrontendUser : undefined;
     if(!data) {
       return undefined;
     }

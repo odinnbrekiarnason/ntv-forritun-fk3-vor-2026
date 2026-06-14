@@ -48,7 +48,9 @@ export const getProductDetailsFrontend = async(id: string, category: string): Pr
     if(!category) {
       throw new Error("Category is required to fetch product details");
     }
-    const response = await fetch(getApiUrl(`${APIEndpoints.PRODUCTS}/${id}/details?category=${category}`));
+
+    const query = new URLSearchParams({ category });
+    const response = await fetch(getApiUrl(`${APIEndpoints.PRODUCTS}/${id}/details?${query.toString()}`));
 
     if(!response.ok) {
       throw new Error(`Failed to fetch product details: ${response.statusText}`);

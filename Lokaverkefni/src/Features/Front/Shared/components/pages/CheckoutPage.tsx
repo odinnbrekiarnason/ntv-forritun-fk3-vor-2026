@@ -1,4 +1,41 @@
+import { getUserFrontEnd } from "@/Features/Front/Hooks/useAPI/get/getUser";
+import { useUser } from "@clerk/react";
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+
 export function CheckoutPage() {
+	const { user, isLoaded, isSignedIn } = useUser();
+  const nav = useNavigate();
+	const [email, setEmail] = useState("");
+
+	useEffect(() => {
+		if (!isLoaded) {
+			return;
+		}
+
+		if (!isSignedIn || !user) {
+			nav("/home");
+			return;
+		}
+
+		const loadUser = async () => {
+			const dbUser = await getUserFrontEnd(user.id);
+			const fallbackEmail = user.emailAddresses[0]?.emailAddress ?? "";
+			setEmail(dbUser?.email ?? fallbackEmail);
+		};
+
+		void loadUser();
+	}, [isLoaded, isSignedIn, nav, user]);
+
+	if (!isLoaded) {
+		return <div className="mx-auto mt-8 max-w-4xl text-sm text-slate-600">Loading checkout...</div>;
+	}
+
+	if (!isSignedIn || !user) {
+		return null;
+	}
+
+  
 	return (
 		<section className="mx-auto mt-8 mb-16 min-h-screen max-w-4xl rounded-2xl border border-slate-200 bg-accent p-6 shadow-md sm:p-8">
 			<div className="mb-6 border-b border-slate-200 pb-4">
@@ -8,7 +45,7 @@ export function CheckoutPage() {
 			</div>
 
 			<form className="space-y-6" noValidate>
-				<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
+				<div className="rounded-xl border border-slate-200 bg-transparent p-5 sm:p-6">
 					<h2 className="text-lg font-semibold text-slate-900">Card Information</h2>
 
 					<div className="mt-4 grid grid-cols-1 gap-4">
@@ -74,26 +111,11 @@ export function CheckoutPage() {
 									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
 								/>
 							</div>
-
-							<div className="sm:col-span-1">
-								<label htmlFor="zip" className="mb-1.5 block text-sm font-medium text-slate-700">
-									ZIP / Postal
-								</label>
-								<input
-									id="zip"
-									name="zip"
-									type="text"
-									required
-									autoComplete="postal-code"
-									placeholder="101"
-									className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
-								/>
-							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
+				<div className="rounded-xl border border-slate-200 bg-transparent p-5 sm:p-6">
 					<h2 className="text-lg font-semibold text-slate-900">Billing Address</h2>
 
 					<div className="mt-4 grid grid-cols-1 gap-4">
@@ -105,9 +127,8 @@ export function CheckoutPage() {
 								id="email"
 								name="email"
 								type="email"
-								required
-								autoComplete="email"
-								placeholder="you@example.com"
+								value={email}
+								readOnly
 								className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-500"
 							/>
 						</div>
@@ -144,7 +165,7 @@ export function CheckoutPage() {
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 							<div>
 								<label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">
-									City
+									Country
 								</label>
 								<input
 									id="city"
@@ -170,7 +191,7 @@ export function CheckoutPage() {
 							</div>
 							<div>
 								<label htmlFor="country" className="mb-1.5 block text-sm font-medium text-slate-700">
-									Country
+									City
 								</label>
 								<input
 									id="country"
@@ -193,7 +214,7 @@ export function CheckoutPage() {
 						Cancel
 					</button>
 					<button
-						type="submit"
+						type="button"
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
 					>
 						Pay now
