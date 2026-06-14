@@ -67,10 +67,8 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
     const stock = checkItem.stock;
 
     if (quantity > stock) {
-      console.error("Not enough stock available");
       return;
     } else if (quantity < 1) {
-      console.error("Quantity must be at least 1");
       return;
     }
 
@@ -103,7 +101,7 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
       console.error("Failed to complete purchase");
       return;
     }
-    console.log("Purchase completed successfully");
+    window.alert("Purchase completed successfully!");
     return set(state => ({ ...state, items: [] }));
   },
 

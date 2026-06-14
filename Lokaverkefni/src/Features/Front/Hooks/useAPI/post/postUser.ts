@@ -1,4 +1,4 @@
-import { APIEndpoints, getApiUrl } from "@/Navigation";
+import { APIEndpoints, getApiUrl } from "@/Features/navigation/Navigation";
 import { useEffect } from "react";
 
 export const postUserToDB = async(user: {clerk_uid: string, username: string, email: string, shop_role: string, firstName: string}) => {

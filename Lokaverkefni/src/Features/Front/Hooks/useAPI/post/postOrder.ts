@@ -1,5 +1,5 @@
 import type { CartItem } from "../../../Cart/CartSchema/cartSchema";
-import { APIEndpoints, getApiUrl } from "@/Navigation";
+import { APIEndpoints, getApiUrl } from "@/Features/navigation/Navigation";
 
 export const postOrder = async (orderData: CartItem[], userId: string) => {
   try {

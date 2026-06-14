@@ -1,4 +1,4 @@
-import { APIEndpoints, getApiUrl } from "@/Navigation";
+import { APIEndpoints, getApiUrl } from "@/Features/navigation/Navigation";
 
 export const getUserFrontEnd = async(userId: string) => {
   try{

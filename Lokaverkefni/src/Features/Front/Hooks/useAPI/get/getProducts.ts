@@ -1,4 +1,4 @@
-import { APIEndpoints, getApiUrl } from "@/Navigation";
+import { APIEndpoints, getApiUrl } from "@/Features/navigation/Navigation";
 import type { Product } from "@/Features/Front/Shared/Schemas/ProductsSchema";
 
 

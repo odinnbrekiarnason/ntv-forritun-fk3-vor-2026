@@ -1,9 +1,9 @@
 import { useAuth, useClerk} from "@clerk/react";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { ShoppingCartButton } from "../components/Buttons/shoppingCartButton";
-import { ProductPageButton } from "../components/Buttons/productPageButton";
-import { ShoppingCart } from "../../Cart/components/ShoppingCart";
+import { ShoppingCartButton } from "../Front/Shared/components/Buttons/shoppingCartButton";
+import { ProductPageButton } from "../Front/Shared/components/Buttons/productPageButton";
+import { ShoppingCart } from "../Front/Cart/components/ShoppingCart";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export function NavBar() {
