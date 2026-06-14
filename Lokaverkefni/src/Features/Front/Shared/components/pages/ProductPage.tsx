@@ -39,8 +39,8 @@ export function ProductPage() {
       setExtraDetails(details ?? null);
     }
 
-    void loadProductDetails(product?.type ?? "");
     void loadProduct();
+    void loadProductDetails(product?.type ?? "");
   }, [productId]);
 
   if (isLoading) {
