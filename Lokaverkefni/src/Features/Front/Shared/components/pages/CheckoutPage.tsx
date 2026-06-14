@@ -172,9 +172,11 @@ export function CheckoutPage() {
 					<button
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
             onClick={() => {
-              completePurchase(user!.id),
-              nav("/confirmation")}
-            }
+              console.log("Completing purchase for user:", user!.id);
+              const test = completePurchase(user!.id);
+              console.log(test);
+              test
+            }}
 					>
 						Pay now
 					</button>
