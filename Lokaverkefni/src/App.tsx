@@ -8,6 +8,7 @@ import { useUser } from '@clerk/react'
 import { useOnLogin } from './Features/Front/Hooks/useAPI/post/postUser'
 import { ProductPage } from './Features/Front/Shared/components/pages/ProductPage'
 import { UserPage } from './Features/Front/Shared/components/pages/loginRequired/UserPage'
+import { CheckoutPage } from './Features/Front/Shared/components/pages/CheckoutPage'
 
 function App() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -27,7 +28,7 @@ function App() {
           <>
             <Route path="/cart" element={<ShoppingCart />} />
             <Route path="/profile" element={<UserPage />} />
-            <Route path="/checkout" element={<div><h1>Checkout Page - Under Construction</h1></div>} />
+            <Route path="/checkout" element={<CheckoutPage />} />
           </>
           }
       </Routes>
