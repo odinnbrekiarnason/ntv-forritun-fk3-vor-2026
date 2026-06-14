@@ -7,12 +7,15 @@ export const getProductDetails = async(req: Request, res: Response, next: NextFu
     const { id } = req.params as { id: string }; 
     const category = req.query.category as string | undefined;
 
+    console.log(category);
+
     if(!id || typeof id !== "string" || !category || typeof category !== "string") {
       res.status(403).json({ error: "Invalid product ID or category" });
       return;
     }
 
     const normalizedCategory = category.trim().toLowerCase();
+    console.log(normalizedCategory);
     let finalQuery = "";
     let specsTable = "";
 
