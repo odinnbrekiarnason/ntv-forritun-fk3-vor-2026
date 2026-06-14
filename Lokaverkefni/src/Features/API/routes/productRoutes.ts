@@ -7,7 +7,7 @@ import { getProductDetails } from "../controllers/productCTRL/oneProductDetail";
 const router = express.Router();
 
 router.get("/", getAllProducts);
-router.get("/details/:id", getProductDetails);
+router.get("/:id/details", getProductDetails);
 router.get("/:id", getProductById);
 
 

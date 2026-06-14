@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Product } from "../../Schemas/ProductsSchema";
-import { getProductByIdFrontend } from "../../../Hooks/useAPI/get/getProducts";
+import type { Product, ProductDetail } from "../../Schemas/ProductsSchema";
+import { getProductByIdFrontend, getProductDetailsFrontend } from "../../../Hooks/useAPI/get/getProducts";
 import { useNavigate, useParams } from "react-router";
 import { UseCartShop } from "../../../Cart/Shop/CartShop";
 import { useAuth } from "@clerk/react";
@@ -8,11 +8,13 @@ import { useAuth } from "@clerk/react";
 const StockNoPhoto = "/images/Stock_noPhoto.png";
 
 export function ProductPage() {
+  const [extraDetails, setExtraDetails] = useState<ProductDetail | null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
   const { productId } = useParams();
   const cartShop = UseCartShop();
   const auth = useAuth();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -29,6 +31,15 @@ export function ProductPage() {
       setIsLoading(false);
     };
 
+    const loadProductDetails = async (category: string) => {
+      const details = await getProductDetailsFrontend(productId, category);
+      if(!details) {
+        console.warn("No extra details found for product ID:", productId);
+      }
+      setExtraDetails(details ?? null);
+    }
+
+    void loadProductDetails(product?.type ?? "");
     void loadProduct();
   }, [productId]);
 
@@ -90,6 +101,11 @@ export function ProductPage() {
 
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-6">
             <p className="text-base leading-relaxed text-slate-700">{product.description}</p>
+          </div>
+          <div>
+            {extraDetails && (
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-6"> {JSON.stringify(extraDetails)} </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
