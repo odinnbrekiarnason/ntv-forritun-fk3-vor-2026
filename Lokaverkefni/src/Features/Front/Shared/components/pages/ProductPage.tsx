@@ -30,17 +30,26 @@ export function ProductPage() {
       setProduct(data ?? null);
       setIsLoading(false);
     };
+    
+    const loadProductDetails = async () => {
+      setIsLoading(true);
+      const type = product?.type ?? "";
 
-    const loadProductDetails = async (category: string) => {
-      const details = await getProductDetailsFrontend(productId, category);
+      if(!type) {
+        console.warn("Product type is missing, cannot fetch extra details");
+      }
+
+      const details = await getProductDetailsFrontend(productId, type);
+
       if(!details) {
         console.warn("No extra details found for product ID:", productId);
       }
+      
       setExtraDetails(details ?? null);
+      setIsLoading(false);
     }
-
     void loadProduct();
-    void loadProductDetails(product?.type ?? "");
+    void loadProductDetails();
   }, [productId]);
 
   if (isLoading) {
