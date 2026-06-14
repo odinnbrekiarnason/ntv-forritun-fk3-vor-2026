@@ -10,6 +10,7 @@ const StockNoPhoto = "/images/Stock_noPhoto.png";
 export function ProductPage() {
   const [extraDetails, setExtraDetails] = useState<ProductDetail | null>(null);
   const [product, setProduct] = useState<Product | null>(null);
+  const [type, setType] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
   const { productId } = useParams();
@@ -28,13 +29,13 @@ export function ProductPage() {
       setIsLoading(true);
       const data = await getProductByIdFrontend(productId);
       setProduct(data ?? null);
+      setType(data?.type ?? null);
       setIsLoading(false);
     };
     
     const loadProductDetails = async () => {
       setIsLoading(true);
-      const type = product?.type ?? "";
-      const details = await getProductDetailsFrontend(productId, type);
+      const details = await getProductDetailsFrontend(productId, type || "");
 
       if(!details) {
         console.warn("No extra details found for product ID:", productId);
