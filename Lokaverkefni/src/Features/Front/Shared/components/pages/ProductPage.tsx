@@ -34,17 +34,13 @@ export function ProductPage() {
     const loadProductDetails = async () => {
       setIsLoading(true);
       const type = product?.type ?? "";
-
-      if(!type) {
-        console.warn("Product type is missing, cannot fetch extra details");
-      }
-
       const details = await getProductDetailsFrontend(productId, type);
 
       if(!details) {
         console.warn("No extra details found for product ID:", productId);
+        console.log(details, type)
       }
-      
+
       setExtraDetails(details ?? null);
       setIsLoading(false);
     }
