@@ -1,36 +1,79 @@
 import { create } from 'zustand';
 import type { CartShopType } from '../CartSchema/cartSchema';
 import { postOrder } from '../../Hooks/useAPI/post/postOrder';
+import { getProductByIdFrontend } from '../../Hooks/useAPI/get/getProducts';
 
 export const UseCartShop = create<CartShopType>((set, get) => ({
-  cartId: "default",
+  cartId: "GuestCart",
   items: [],
 
   setInitalState: (cartId, items) => {
-    set({ cartId, items });
+    return set({ cartId, items });
   },
 
-  addToCart: (productId, quantity) => {
-    const item = { productId, quantity };
+  addToCart: async (productId, quantity) => {
+    const checkItem = await getProductByIdFrontend(productId);
+    if (!checkItem) {
+      console.error("Product not found");
+      return;
+    }
+    const stock = checkItem.stock;
+    if (quantity > stock) {
+      console.error("Not enough stock available");
+      return;
+    }
+
     set(state => {
-      const existingItem = state.items.find(i => i.productId === productId);
-      if (existingItem) {
+      const existingCart = state.items.find(item => item.productId === productId);
+      if (existingCart) {
+        const newQuantity = existingCart.quantity + quantity;
+
+        if (newQuantity > stock) {
+          console.error("Not enough stock available");
+          return state;
+        }
+        localStorage.setItem(state.cartId, JSON.stringify({
+          ...state,
+          items: state.items.map(item => item.productId === productId ? { ...item, quantity: newQuantity } : item)
+        }));
+
         return {
           ...state,
-          items: state.items.map(i =>
-            i.productId === productId ? { ...i, quantity: i.quantity + quantity } : i
-          )
-        };
+          items: state.items.map(item => item.productId === productId ? { ...item, quantity: newQuantity } : item)
+        }
+
       } else {
+        localStorage.setItem(state.cartId, JSON.stringify({
+          ...state,
+          items: [...state.items, { productId, quantity }]
+        }));
+
         return {
           ...state,
-          items: [...state.items, item]
-        };
+          items: [...state.items, { productId, quantity }]
+        }
       }
     })
+
   },
 
-  changeQuantity: (productId, quantity) => {
+  changeQuantity: async (productId, quantity) => {
+    const checkItem = await getProductByIdFrontend(productId);
+    if (!checkItem) {
+      console.error("Product not found");
+      return;
+    }
+
+    const stock = checkItem.stock;
+
+    if (quantity > stock) {
+      console.error("Not enough stock available");
+      return;
+    } else if (quantity < 1) {
+      console.error("Quantity must be at least 1");
+      return;
+    }
+
     set(state => ({
       ...state,
       items: state.items.map(item =>
@@ -40,24 +83,40 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
   },
 
   removeFromCart: (productId) => {
-    set(state => ({
-      ...state,
-      items: state.items.filter(item => item.productId !== productId)
-    }));
+    return set(state => {
+      const newItems = state.items.filter(item => item.productId !== productId);
+      localStorage.setItem(state.cartId, JSON.stringify({
+        ...state,
+        items: newItems
+      }));
+      return {
+        ...state,
+        items: newItems
+      };
+    });
   },
 
-  completePurchase: async(userId: string) => {
-    const orderData = get().items;
-    const success = await postOrder(orderData, userId);
-    if(!success) {
+  completePurchase: async (userId: string) => {
+    const { items } = get();
+    const success = await postOrder(items, userId);
+    if (!success) {
       console.error("Failed to complete purchase");
       return;
     }
     console.log("Purchase completed successfully");
-    set(state => ({ ...state, items: [] }));
+    return set(state => ({ ...state, items: [] }));
   },
 
   clearCart: () => {
-    set(state => ({ ...state, items: [] }));
+    return set(state => {
+      localStorage.setItem(state.cartId, JSON.stringify({
+        ...state,
+        items: []
+      }));
+      return {
+        ...state,
+        items: []
+      }
+    });
   }
 }))
