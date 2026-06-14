@@ -173,9 +173,9 @@ export function CheckoutPage() {
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
             onClick={() => {
               console.log("Completing purchase for user:", user!.id);
-              const test = completePurchase(user!.id);
+              const test = completePurchase(user!.id, UseCartShop().items);
               console.log(test);
-              completePurchase(user!.id);
+              completePurchase(user!.id, UseCartShop().items);
             }}
 					>
 						Pay now
