@@ -48,7 +48,7 @@ export function CheckoutPage() {
 			</div>
 
 			<form className="space-y-6" noValidate>
-				<div className="rounded-xl border border-slate-200 bg-slate-700 p-5 sm:p-6">
+				<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
 					<h2 className="text-lg font-semibold text-slate-900">Card Information</h2>
 
 					<div className="mt-4 grid grid-cols-1 gap-4">
@@ -100,7 +100,7 @@ export function CheckoutPage() {
 					</div>
 				</div>
 
-				<div className="rounded-xl border border-slate-200 bg-slate-700 p-5 sm:p-6">
+				<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
 					<h2 className="text-lg font-semibold text-slate-900">Billing Address</h2>
 
 					<div className="mt-4 grid grid-cols-1 gap-4">

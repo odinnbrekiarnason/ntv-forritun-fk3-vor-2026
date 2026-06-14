@@ -2,6 +2,7 @@ import { getAllProductsFrontend } from "@/Features/Front/Hooks/useAPI/get/getPro
 import { useEffect, useMemo, useState } from "react";
 import type { Product } from "../../Schemas/ProductsSchema";
 import { ProductCard } from "./pageComponents/productCard";
+import { SearchBar } from "@/Features/Front/Search/components/searchBar";
 
 const categories = ["All", "GPU", "CPU", "RAM", "Storage", "Power Supply", "CPU Cooler"] as const;
 
@@ -9,6 +10,7 @@ export function StorePage() {
   const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>(
     "All"
   );
+  const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,12 +26,19 @@ export function StorePage() {
   }, []);
 
   const visibleProducts = useMemo(() => {
-    if (activeCategory === "All") {
-      return products;
-    }
+    const normalizedSearch = searchTerm.trim().toLowerCase();
 
-    return products.filter((item) => item.type === activeCategory);
-  }, [activeCategory, products]);
+    return products.filter((item) => {
+      const matchesCategory = activeCategory === "All" || item.type === activeCategory;
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        item.product_name.toLowerCase().includes(normalizedSearch) ||
+        item.description.toLowerCase().includes(normalizedSearch) ||
+        item.type.toLowerCase().includes(normalizedSearch);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, products, searchTerm]);
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -66,6 +75,7 @@ export function StorePage() {
               );
             })}
           </div>
+          <SearchBar value={searchTerm} onChange={setSearchTerm} />
         </header>
 
         <section className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
