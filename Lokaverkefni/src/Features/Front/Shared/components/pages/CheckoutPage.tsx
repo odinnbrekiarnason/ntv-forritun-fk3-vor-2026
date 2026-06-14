@@ -175,7 +175,7 @@ export function CheckoutPage() {
               console.log("Completing purchase for user:", user!.id);
               const test = completePurchase(user!.id);
               console.log(test);
-              test
+              completePurchase(user!.id);
             }}
 					>
 						Pay now

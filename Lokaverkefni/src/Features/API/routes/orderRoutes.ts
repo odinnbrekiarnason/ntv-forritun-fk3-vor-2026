@@ -6,7 +6,6 @@ import { OrderSchema } from "@/Features/API/schemas/OrderSchema";
 
 const router = express.Router();
 
-
 router.post("/", validate(OrderSchema), createOrder);
 
 router.use(errorHandler);

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { CartShopType } from '../CartSchema/cartSchema';
+import type { CartItem, CartShopType } from '../CartSchema/cartSchema';
 import { postOrder } from '../../Hooks/useAPI/post/postOrder';
 import { getProductByIdFrontend } from '../../Hooks/useAPI/get/getProducts';
 
@@ -94,15 +94,19 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
     });
   },
 
-  completePurchase: async (userId: string) => {
-    const { items } = get();
-    const success = await postOrder(items, userId);
-    if (!success) {
-      console.error("Failed to complete purchase");
-      return;
-    }
-    window.alert("Purchase completed successfully!");
-    return set(state => ({ ...state, items: [] }));
+  completePurchase: async (userId: string, itemState: CartItem[]) => {
+      const success = await postOrder(itemState, userId);
+
+      if (!success) {
+        console.error("Failed to complete purchase");
+        return;
+      }
+
+      window.alert("Purchase completed successfully!");
+      return set(state => ({
+        ...state,       
+        items: []
+      }));
   },
 
   clearCart: () => {

@@ -10,6 +10,6 @@ export interface CartShopType {
   addToCart: (productId: string, quantity: number) => void;
   changeQuantity: (productId: string, quantity: number) => void;
   removeFromCart: (productId: string) => void;
-  completePurchase: (userId: string) => Promise<void>;
+  completePurchase: (userId: string, itemState: CartItem[]) => Promise<void>;
   clearCart: () => void;
 }
