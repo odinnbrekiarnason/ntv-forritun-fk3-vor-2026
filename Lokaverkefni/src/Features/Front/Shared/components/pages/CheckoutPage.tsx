@@ -8,6 +8,7 @@ import { UseCartShop } from "@/Features/Front/Cart/Shop/CartShop";
 export function CheckoutPage() {
 	const { user, isLoaded, isSignedIn } = useUser();
 	const [email, setEmail] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
   const { completePurchase } = UseCartShop();
   const nav = useNavigate();
   const { items } = UseCartShop();
@@ -172,13 +173,23 @@ export function CheckoutPage() {
 					</button>
 					<button
             type="button"
+						disabled={isSubmitting || items.length === 0}
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
-            onClick={() => {
-              console.log("Completing purchase for user:", user!.id);
-              completePurchase(user!.id, items);
-            }}
+						onClick={async () => {
+							if (isSubmitting) {
+								return;
+							}
+
+							setIsSubmitting(true);
+							const success = await completePurchase(user.id, items);
+							setIsSubmitting(false);
+
+							if (success) {
+								nav("/products");
+							}
+						}}
 					>
-						Pay now
+						{isSubmitting ? "Processing..." : "Pay now"}
 					</button>
 				</div>
 			</form>

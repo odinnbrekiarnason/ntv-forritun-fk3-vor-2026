@@ -94,19 +94,34 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
     });
   },
 
-  completePurchase: async (userId: string, itemState: CartItem[]) => {
-      const success = await postOrder(itemState, userId);
+  completePurchase: async (userId: string, itemState?: CartItem[]) => {
+      const currentItems = itemState ?? get().items;
+
+      if (!currentItems.length) {
+        console.error("No items in cart");
+        return false;
+      }
+
+      const success = await postOrder(currentItems, userId);
 
       if (!success) {
         console.error("Failed to complete purchase");
-        return;
+        return false;
       }
 
       window.alert("Purchase completed successfully!");
-      return set(state => ({
-        ...state,       
+      const cartId = get().cartId;
+      localStorage.setItem(cartId, JSON.stringify({
+        cartId,
         items: []
       }));
+
+      set(state => ({
+        ...state,
+        items: []
+      }));
+
+      return true;
   },
 
   clearCart: () => {
