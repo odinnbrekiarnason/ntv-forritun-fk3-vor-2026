@@ -1,7 +1,7 @@
 import { getUserFrontEnd } from "@/Features/Front/Hooks/useAPI/get/getUser";
 import { useUser } from "@clerk/react";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CheckoutInput } from "./pageComponents/input";
 import { UseCartShop } from "@/Features/Front/Cart/Shop/CartShop";
 
@@ -9,9 +9,11 @@ export function CheckoutPage() {
 	const { user, isLoaded, isSignedIn } = useUser();
 	const [email, setEmail] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isFormValid, setIsFormValid] = useState(false);
   const { completePurchase } = UseCartShop();
   const nav = useNavigate();
   const { items } = UseCartShop();
+	const formRef = useRef<HTMLFormElement | null>(null);
 
 	useEffect(() => {
 		if (!isLoaded) {
@@ -32,6 +34,14 @@ export function CheckoutPage() {
 		void loadUser();
 	}, [isLoaded, isSignedIn, nav, user]);
 
+	useEffect(() => {
+		if (!formRef.current) {
+			return;
+		}
+
+		setIsFormValid(formRef.current.checkValidity());
+	}, [email]);
+
 	if (!isLoaded) {
 		return <div className="mx-auto mt-8 max-w-4xl text-sm text-slate-600">Loading checkout...</div>;
 	}
@@ -49,7 +59,12 @@ export function CheckoutPage() {
 				<p className="mt-2 text-sm text-slate-600">Enter your card and billing details to complete your purchase.</p>
 			</div>
 
-			<form className="space-y-6" noValidate>
+			<form
+				className="space-y-6"
+				noValidate
+				ref={formRef}
+				onInput={() => setIsFormValid(formRef.current?.checkValidity() ?? false)}
+			>
 				<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
 					<h2 className="text-lg font-semibold text-slate-900">Card Information</h2>
 
@@ -112,6 +127,7 @@ export function CheckoutPage() {
 							label="Email"
 							type="email"
 							value={email}
+							required
 							readOnly
 						/>
 
@@ -173,7 +189,7 @@ export function CheckoutPage() {
 					</button>
 					<button
             type="button"
-						disabled={isSubmitting || items.length === 0}
+						disabled={isSubmitting || items.length === 0 || !isFormValid}
 						className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
 						onClick={async () => {
 							if (isSubmitting) {

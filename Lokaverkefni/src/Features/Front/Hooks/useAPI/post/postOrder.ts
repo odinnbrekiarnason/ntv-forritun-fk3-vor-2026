@@ -10,10 +10,12 @@ export const postOrder = async (orderData: CartItem[], userId: string) => {
         "Content-Type": "application/json"
       }
     });
+
     if(!result.ok) {
       console.error("Failed to post order:", result.statusText);
       return false;
     }
+    
     return result.ok;
   } catch (e) {
     console.error(e);
