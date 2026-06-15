@@ -17,9 +17,10 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
       console.error("Product not found");
       return;
     }
+
     const stock = checkItem.stock;
     if (quantity > stock) {
-      console.error("Not enough stock available");
+      window.alert("Not enough stock available");
       return;
     }
 
@@ -47,6 +48,7 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
           ...state,
           items: [...state.items, { productId, quantity }]
         }));
+        window.alert("Added Item to cart");
 
         return {
           ...state,
@@ -87,6 +89,7 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
         ...state,
         items: newItems
       }));
+      window.alert("Removed Item from cart");
       return {
         ...state,
         items: newItems
@@ -105,7 +108,7 @@ export const UseCartShop = create<CartShopType>((set, get) => ({
       const success = await postOrder(currentItems, userId);
 
       if (!success) {
-        console.error("Failed to complete purchase");
+        window.alert("Failed to complete purchase");
         return false;
       }
 
