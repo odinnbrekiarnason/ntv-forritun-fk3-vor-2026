@@ -76,3 +76,53 @@ export const createOrder = async (_req: Request, _res: Response, _next: NextFunc
     _next(e);
   }
 };
+
+
+export const getOrdersByUserId = async(_req: Request, _res: Response, _next: NextFunction) => {
+  try{
+    const { userId } = _req.params;
+
+    if (!userId) {
+      _res.status(400).json({ error: "userId is required" });
+      return;
+    }
+
+    const userExists = await pool.oneOrNone("select clerk_uid from users where clerk_uid = $1", [userId]);
+    if (!userExists) {
+      _res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const order = await pool.manyOrNone(
+      `
+      select o.id as order_id, o.status, o.total_price, o.finished_at,
+      coalesce(
+        json_agg(
+          json_build_object(
+            'productId', oi.product_id,
+            'name', p.product_name,
+            'image', p.img_url,
+            'type', p.type,
+            'unitPrice', oi.unit_price,
+            'quantity', oi.quantity
+          )
+        ) filter (where oi.product_id is not null),
+        '[]'::json
+      ) as items
+      from orders o
+      left join order_items oi on o.id = oi.order_id
+      left join products p on p.id = oi.product_id
+      where o.user_id = $1
+      group by o.id, o.status, o.total_price, o.finished_at
+      order by o.finished_at desc
+      `,
+      [userId]
+    );
+
+    
+    _res.status(200).json({ orders: order });
+  } catch(e: any) {
+    console.log(e);
+    _next(e);
+  }
+}
