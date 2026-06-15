@@ -16,11 +16,26 @@ interface Order {
   }[];
 }
 
-type OrdersApiResponse = {
-  orders: Order[];
+type ApiOrder = {
+  order_id: string;
+  status: string;
+  total_price: number;
+  finished_at: string;
+  items: {
+    productId: string;
+    name: string;
+    image: string;
+    type: string;
+    unitPrice: number;
+    quantity: number;
+  }[];
 };
 
-export const getUserOrders = async (userId: string) => {
+type OrdersApiResponse = {
+  orders: ApiOrder[];
+};
+
+export const getUserOrders = async (userId: string): Promise<Order[]> => {
   try{
     const response = await fetch(getApiUrl(`${APIEndpoints.ORDER}/${userId}`));
     if (!response.ok) {
@@ -35,7 +50,13 @@ export const getUserOrders = async (userId: string) => {
       throw new Error("No orders found for the user");
     }
 
-    return data.orders;
+    return data.orders.map((order) => ({
+      orderId: order.order_id,
+      status: order.status,
+      totalPrice: Number(order.total_price),
+      finishedAt: order.finished_at,
+      items: order.items,
+    }));
   } catch(e: any) {
     console.error(e.message);
     throw e;
