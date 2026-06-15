@@ -35,7 +35,6 @@ export const UserPage = () => {
 				setOrdersError(null);
 				const userOrders = await getUserOrders(user.id);
 				setOrders(userOrders as UserOrder[]);
-        console.log("Fetched user orders:", userOrders);
 			} catch {
 				setOrdersError("Could not load order history right now.");
 			} finally {
@@ -104,6 +103,32 @@ export const UserPage = () => {
 										<p className="mt-1 text-xs text-slate-600">
 											{order.items.length} items | {order.status}
 										</p>
+										{order.items.length > 0 && (
+											<div className="mt-2 space-y-2">
+												{order.items.map((item) => (
+													<div
+														key={`${order.orderId}-${item.productId}`}
+														className="flex items-center gap-3 rounded-md border border-slate-200 bg-white px-2 py-2"
+													>
+														{item.image ? (
+															<img
+																src={item.image}
+																alt={item.name}
+																className="h-10 w-10 rounded-md object-cover"
+															/>
+														) : (
+															<div className="flex h-10 w-10 items-center justify-center rounded-md bg-slate-100 text-[10px] text-slate-500">
+																No img
+															</div>
+														)}
+														<div className="min-w-0 flex-1">
+															<p className="truncate text-xs font-medium text-slate-800">{item.name}</p>
+															<p className="text-xs text-slate-600">{item.type} | Qty: {item.quantity}</p>
+														</div>
+													</div>
+												))}
+											</div>
+										)}
 									</div>
 								))}
 							</div>

@@ -55,7 +55,7 @@ export const getUserOrders = async (userId: string): Promise<Order[]> => {
       status: order.status,
       totalPrice: Number(order.total_price),
       finishedAt: order.finished_at,
-      items: order.items,
+      items: Array.isArray(order.items) ? order.items : [],
     }));
   } catch(e: any) {
     console.error(e.message);
