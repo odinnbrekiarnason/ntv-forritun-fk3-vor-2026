@@ -81,6 +81,7 @@ export const createOrder = async (_req: Request, _res: Response, _next: NextFunc
 export const getOrdersByUserId = async(_req: Request, _res: Response, _next: NextFunction) => {
   try{
     const { userId } = _req.params;
+    console.log(`Fetching orders for userId: ${userId}`);
 
     if (!userId) {
       _res.status(400).json({ error: "userId is required" });
