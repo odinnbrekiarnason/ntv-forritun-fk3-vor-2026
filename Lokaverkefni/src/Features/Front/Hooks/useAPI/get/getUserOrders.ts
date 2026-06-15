@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/Features/navigation/Navigation";
+import { APIEndpoints } from "@/Features/navigation/Navigation";
 
 interface Order {
   orderId: string;
@@ -21,7 +22,7 @@ type OrdersApiResponse = {
 
 export const getUserOrders = async (userId: string) => {
   try{
-    const response = await fetch(getApiUrl(`/api/orders/${userId}`));
+    const response = await fetch(getApiUrl(`${APIEndpoints.ORDER}/${userId}`));
     if (!response.ok) {
       console.log(`Failed to fetch user orders: ${response.statusText}`);
       throw new Error(`Failed to fetch user orders: ${response.statusText}`);

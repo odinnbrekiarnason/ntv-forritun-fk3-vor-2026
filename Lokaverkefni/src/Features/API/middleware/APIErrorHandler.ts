@@ -1,9 +1,11 @@
 import z from 'zod'
-import type { Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 
 export const errorHandler = (
   error: any,
+  _request: Request,
   response: Response,
+  _next: NextFunction,
 ) => {
   if (error instanceof z.ZodError) {
     const details = error.issues.map((issue) => ({
