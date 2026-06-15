@@ -119,7 +119,6 @@ export const getOrdersByUserId = async(_req: Request, _res: Response, _next: Nex
       [userId]
     );
 
-    
     _res.status(200).json({ orders: order });
   } catch(e: any) {
     console.log(e);
