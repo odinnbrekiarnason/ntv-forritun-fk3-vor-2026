@@ -75,7 +75,6 @@ export const useOnLogin = (isLoaded: boolean, isSignedIn: boolean | undefined, u
         console.error("Failed to run login callback", error);
       }
     };
-    console.log('Running login callback for user');
     void saveUser();
   }, [isLoaded, isSignedIn, user]);
 };

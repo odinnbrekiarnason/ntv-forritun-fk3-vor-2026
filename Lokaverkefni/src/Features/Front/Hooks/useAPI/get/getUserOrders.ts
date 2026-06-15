@@ -21,12 +21,14 @@ export const getUserOrders = async (userId: string) => {
   try{
     const response = await fetch(`/api/orders/${userId}`);
     if (!response.ok) {
+      console.log(`Failed to fetch user orders: ${response.statusText}`);
       throw new Error(`Failed to fetch user orders: ${response.statusText}`);
     }
 
     const data = (await response.json()) as OrdersApiResponse;
 
     if (!Array.isArray(data.orders)) {
+      console.log("No orders found for the user");
       throw new Error("No orders found for the user");
     }
 
