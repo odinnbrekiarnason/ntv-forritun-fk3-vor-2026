@@ -35,6 +35,7 @@ export const UserPage = () => {
 				setOrdersError(null);
 				const userOrders = await getUserOrders(user.id);
 				setOrders(userOrders as UserOrder[]);
+        console.log("Fetched user orders:", userOrders);
 			} catch {
 				setOrdersError("Could not load order history right now.");
 			} finally {
@@ -91,7 +92,7 @@ export const UserPage = () => {
 
 						{!ordersLoading && !ordersError && orders.length > 0 && (
 							<div className="mt-3 space-y-2">
-								{orders.slice(0, 3).map((order) => (
+								{orders.map((order) => (
 									<div
 										key={order.orderId}
 										className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2"
